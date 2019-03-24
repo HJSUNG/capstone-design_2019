@@ -37,17 +37,17 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<String> labels = new ArrayList<String>();
         labels.add("0 am");
-        labels.add("February");
-        labels.add("March");
+        labels.add("2 am");
+        labels.add("4 am");
         labels.add("6 am");
-        labels.add("May");
-        labels.add("June");
+        labels.add("8 am");
+        labels.add("10 am");
         labels.add("12 pm");
-        labels.add("August");
-        labels.add("September");
+        labels.add("2 pm");
+        labels.add("4 pm");
         labels.add("6 pm");
-        labels.add("November");
-        labels.add("December");
+        labels.add("8 pm");
+        labels.add("10 pm");
 
         LineData data = new LineData(labels, dataset);
         dataset.setColors(ColorTemplate.COLORFUL_COLORS); //
