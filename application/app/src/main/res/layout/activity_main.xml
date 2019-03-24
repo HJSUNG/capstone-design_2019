@@ -9,10 +9,69 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="Main activity"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/button_first"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/GlucoseButton"
+                android:layout_width="100px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Glucose" />
+
+            <Button
+                android:id="@+id/MedicationButton"
+                android:layout_width="100px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Medication" />
+
+            <Button
+                android:id="@+id/ExerciseButton"
+                android:layout_width="100px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Exercise" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/button_second"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button_first">
+
+            <Button
+                android:id="@+id/MealButton"
+                android:layout_width="100px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Meal" />
+
+            <Button
+                android:id="@+id/DiaryButton"
+                android:layout_width="100px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Diary" />
+        </LinearLayout>
+        <com.github.mikephil.charting.charts.LineChart
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/chart"
+            android:layout_below="@id/button_second"
+            ></com.github.mikephil.charting.charts.LineChart>
+    </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
