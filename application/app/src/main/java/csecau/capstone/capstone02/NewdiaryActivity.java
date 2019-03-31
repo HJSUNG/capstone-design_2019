@@ -21,6 +21,10 @@ public class NewdiaryActivity extends AppCompatActivity {
     private Button doneButton;
     private EditText contentEdittext;
 
+    private String ID = "2";
+    private String Date = "2019-03-31 15:10:15";
+    private String Contents = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +36,10 @@ public class NewdiaryActivity extends AppCompatActivity {
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String content = contentEdittext.getText().toString();
+                String Contents = contentEdittext.getText().toString();
 
                 InsertDiary task = new InsertDiary();
-//                task.execute()
+                task.execute("http://capstone02.cafe24.com/insert_diary.php", ID, Date , Contents);
 
             }
         });
@@ -58,13 +62,11 @@ public class NewdiaryActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             String ID = (String)params[1];
-            String PW = (String)params[2];
-            String nickname = (String)params[3];
-            String user_type = (String)params[4];
-            String phone = (String)params[5];
+            String Date = (String)params[2];
+            String Contents = (String)params[3];
 
             String serverURL = (String)params[0];
-            String postParameters = "ID=" + ID + "&PW=" + PW + "&nickname=" + nickname + "&user_type=" + user_type + "&phone=" + phone;
+            String postParameters = "ID=" + ID + "&Date=" + Date + "&Contents=" + Contents;
 
             try {
                 URL url = new URL(serverURL);
@@ -105,6 +107,7 @@ public class NewdiaryActivity extends AppCompatActivity {
 
                 return sb.toString();
             } catch (Exception e) {
+                Log.e("@@@", "exception", e);
                 return new String("Same ID exists !");
             }
         }
