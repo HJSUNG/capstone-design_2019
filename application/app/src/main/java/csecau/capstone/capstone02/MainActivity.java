@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button diaryButton;
+    private Button diaryButton,GlucoseButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +24,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         diaryButton = (Button) findViewById(R.id.DiaryButton);
+        GlucoseButton = (Button)findViewById(R.id.GlucoseButton);
 
         diaryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), DiaryActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        GlucoseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), GlucoseActivity.class);
                 startActivity(intent);
             }
         });
