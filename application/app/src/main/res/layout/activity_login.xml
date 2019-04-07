@@ -1,6 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".LoginActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="100dp"
+            android:text="프로젝트 이름"
+            android:textSize="50dp"
+            android:textColor="@color/textcolor"
+            android:gravity="center_horizontal"
+            android:textStyle="bold"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:text="아이디 : "
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/idinput"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:imeOptions="actionNext"
+                android:inputType="text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp">
+
+            <TextView
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:text="비밀번호 : "
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/passwordinput"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="55dp"
+                android:text="Log in"
+                android:id="@+id/loginButton"
+                android:textAllCaps="false"
+                android:layout_below="@+id/passwordinput"
+                android:layout_toStartOf="@+id/signupButton"/>
+
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="55dp"
+                android:text="Sign up"
+                android:id="@+id/signupButton"
+                android:textAllCaps="false"
+                android:layout_alignTop="@+id/loginButton"
+                android:layout_alignEnd="@+id/passwordinput"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:id="@+id/TextResultLogin"
+            android:layout_below="@+id/loginButton"
+            android:layout_centerHorizontal="true"/>
+
+    </LinearLayout>
+
+</RelativeLayout>
