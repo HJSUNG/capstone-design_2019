@@ -15,10 +15,6 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-
-        debug {
-            testCoverageEnabled = false
-        }
     }
 }
 
@@ -31,5 +27,5 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.github.PhilJay:MPAndroidChart:v2.1.6'
     implementation 'com.opencsv:opencsv:3.9'
-
+    implementation 'com.android.volley:volley:1.0.0'
 }
