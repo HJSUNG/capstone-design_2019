@@ -10,11 +10,20 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class NewdiaryActivity extends AppCompatActivity {
 
@@ -37,9 +46,72 @@ public class NewdiaryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String Contents = contentEdittext.getText().toString();
+                Contents.trim();
 
-                InsertDiary task = new InsertDiary();
-                task.execute("http://capstone02.cafe24.com/insert_diary.php", ID, Date , Contents);
+                try{
+                    int count=0;
+                    String tweet;
+
+                    ArrayList<String> stopwords= new ArrayList<String>();
+                    BufferedReader stop = new BufferedReader(new FileReader(getFilesDir() + "/stopwords.txt"));
+                    String line = "";
+                    while ((line = stop.readLine()) != null)
+                    {
+                        stopwords.add(line);
+                    }
+
+
+                    Map<String, String> map = new HashMap<String, String>();
+                    BufferedReader in = new BufferedReader(new FileReader(getFilesDir() + "/afinn.txt"));
+
+                    line="";
+                    while ((line = in.readLine()) != null) {
+                        String parts[] = line.split("\t");
+                        map.put(parts[0], parts[1]);
+                        count++;
+                    }
+                    in.close();
+                    //   System.out.println(map.toString());
+
+
+
+//                    InputStream inputStream = new ByteArrayInputStream(contentEdittext.toString().getBytes());
+//                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                    if((Contents != null))
+                    {
+                        float score=0;
+                        String[] word= Contents.split(" ");
+
+                        for(int i=0; i<word.length;i++)
+                        {
+                            if(stopwords.contains(word[i].toLowerCase()))
+                            {
+
+                            }
+                            else{
+                                if(map.get(word[i])!=null)
+                                {
+                                    String wordscore= map.get(word[i].toLowerCase());
+                                    score=(float) score + Integer.parseInt(wordscore);
+                                }}}
+                        Map<String, Float> sentiment= new HashMap<String, Float>();
+                        sentiment.put(Contents, score);
+
+                        contentEdittext.setText(sentiment.toString());
+
+                    }
+
+                }
+                catch(FileNotFoundException e)
+                {
+                    e.printStackTrace();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+//                InsertDiary task = new InsertDiary();
+//                task.execute("http://capstone02.cafe24.com/insert_diary.php", ID, Date , Contents);
 
             }
         });
