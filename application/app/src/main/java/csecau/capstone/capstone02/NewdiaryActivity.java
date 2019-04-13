@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -29,6 +30,7 @@ public class NewdiaryActivity extends AppCompatActivity {
 
     private Button doneButton;
     private EditText contentEdittext;
+    private TextView resultText;
 
     private String ID = "2";
     private String Date = "2019-03-31 15:10:15";
@@ -41,6 +43,7 @@ public class NewdiaryActivity extends AppCompatActivity {
 
         doneButton = (Button)findViewById(R.id.DoneButton);
         contentEdittext = (EditText)findViewById(R.id.contentinput);
+        resultText = (TextView)findViewById(R.id.resulttext);
 
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,7 +53,6 @@ public class NewdiaryActivity extends AppCompatActivity {
 
                 try{
                     int count=0;
-                    String tweet;
 
                     ArrayList<String> stopwords= new ArrayList<String>();
                     BufferedReader stop = new BufferedReader(new FileReader(getFilesDir() + "/stopwords.txt"));
@@ -73,10 +75,6 @@ public class NewdiaryActivity extends AppCompatActivity {
                     in.close();
                     //   System.out.println(map.toString());
 
-
-
-//                    InputStream inputStream = new ByteArrayInputStream(contentEdittext.toString().getBytes());
-//                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                     if((Contents != null))
                     {
                         float score=0;
@@ -97,7 +95,7 @@ public class NewdiaryActivity extends AppCompatActivity {
                         Map<String, Float> sentiment= new HashMap<String, Float>();
                         sentiment.put(Contents, score);
 
-                        contentEdittext.setText(sentiment.toString());
+                        resultText.setText("Analysis Result : " + sentiment.toString());
 
                     }
 
