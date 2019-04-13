@@ -20,6 +20,7 @@
         <activity android:name=".RegistrationActivity"></activity>
         <activity android:name=".GlucoseActivity"></activity>
         <activity android:name=".DiaryActivity"></activity>
+        <activity android:name=".NewdiaryActivity"></activity>
     </application>
 
 </manifest>
