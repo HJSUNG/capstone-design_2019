@@ -93,7 +93,7 @@ public class NewdiaryActivity extends AppCompatActivity {
                                     score=(float) score + Integer.parseInt(wordscore);
                                 }}}
                         Map<String, Float> sentiment= new HashMap<String, Float>();
-                        sentiment.put(Contents, score);
+                        sentiment.put("", score);
 
                         resultText.setText("Analysis Result : " + sentiment.toString());
 

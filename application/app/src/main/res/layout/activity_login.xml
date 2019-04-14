@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginTop="100dp"
-            android:text="프로젝트 이름"
+            android:text="Diabetes Tracker"
             android:textSize="50dp"
             android:textColor="@color/textcolor"
             android:gravity="center_horizontal"
