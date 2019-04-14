@@ -43,16 +43,16 @@ public class NewdiaryActivity extends AppCompatActivity {
 
         doneButton = (Button)findViewById(R.id.DoneButton);
         contentEdittext = (EditText)findViewById(R.id.contentinput);
-        resultText = (TextView)findViewById(R.id.resulttext);
+                    resultText = (TextView)findViewById(R.id.resulttext);
 
-        doneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String Contents = contentEdittext.getText().toString();
-                Contents.trim();
+                    doneButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String Contents = contentEdittext.getText().toString();
+                            Contents.trim();
 
-                try{
-                    int count=0;
+                            try{
+                                int count=0;
 
                     ArrayList<String> stopwords= new ArrayList<String>();
                     BufferedReader stop = new BufferedReader(new FileReader(getFilesDir() + "/stopwords.txt"));
