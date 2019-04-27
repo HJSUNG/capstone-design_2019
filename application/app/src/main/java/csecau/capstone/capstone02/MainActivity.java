@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button diaryButton,GlucoseButton;
+    private Button diaryButton, glucoseButton, medicationButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         diaryButton = (Button) findViewById(R.id.DiaryButton);
-        GlucoseButton = (Button)findViewById(R.id.GlucoseButton);
+        glucoseButton = (Button)findViewById(R.id.GlucoseButton);
+        medicationButton = (Button)findViewById(R.id.MedicationButton);
+
 
         diaryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,10 +36,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        GlucoseButton.setOnClickListener(new View.OnClickListener() {
+        glucoseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), GlucoseActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        medicationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MedicationActivity.class);
                 startActivity(intent);
             }
         });
