@@ -21,6 +21,7 @@
         <activity android:name=".GlucoseActivity"></activity>
         <activity android:name=".DiaryActivity"></activity>
         <activity android:name=".NewdiaryActivity"></activity>
+        <activity android:name=".MedicationActivity"></activity>
     </application>
 
 </manifest>

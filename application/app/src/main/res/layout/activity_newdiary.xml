@@ -38,6 +38,7 @@
                 android:background="@drawable/edittext_edge"
                 android:id="@+id/contentinput"
                 android:layout_weight="9"
+                android:gravity="top"
                 android:padding="5dp"/>
 
             <LinearLayout
