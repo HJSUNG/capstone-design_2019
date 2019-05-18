@@ -38,6 +38,9 @@ import java.io.InputStreamReader;
 
 public class NewdiaryActivity extends AppCompatActivity {
 
+    private boolean checkTranslationFinished = false;
+    private boolean checkSentimentAnalysisFinished = false;
+
     private Button doneButton;
     private Button recognizeButton;
     private EditText contentEdittext;
@@ -130,54 +133,60 @@ public class NewdiaryActivity extends AppCompatActivity {
                     Translation translation = new Translation();
                     translation.execute(Contents);
 
-                    try {
-                        int count = 0;
+                    while(true) {
+                        if(checkTranslationFinished) {
+                            try {
+                                int count = 0;
 
-                        ArrayList<String> stopwords = new ArrayList<String>();
-                        BufferedReader stop = new BufferedReader(new FileReader(getFilesDir() + "/stopwords.txt"));
-                        String line = "";
-                        while ((line = stop.readLine()) != null) {
-                            stopwords.add(line);
-                        }
-
-
-                        Map<String, String> map = new HashMap<String, String>();
-                        BufferedReader in = new BufferedReader(new FileReader(getFilesDir() + "/afinn.txt"));
-
-                        line = "";
-                        while ((line = in.readLine()) != null) {
-                            String parts[] = line.split("\t");
-                            map.put(parts[0], parts[1]);
-                            count++;
-                        }
-                        in.close();
-                        //   System.out.println(map.toString());
-
-                        if ((Contents != null)) {
-                            float score = 0;
-                            String[] word = Contents.split(" ");
-
-                            for (int i = 0; i < word.length; i++) {
-                                if (stopwords.contains(word[i].toLowerCase())) {
-
-                                } else {
-                                    if (map.get(word[i]) != null) {
-                                        String wordscore = map.get(word[i].toLowerCase());
-                                        score = (float) score + Integer.parseInt(wordscore);
-                                    }
+                                ArrayList<String> stopwords = new ArrayList<String>();
+                                BufferedReader stop = new BufferedReader(new FileReader(getFilesDir() + "/stopwords.txt"));
+                                String line = "";
+                                while ((line = stop.readLine()) != null) {
+                                    stopwords.add(line);
                                 }
-                            }
+
+                                Map<String, String> map = new HashMap<String, String>();
+                                BufferedReader in = new BufferedReader(new FileReader(getFilesDir() + "/afinn.txt"));
+
+                                line = "";
+                                while ((line = in.readLine()) != null) {
+                                    String parts[] = line.split("\t");
+                                    map.put(parts[0], parts[1]);
+                                    count++;
+                                }
+                                in.close();
+
+                                if ((Contents != null)) {
+                                    float score = 0;
+                                    String[] word = Contents.split(" ");
+
+                                    for (int i = 0; i < word.length; i++) {
+                                        if (stopwords.contains(word[i].toLowerCase())) {
+
+                                        } else {
+                                            if (map.get(word[i]) != null) {
+                                                String wordscore = map.get(word[i].toLowerCase());
+                                                score = (float) score + Integer.parseInt(wordscore);
+                                            }
+                                        }
+                                    }
 //                                    Map<String, Float> sentiment= new HashMap<String, Float>();
 //                                    sentiment.put("", score);
 
-                            resultText.setText("Analysis Result : " + score);
+                                    resultText.setText("Analysis Result : " + score);
+                                    checkSentimentAnalysisFinished = true;
+                                    break;
 
+                                }
+
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                                break;
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                break;
+                            }
                         }
-
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
                 }
 
@@ -192,9 +201,7 @@ public class NewdiaryActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mRecognizer.startListening(i);
             }
-
         });
-
 
     }
 
@@ -279,62 +286,11 @@ public class NewdiaryActivity extends AppCompatActivity {
             JsonParser parser = new JsonParser();
             JsonElement target = parser.parse(result.toString()).getAsJsonObject().get("message").getAsJsonObject().get("result").getAsJsonObject().get("translatedText");
 
-
             result = target.toString();
             result = result.substring(1, result.length() - 1);
 
             contentEdittext.setText(result);
-
-            try {
-                int count = 0;
-
-                ArrayList<String> stopwords = new ArrayList<String>();
-                BufferedReader stop = new BufferedReader(new FileReader(getFilesDir() + "/stopwords.txt"));
-                String line = "";
-                while ((line = stop.readLine()) != null) {
-                    stopwords.add(line);
-                }
-
-
-                Map<String, String> map = new HashMap<String, String>();
-                BufferedReader in = new BufferedReader(new FileReader(getFilesDir() + "/afinn.txt"));
-
-                line = "";
-                while ((line = in.readLine()) != null) {
-                    String parts[] = line.split("\t");
-                    map.put(parts[0], parts[1]);
-                    count++;
-                }
-                in.close();
-                //   System.out.println(map.toString());
-
-                if ((result != null)) {
-                    float score = 0;
-                    String[] word = result.split(" ");
-
-                    for (int i = 0; i < word.length; i++) {
-                        if (stopwords.contains(word[i].toLowerCase())) {
-
-                        } else {
-                            if (map.get(word[i]) != null) {
-                                String wordscore = map.get(word[i].toLowerCase());
-                                score = (float) score + Integer.parseInt(wordscore);
-                            }
-                        }
-                    }
-//                                    Map<String, Float> sentiment= new HashMap<String, Float>();
-//                                    sentiment.put("", score);
-
-                    resultText.setText("Analysis Result : " + score);
-
-                }
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
+            checkTranslationFinished = true;
         }
 
         @Override
