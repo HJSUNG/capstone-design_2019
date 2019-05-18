@@ -1,10 +1,15 @@
 package csecau.capstone.capstone02;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -16,7 +21,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button diaryButton, glucoseButton, medicationButton;
+    private Button diaryButton, glucoseButton, medicationButton,logoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         diaryButton = (Button) findViewById(R.id.DiaryButton);
         glucoseButton = (Button)findViewById(R.id.GlucoseButton);
         medicationButton = (Button)findViewById(R.id.MedicationButton);
+        logoutButton = (Button) findViewById(R.id.logoutButton);
 
 
         diaryButton.setOnClickListener(new View.OnClickListener() {
@@ -52,39 +58,129 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        logoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                SharedPreferences auto = getSharedPreferences("auto", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor editor = auto.edit();
+                editor.clear();
+                editor.commit();
+                Toast.makeText(MainActivity.this, "로그아웃", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
         LineChart lineChart = (LineChart) findViewById(R.id.chart);
 
         ArrayList<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(4f, 0));
-        entries.add(new Entry(8f, 1));
-        entries.add(new Entry(6f, 2));
-        entries.add(new Entry(2f, 3));
-        entries.add(new Entry(18f, 4));
-        entries.add(new Entry(9f, 5));
-        entries.add(new Entry(16f, 6));
-        entries.add(new Entry(5f, 7));
-        entries.add(new Entry(3f, 8));
-        entries.add(new Entry(7f, 10));
-        entries.add(new Entry(9f, 11));
+        entries.add(new Entry(100, 2));
+        entries.add(new Entry(123, 3));
+        entries.add(new Entry(100, 25));
+        entries.add(new Entry(200, 26));
+        entries.add(new Entry(180, 29));
+        entries.add(new Entry(123, 30));
+        entries.add(new Entry(100, 32));
+        entries.add(new Entry(120, 33));
+        entries.add(new Entry(120, 34));
+        entries.add(new Entry(90, 36));
+        entries.add(new Entry(120, 81 ));
 
-        LineDataSet dataset = new LineDataSet(entries, "# of Calls");
+        LineDataSet dataset = new LineDataSet(entries, "Blood Glucose");
+        dataset.setColor(Color.parseColor("#FF0000"));
+        dataset.setCircleColor(R.color.black);
+        dataset.setCircleColorHole(R.color.black);
+
 
         ArrayList<String> labels = new ArrayList<String>();
-        labels.add("0 am");
-        labels.add("2 am");
-        labels.add("4 am");
-        labels.add("6 am");
-        labels.add("8 am");
-        labels.add("10 am");
-        labels.add("12 pm");
-        labels.add("2 pm");
-        labels.add("4 pm");
-        labels.add("6 pm");
-        labels.add("8 pm");
-        labels.add("10 pm");
+        labels.add("04-07 6am");
+        labels.add("04-07 12am");
+        labels.add("04-07 6pm");
+        labels.add("04-07 12pm");
+        labels.add("04-08 6am");
+        labels.add("04-08 12am");
+        labels.add("04-08 6pm");
+        labels.add("04-08 12pm");
+        labels.add("04-09 6am");
+        labels.add("04-09 12am");
+        labels.add("04-09 6pm");
+        labels.add("04-09 12pm");
+        labels.add("04-10 6am");
+        labels.add("04-10 12am");
+        labels.add("04-10 6pm");
+        labels.add("04-10 12pm");
+        labels.add("04-11 6am");
+        labels.add("04-11 12am");
+        labels.add("04-11 6pm");
+        labels.add("04-11 12pm");
+        labels.add("04-12 6am");
+        labels.add("04-12 12am");
+        labels.add("04-12 6pm");
+        labels.add("04-12 12pm");
+        labels.add("04-13 6am");
+        labels.add("04-13 12am");
+        labels.add("04-13 6pm");
+        labels.add("04-13 12pm");
+        labels.add("04-14 6am");
+        labels.add("04-14 12am");
+        labels.add("04-14 6pm");
+        labels.add("04-14 12pm");
+        labels.add("04-15 6am");
+        labels.add("04-15 12am");
+        labels.add("04-15 6pm");
+        labels.add("04-15 12pm");
+        labels.add("04-16 6am");
+        labels.add("04-16 12am");
+        labels.add("04-16 6pm");
+        labels.add("04-16 12pm");
+        labels.add("04-17 6am");
+        labels.add("04-17 12am");
+        labels.add("04-17 6pm");
+        labels.add("04-17 12pm");
+        labels.add("04-18 6am");
+        labels.add("04-18 12am");
+        labels.add("04-18 6pm");
+        labels.add("04-18 12pm");
+        labels.add("04-19 6am");
+        labels.add("04-19 12am");
+        labels.add("04-19 6pm");
+        labels.add("04-19 12pm");
+        labels.add("04-20 6am");
+        labels.add("04-20 12am");
+        labels.add("04-20 6pm");
+        labels.add("04-20 12pm");
+        labels.add("04-21 6am");
+        labels.add("04-21 12am");
+        labels.add("04-21 6pm");
+        labels.add("04-21 12pm");
+        labels.add("04-22 6am");
+        labels.add("04-22 12am");
+        labels.add("04-22 6pm");
+        labels.add("04-22 12pm");
+        labels.add("04-23 6am");
+        labels.add("04-23 12am");
+        labels.add("04-23 6pm");
+        labels.add("04-23 12pm");
+        labels.add("04-24 6am");
+        labels.add("04-24 12am");
+        labels.add("04-24 6pm");
+        labels.add("04-24 12pm");
+        labels.add("04-25 6am");
+        labels.add("04-25 12am");
+        labels.add("04-25 6pm");
+        labels.add("04-25 12pm");
+        labels.add("04-26 6am");
+        labels.add("04-26 12am");
+        labels.add("04-26 6pm");
+        labels.add("04-26 12pm");
+        labels.add("04-27 6am");
+        labels.add("04-27 12am");
+        labels.add("04-27 6pm");
+        labels.add("04-27 12pm");
+
 
         LineData data = new LineData(labels, dataset);
-        dataset.setColors(ColorTemplate.COLORFUL_COLORS); //
+//        dataset.setColors(ColorTemplate.COLORFUL_COLORS); //
         /*dataset.setDrawCubic(true); //선 둥글게 만들기
         dataset.setDrawFilled(true); //그래프 밑부분 색칠*/
 
