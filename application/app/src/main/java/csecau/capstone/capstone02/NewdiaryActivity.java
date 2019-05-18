@@ -38,8 +38,8 @@ import java.io.InputStreamReader;
 
 public class NewdiaryActivity extends AppCompatActivity {
 
-    private boolean checkTranslationFinished = false;
-    private boolean checkSentimentAnalysisFinished = false;
+    private float analysis_score = 0;
+    private static String Contents = "";
 
     private Button doneButton;
     private Button recognizeButton;
@@ -87,7 +87,7 @@ public class NewdiaryActivity extends AppCompatActivity {
             ArrayList<String> mResult = results.getStringArrayList(recognition_result);
             String[] result_string = new String[mResult.size()];
             mResult.toArray(result_string);
-            contentEdittext.setText(""+result_string[0]);
+            contentEdittext.setText("" + result_string[0]);
 //            for (int i = 0; i < mResult.size(); i++) {
 //                contentEdittext.append(" " + result_string[i]);
 //            }
@@ -124,70 +124,14 @@ public class NewdiaryActivity extends AppCompatActivity {
         doneButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String Contents = contentEdittext.getText().toString();
+                Contents = contentEdittext.getText().toString();
                 Contents.trim();
 
                 if (Contents.length() == 0) {
                     Toast.makeText(getApplicationContext(), "내용을 입력하세요 !", Toast.LENGTH_SHORT).show();
                 } else {
-                    Translation translation = new Translation();
-                    translation.execute(Contents);
-
-                    while(true) {
-                        if(checkTranslationFinished) {
-                            try {
-                                int count = 0;
-
-                                ArrayList<String> stopwords = new ArrayList<String>();
-                                BufferedReader stop = new BufferedReader(new FileReader(getFilesDir() + "/stopwords.txt"));
-                                String line = "";
-                                while ((line = stop.readLine()) != null) {
-                                    stopwords.add(line);
-                                }
-
-                                Map<String, String> map = new HashMap<String, String>();
-                                BufferedReader in = new BufferedReader(new FileReader(getFilesDir() + "/afinn.txt"));
-
-                                line = "";
-                                while ((line = in.readLine()) != null) {
-                                    String parts[] = line.split("\t");
-                                    map.put(parts[0], parts[1]);
-                                    count++;
-                                }
-                                in.close();
-
-                                if ((Contents != null)) {
-                                    float score = 0;
-                                    String[] word = Contents.split(" ");
-
-                                    for (int i = 0; i < word.length; i++) {
-                                        if (stopwords.contains(word[i].toLowerCase())) {
-
-                                        } else {
-                                            if (map.get(word[i]) != null) {
-                                                String wordscore = map.get(word[i].toLowerCase());
-                                                score = (float) score + Integer.parseInt(wordscore);
-                                            }
-                                        }
-                                    }
-//                                    Map<String, Float> sentiment= new HashMap<String, Float>();
-//                                    sentiment.put("", score);
-
-                                    resultText.setText("Analysis Result : " + score);
-                                    checkSentimentAnalysisFinished = true;
-                                    break;
-
-                                }
-
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                                break;
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                break;
-                            }
-                        }
-                    }
+                    Translation_And_Sentiment_Analysis translation_and_sentiment_analysis = new Translation_And_Sentiment_Analysis();
+                    translation_and_sentiment_analysis.execute(Contents);
                 }
 
 //                InsertDiary task = new InsertDiary();
@@ -272,7 +216,7 @@ public class NewdiaryActivity extends AppCompatActivity {
         }
     }
 
-    class Translation extends AsyncTask<String, Void, String> {
+    class Translation_And_Sentiment_Analysis extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -290,7 +234,52 @@ public class NewdiaryActivity extends AppCompatActivity {
             result = result.substring(1, result.length() - 1);
 
             contentEdittext.setText(result);
-            checkTranslationFinished = true;
+
+            try {
+                int count = 0;
+
+                ArrayList<String> stopwords = new ArrayList<String>();
+                BufferedReader stop = new BufferedReader(new FileReader(getFilesDir() + "/stopwords.txt"));
+                String line = "";
+                while ((line = stop.readLine()) != null) {
+                    stopwords.add(line);
+                }
+
+                Map<String, String> map = new HashMap<String, String>();
+                BufferedReader in = new BufferedReader(new FileReader(getFilesDir() + "/afinn.txt"));
+
+                line = "";
+                while ((line = in.readLine()) != null) {
+                    String parts[] = line.split("\t");
+                    map.put(parts[0], parts[1]);
+                    count++;
+                }
+                in.close();
+
+                if ((contentEdittext.toString() != null)) {
+                    float score = 0;
+                    String[] word = contentEdittext.toString().split(" ");
+
+                    for (int i = 0; i < word.length; i++) {
+                        if (stopwords.contains(word[i].toLowerCase())) {
+
+                        } else {
+                            if (map.get(word[i]) != null) {
+                                String wordscore = map.get(word[i].toLowerCase());
+                                score = (float) score + Integer.parseInt(wordscore);
+                            }
+                        }
+                    }
+
+                    analysis_score = score;
+                    resultText.setText("Analysis Result : " + score);
+                }
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
