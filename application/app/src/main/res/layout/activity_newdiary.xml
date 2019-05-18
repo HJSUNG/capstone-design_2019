@@ -65,20 +65,20 @@
             <Button
                 android:layout_width="70dp"
                 android:layout_height="50dp"
-                android:id="@+id/DoneButton"
-                android:text="Done"
-                android:textAlignment="center"
-                android:layout_margin="40dp"
-                />
-
-            <Button
-                android:layout_width="70dp"
-                android:layout_height="50dp"
                 android:id="@+id/RecognizeButton"
                 android:text="Speech"
                 android:textSize="10sp"
                 android:textAlignment="center"
                 android:layout_margin="40dp"/>
+
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:id="@+id/DoneButton"
+                android:text="Done"
+                android:textAlignment="center"
+                android:layout_margin="40dp"
+                />
 
         </LinearLayout>
 
