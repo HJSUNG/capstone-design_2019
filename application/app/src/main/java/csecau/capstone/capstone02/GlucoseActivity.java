@@ -45,6 +45,7 @@ public class GlucoseActivity extends AppCompatActivity {
                 String glucose = GlucoseEdittext.getText().toString();
                 String comment = ComentEdittext.getText().toString();
                 String UserID = "6";
+                //6말고 UserID값이 자동으로 들어와야된다.
 
                 Glucose task = new Glucose();
                 task.execute("http://capstone02.cafe24.com/insert_glucose.php", UserID, glucose, comment);
