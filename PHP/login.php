@@ -48,6 +48,7 @@ if(!isset($_COOKIE['user_id']) || !isset($_COOKIE['user_name'])) {
       }
     }
 
+//    echo($Password_hash);
     $user_id = $_COOKIE['user_id'];
     $user_name = $_COOKIE['user_name'];
     echo "<p>안녕하세요. $user_name($user_id)님</p>";
