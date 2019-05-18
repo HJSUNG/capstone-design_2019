@@ -135,7 +135,7 @@ public class NewdiaryActivity extends AppCompatActivity {
                 }
 
 //                InsertDiary task = new InsertDiary();
-//                task.execute("http://capstone02.cafe24.com/insert_diary.php", ID, Date , Contents);
+//                task.execute("http://capstone02.cafe24.com/insert_diary.php", ID, Contents, analysis_score);
 
             }
         });
@@ -166,11 +166,11 @@ public class NewdiaryActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             String ID = (String) params[1];
-            String Date = (String) params[2];
-            String Contents = (String) params[3];
+            String Contents = (String) params[2];
+            String analysis_score = (String) params[3];
 
             String serverURL = (String) params[0];
-            String postParameters = "ID=" + ID + "&Date=" + Date + "&Contents=" + Contents;
+            String postParameters = "ID=" + ID + "&Contents=" + Contents + "&analysis_score=" + analysis_score;
 
             try {
                 URL url = new URL(serverURL);
