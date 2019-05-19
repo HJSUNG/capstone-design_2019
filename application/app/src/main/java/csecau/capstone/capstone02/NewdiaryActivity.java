@@ -139,6 +139,24 @@ public class NewdiaryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mRecognizer.startListening(i);
+//                1 ERROR_NETWORK_TIMEOUT : 네트워크 타임아웃
+//
+//                2 ERROR_NETWORK :  그 외 네트워크 에러
+//
+//                3 ERROR_AUDIO :  녹음 에러
+//
+//                4 ERROR_SERVER :  서버에서 에러를 보냄
+//
+//                5 ERROR_CLIENT :  클라이언트 에러
+//
+//                6 ERROR_SPEECH_TIMEOUT :  아무 음성도 듣지 못했을 때
+//
+//                7 ERROR_NO_MATCH :  적당한 결과를 찾지 못했을 때
+//
+//                8 ERROR_RECOGNIZER_BUSY :  RecognitionService가 바쁠 때
+//
+//                9 ERROR_INSUFFICIENT_PERMISSIONS: uses-permission(즉 RECORD_AUDIO) 이 없을 때
+
             }
         });
 
@@ -258,7 +276,9 @@ public class NewdiaryActivity extends AppCompatActivity {
                     for (int i = 0; i < word.length; i++) {
                         if (stopwords.contains(word[i].toLowerCase())) {
                             String wordscore = map.get(word[i].toLowerCase());
-                            score = (float) score + Integer.parseInt(wordscore);
+                            if (wordscore != null) {
+                                score = (float) score + Integer.parseInt(wordscore);
+                            }
                         } else {
                             if (map.get(word[i]) != null) {
                                 String wordscore = map.get(word[i].toLowerCase());

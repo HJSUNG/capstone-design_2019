@@ -72,11 +72,15 @@ public class DiaryActivity extends AppCompatActivity {
             listview = (ListView) findViewById(R.id.dairylistview);
             listview.setAdapter(adapter);
 
-            for (String diary : diary_list) {
-                String diary_split[] = diary.split("<comma>");
-                adapter.addItem(diary_split[2], diary_split[0], diary_split[1]);
-            }
+            String test_sentence = diary_list[0];
+            boolean test_contains = result.contains("comma");
 
+            if (result.contains("<comma>")) {
+                for (String diary : diary_list) {
+                    String diary_split[] = diary.split("<comma>");
+                    adapter.addItem(diary_split[2], diary_split[0], diary_split[1]);
+                }
+            }
         }
 
         @Override

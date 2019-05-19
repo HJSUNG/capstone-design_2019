@@ -370,6 +370,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(responseStatusCode == HttpURLConnection.HTTP_OK) {
                     inputStream = httpURLConnection.getInputStream();
                 }
+
                 else {
                     inputStream = httpURLConnection.getErrorStream();
                 }
