@@ -257,7 +257,8 @@ public class NewdiaryActivity extends AppCompatActivity {
 
                     for (int i = 0; i < word.length; i++) {
                         if (stopwords.contains(word[i].toLowerCase())) {
-
+                            String wordscore = map.get(word[i].toLowerCase());
+                            score = (float) score + Integer.parseInt(wordscore);
                         } else {
                             if (map.get(word[i]) != null) {
                                 String wordscore = map.get(word[i].toLowerCase());
