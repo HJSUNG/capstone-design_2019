@@ -6,12 +6,13 @@
     android:layout_height="match_parent"
     android:focusableInTouchMode="true"
     android:focusable="true"
+    android:background="@color/white"
     tools:context=".RegistrationActivity">
 
     <LinearLayout
         android:id="@+id/RegisterLinear"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:orientation="vertical">
@@ -20,10 +21,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center_horizontal"
             android:text="회원가입"
             android:textStyle="bold"
-            android:textColor="#246F20"
+            android:textColor="@color/textcolor"
             android:textSize="40sp" />
 
         <LinearLayout
@@ -33,7 +35,7 @@
 
             <TextView
                 android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:text="아이디 : "
                 android:textColor="#000000"
                 android:textSize="15sp" />
@@ -41,14 +43,14 @@
             <EditText
                 android:id="@+id/IDregister"
                 android:layout_width="160dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:imeOptions="actionNext"
                 android:inputType="text" />
 
             <Button
                 android:id="@+id/IDcheck"
                 android:layout_width="70dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:layout_toRightOf="@+id/IDregister"
                 android:text="Check"
                 android:textAllCaps="false" />
@@ -56,12 +58,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="30dp">
 
             <TextView
                 android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:text="비밀번호 : "
                 android:textColor="#000000"
                 android:textSize="15sp" />
@@ -69,18 +71,18 @@
             <EditText
                 android:id="@+id/PWregister"
                 android:layout_width="220dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:inputType="textPassword" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_marginLeft="30dp">
 
             <TextView
                 android:layout_width="100dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:text="비밀번호 확인 : "
                 android:textColor="#000000"
                 android:textSize="15sp" />
@@ -88,8 +90,28 @@
             <EditText
                 android:id="@+id/ConfirmPW"
                 android:layout_width="220dp"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:inputType="textPassword" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="30dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="이름 : "
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <EditText
+                android:id="@+id/NameRegister"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:imeOptions="actionNext"
+                android:inputType="text" />
         </LinearLayout>
 
         <LinearLayout
@@ -100,16 +122,38 @@
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="50dp"
-                android:text="나이 : "
+                android:text="이메일 : "
                 android:textColor="#000000"
                 android:textSize="15sp" />
 
             <EditText
-                android:id="@+id/AgeRegister"
+                android:id="@+id/EmailRegister"
                 android:layout_width="220dp"
                 android:layout_height="50dp"
                 android:imeOptions="actionNext"
                 android:inputType="text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginLeft="15dp">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="150dp"
+                android:gravity="center"
+                android:text="생년월일 : "
+                android:textColor="#000000"
+                android:textSize="15sp" />
+
+            <DatePicker
+                android:id="@+id/datePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="150dp"
+                android:datePickerMode="spinner"
+                android:calendarViewShown="false"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -166,11 +210,13 @@
         </LinearLayout>
     </LinearLayout>
 
+
+
     <Button
         android:layout_width="70dp"
         android:layout_height="50dp"
         android:id="@+id/DoneRegister"
-        android:text="Done"
+        android:text="확인"
         android:textAllCaps="false"
         android:layout_below="@id/RegisterLinear"
         android:layout_centerHorizontal="true"

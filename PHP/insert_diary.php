@@ -13,8 +13,9 @@ include('dbcon.php');
 
     if( (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['submit'])) || $android ) {
       $UserID=(int)$_POST['ID'];
-      $DateRegistered=$_POST['Date'];
+      //$DateRegistered=$_POST['Date'];
       $Contents=$_POST['Contents'];
+      $Value=$_POST['Value'];
 
       try {
         // timestamp: YYYY-MM-DD HH:MM:SS
@@ -27,11 +28,11 @@ include('dbcon.php');
           $e = "UserID not found.";
           throw($e);
         } else {
+          $stmt = $con->prepare("INSERT INTO Diary (UserID, Contents, Value) VALUES (:UserID, :Contents, :Value)");
           $stmt->bindParam(':UserID', $UserID);
-          $stmt = $con->prepare("INSERT INTO Diary (UserID, DateRegistered, Contents) VALUES (:UserID, :Date, :Contents)");
-          $stmt->bindParam(':UserID', $UserID);
-          $stmt->bindParam(':Date', $DateRegistered);
+          // $stmt->bindParam(':Date', $DateRegistered);
           $stmt->bindParam(':Contents', $Contents);
+          $stmt->bindParam(':Value', $Value);
           if($stmt->execute()){
             echo("Inserting diary data successful!");
           } else {
@@ -44,37 +45,4 @@ include('dbcon.php');
         die("Error!" . $e->getMessage());
       }
     }
-
-/*
-      $mysqli=mysqli_connect("$host", "$username", "$password", "$dbname");
-
-            try{
-              $query_search = "SELECT * from homeseek_user WHERE ID = '".$ID."' ";
-              $result = $mysqli->query($query_search);
-
-              if($result->num_rows == 1) {
-                $row=$result->fetch_array(MYSQLI_ASSOC);
-                if(validate_password($PW, $row['PW'])) {
-                  $_SESSION['ID']= $ID;
-                  $return_nickname = $row['nickname'];
-                  $return_phone = $row['phone'];
-                  $return_type = $row['user_type'];
-
-                  if(isset($_SESSION['ID'])) {
-                    $successMSG = "$ID,$ID,$return_nickname,$return_phone,$return_type";
-                  }
-                  else {
-                    $errMSG = "error";
-                  }
-                }else{
-                  $errMSG = "error";
-                }
-              }else {
-                $errMSG = "error";
-            }
-          }catch(PDOException $e) {
-                die("Database error: " . $e->getMessage());
-            }
-     }
-    */
-
+?>
