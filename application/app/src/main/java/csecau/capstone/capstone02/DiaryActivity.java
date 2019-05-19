@@ -18,20 +18,21 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DiaryActivity extends AppCompatActivity {
+import static csecau.capstone.capstone02.MainActivity.user_id;
 
-    private String user_id = "24";
+public class DiaryActivity extends AppCompatActivity {
 
     private String[] diary_list;
 
     private Button newdiaryButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dairy);
 
-        newdiaryButton = (Button)findViewById(R.id.newdiarybutton);
+        newdiaryButton = (Button) findViewById(R.id.newdiarybutton);
 
         newdiaryButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,24 +43,12 @@ public class DiaryActivity extends AppCompatActivity {
         });
 
         Getdairylist getdairylist = new Getdairylist();
-        getdairylist.execute("", user_id);
+        getdairylist.execute("http://capstone02.cafe24.com/retrieve_diary.php", user_id);
 
-        ListView listview;
-        diary_listviewAdapter adapter;
-
-        adapter = new diary_listviewAdapter();
-
-        listview = (ListView) findViewById(R.id. dairylistview);
-        listview.setAdapter(adapter);
-
-        for (String diary : diary_list) {
-            adapter.addItem(diary.split("<comma>")[0],diary.split("<comma>")[1],diary.split("<comma>")[2]);
-        }
 
 //        // 첫 번째 아이템 추가.
 //        adapter.addItem("1", "First Dairy content", "2019.3.29") ;
     }
-
 
 
     class Getdairylist extends AsyncTask<String, Void, String> {
@@ -74,6 +63,24 @@ public class DiaryActivity extends AppCompatActivity {
 
             String result_string = result;
             diary_list = result_string.split("<br>");
+
+            ListView listview;
+            diary_listviewAdapter adapter;
+
+            adapter = new diary_listviewAdapter();
+
+            listview = (ListView) findViewById(R.id.dairylistview);
+            listview.setAdapter(adapter);
+
+            String test_sentence = diary_list[0];
+            boolean test_contains = result.contains("comma");
+
+            if (result.contains("<comma>")) {
+                for (String diary : diary_list) {
+                    String diary_split[] = diary.split("<comma>");
+                    adapter.addItem(diary_split[2], diary_split[0], diary_split[1]);
+                }
+            }
         }
 
         @Override
@@ -82,7 +89,7 @@ public class DiaryActivity extends AppCompatActivity {
             String user_id = (String) params[1];
 
             String serverURL = (String) params[0];
-            String postParameters = "user_id=" + user_id;
+            String postParameters = "ID=" + user_id;
 
             try {
                 URL url = new URL(serverURL);
