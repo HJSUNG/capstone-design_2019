@@ -162,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
             boolean SameLogin = input_string.contains("Fail");
             Log.d("11",input_string);
 
-            user_id = input_string.split("<br>")[2];
+            user_id = input_string.split("<br>")[1];
 
 
             if(SameLogin) {

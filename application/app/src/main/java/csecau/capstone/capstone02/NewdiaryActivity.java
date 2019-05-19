@@ -165,7 +165,7 @@ public class NewdiaryActivity extends AppCompatActivity {
             String analysis_score = (String) params[3];
 
             String serverURL = (String) params[0];
-            String postParameters = "ID=" + ID + "&Contents=" + Contents + "&analysis_score=" + analysis_score;
+            String postParameters = "ID=" + ID + "&Contents=" + Contents + "&Value=" + analysis_score;
 
             try {
                 URL url = new URL(serverURL);
@@ -251,9 +251,9 @@ public class NewdiaryActivity extends AppCompatActivity {
                 }
                 in.close();
 
-                if ((contentEdittext.toString() != null)) {
+                if ((result != null)) {
                     float score = 0;
-                    String[] word = contentEdittext.toString().split(" ");
+                    String[] word = result.split(" ");
 
                     for (int i = 0; i < word.length; i++) {
                         if (stopwords.contains(word[i].toLowerCase())) {
@@ -266,6 +266,7 @@ public class NewdiaryActivity extends AppCompatActivity {
                         }
                     }
 
+//                    String test_string = contentEdittext.toString();
                     analysis_score = score;
                     resultText.setText("Analysis Result : " + score);
                 }
