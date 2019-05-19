@@ -19,7 +19,10 @@ include('dbcon.php');
       $Email=$_POST['Email'];
       $PhoneNumber=$_POST['PhoneNumber'];
 
-      $Password_hash=hash("sha256", $Password);
+      // Password hash
+      $Salt = "123";
+      $Password_salted = $Password . $Salt;
+      $Password_hash=hash("sha256", $Password_salted);
 
       try {
         // Check for duplicate ID

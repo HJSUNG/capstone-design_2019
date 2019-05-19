@@ -5,7 +5,6 @@
 
 // Connect to the databse
 include('dbcon.php');
-// include('pbkdf2.compat.php');
 /*
 if(!isset($_COOKIE['user_id']) || !isset($_COOKIE['user_name'])) {
 	echo "<meta http-equiv='refresh' content='0;url=login.php'>";
@@ -19,7 +18,9 @@ if(!isset($_COOKIE['user_id']) || !isset($_COOKIE['user_name'])) {
     if( (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['submit'])) || $android ) {
       $ID=$_POST['ID'];
       $Password=$_POST['Password'];
-      $Password_hash=hash("sha256", $Password);
+      $Salt="123";
+      $Password_salted=$Password . $Salt;
+      $Password_hash=hash("sha256", $Password_salted);
 
       try {
         $stmt = $con->prepare('SELECT * FROM User WHERE UserName = :ID AND Password = :Password');
