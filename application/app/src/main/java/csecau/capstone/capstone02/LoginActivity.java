@@ -66,18 +66,6 @@ public class LoginActivity extends AppCompatActivity {
 
         checkbox.setChecked(true);
 
-//        if(saveLoginData){
-//            IDEdittext.setText(loginId);
-//            PWEdittext.setText(loginPw);
-//            checkbox.setChecked(saveLoginData);
-//            if(true){
-//                String ID = IDEdittext.getText().toString();
-//                String PW = PWEdittext.getText().toString();
-//
-//                Login task = new Login();
-//                task.execute("http://capstone02.cafe24.com/login.php", ID, PW);
-//            }
-//        }
 
         if(loginId != null && loginPw != null) {
             String ID = loginId;
@@ -103,14 +91,6 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-//                SharedPreferences auto = getSharedPreferences("auto",Activity.MODE_PRIVATE);
-//
-//                SharedPreferences.Editor autoLogin = auto.edit();
-//                autoLogin.putString("inputId", IDEdittext.getText().toString());
-//                autoLogin.putString("inputPw", PWEdittext.getText().toString());
-//
-//                autoLogin.commit();
 
                 String ID = IDEdittext.getText().toString();
                 String PW = PWEdittext.getText().toString();
@@ -150,13 +130,6 @@ public class LoginActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             progressDialog.dismiss();
-//            String result_string_temp[] = (String[]) result.split(",");
-//            String result_string[]={"","","",""};
-
-
-//            for(int i=1;i<result_string_temp.length;i++) {
-//                result_string[i-1] = result_string_temp[i];
-//            }
 
             String input_string = result;
             boolean SameLogin = input_string.contains("Fail");
@@ -168,7 +141,6 @@ public class LoginActivity extends AppCompatActivity {
             if(SameLogin) {
                 Toast.makeText(LoginActivity.this, "Log-in failed", Toast.LENGTH_SHORT).show();
             } else {
-//                user.log_in(result_string[0], result_string[1], result_string[2], result_string[3]);
                 Toast.makeText(LoginActivity.this, "Log-in Success", Toast.LENGTH_SHORT).show();
                 login_check = true;
 
@@ -185,12 +157,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
-//                    if(MainActivity.activity !=null) {
-//                        MainActivity activity = (MainActivity)MainActivity.activity;
-//                        activity.finish();
-//                    }
-                    finish();
 
+                    finish();
                 }
             }
         }

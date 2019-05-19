@@ -1,6 +1,7 @@
 package csecau.capstone.capstone02;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,6 +25,9 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class RegistrationActivity extends AppCompatActivity {
     private static boolean IDcheck_done = false;
 
@@ -39,6 +43,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private Button checkButton;
     private Button doneButton;
+    private DatePickerDialog datePicker;
 
     private TextView textResult;
 
@@ -53,7 +58,7 @@ public class RegistrationActivity extends AppCompatActivity {
         confirmPWEdittext = (EditText)findViewById(R.id.ConfirmPW);
         NameEdittext = (EditText)findViewById(R.id.NameRegister);
         EmailEdittext = (EditText)findViewById(R.id.EmailRegister);
-        DOBEdittext = (EditText)findViewById(R.id.DOBRegister);
+//        DOBEdittext = (EditText)findViewById(R.id.DOBRegister);
         phoneEdittext_first = (EditText) findViewById(R.id.first_num);
         phoneEdittext_second = (EditText) findViewById(R.id.second_num);
         phoneEdittext_third = (EditText) findViewById(R.id.third_num);
@@ -120,7 +125,6 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
     }
-
 
     class CheckID extends AsyncTask<String, Void, String>{
         ProgressDialog progressDialog;

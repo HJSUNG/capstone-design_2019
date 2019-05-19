@@ -18,6 +18,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static csecau.capstone.capstone02.MainActivity.user_id;
+
 public class ExerciseActivity extends AppCompatActivity {
 
     private String TAG = "Exercisefunction";
@@ -42,7 +44,7 @@ public class ExerciseActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String exercise = ExerciseEdittext.getText().toString();
                 String exe_time = TimeEdittext.getText().toString();
-                String UserID = "24";
+                String UserID = user_id;
 
                 Exercsie task = new Exercsie();
                 task.execute("http://capstone02.cafe24.com/insert_exercise.php", UserID, exercise, exe_time);
@@ -84,7 +86,7 @@ public class ExerciseActivity extends AppCompatActivity {
             String exercise = (String)params[2];
             String exe_time = (String)params[3];
             
-            String postParameters = "ID=" + userID + "&Exercise=" + exercise + "&Time=" + exe_time;
+            String postParameters = "ID=" + userID + "&ActivityName=" + exercise + "&Value=" + exe_time;
 
             try {
                 URL url = new URL(serverURL);
