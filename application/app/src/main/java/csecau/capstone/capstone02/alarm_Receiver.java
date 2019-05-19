@@ -1,4 +1,4 @@
 package csecau.capstone.capstone02;
 
-class Alarm_Receiver {
+class alarm_Receiver {
 }

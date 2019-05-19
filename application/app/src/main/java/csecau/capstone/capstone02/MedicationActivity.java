@@ -40,7 +40,7 @@ public class MedicationActivity extends AppCompatActivity{
         Deletebtn = (Button)findViewById(R.id.btn_delete) ;
 
 //        final Calendar calendar = Calendar.getInstance();
-//        final Intent my_intent = new Intent(this.context, Alarm_Receiver.class);
+//        final Intent my_intent = new Intent(this.context, alarm_Receiver.class);
 
         Addbtn.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)

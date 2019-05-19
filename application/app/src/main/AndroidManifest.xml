@@ -23,6 +23,8 @@
         <activity android:name=".DiaryActivity"></activity>
         <activity android:name=".NewdiaryActivity"></activity>
         <activity android:name=".MedicationActivity"></activity>
+        <activity android:name=".MealActivity"></activity>
+        <activity android:name=".ExerciseActivity"></activity>
     </application>
 
 </manifest>

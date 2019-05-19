@@ -21,28 +21,25 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    private Button diaryButton, glucoseButton, medicationButton, logoutButton, exerciseButton, mealButton;
     public static String user_id ="";
 
-    private Button diaryButton, glucoseButton, medicationButton,logoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        diaryButton = (Button) findViewById(R.id.DiaryButton);
+
         glucoseButton = (Button)findViewById(R.id.GlucoseButton);
         medicationButton = (Button)findViewById(R.id.MedicationButton);
+        exerciseButton = (Button)findViewById(R.id.ExerciseButton);
+        mealButton = (Button)findViewById(R.id.MealButton);
+        diaryButton = (Button) findViewById(R.id.DiaryButton);
         logoutButton = (Button) findViewById(R.id.logoutButton);
 
 
-        diaryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), DiaryActivity.class);
-                startActivity(intent);
-            }
-        });
 
         glucoseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +53,30 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), MedicationActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        exerciseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ExerciseActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        mealButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), MealActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        diaryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), DiaryActivity.class);
                 startActivity(intent);
             }
         });
