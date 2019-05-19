@@ -2,11 +2,11 @@ package csecau.capstone.capstone02;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,10 +19,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -32,11 +32,13 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
+import static csecau.capstone.capstone02.MainActivity.user_id;
 
 public class NewdiaryActivity extends AppCompatActivity {
+
+    private float analysis_score = 0;
+    private static String Contents = "";
 
     private Button doneButton;
     private Button recognizeButton;
@@ -84,7 +86,7 @@ public class NewdiaryActivity extends AppCompatActivity {
             ArrayList<String> mResult = results.getStringArrayList(recognition_result);
             String[] result_string = new String[mResult.size()];
             mResult.toArray(result_string);
-            contentEdittext.setText(""+result_string[0]);
+            contentEdittext.setText("" + result_string[0]);
 //            for (int i = 0; i < mResult.size(); i++) {
 //                contentEdittext.append(" " + result_string[i]);
 //            }
@@ -121,69 +123,15 @@ public class NewdiaryActivity extends AppCompatActivity {
         doneButton.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String Contents = contentEdittext.getText().toString();
+                Contents = contentEdittext.getText().toString();
                 Contents.trim();
 
                 if (Contents.length() == 0) {
                     Toast.makeText(getApplicationContext(), "내용을 입력하세요 !", Toast.LENGTH_SHORT).show();
                 } else {
-                    Translation translation = new Translation();
-                    translation.execute(Contents);
-
-                    try {
-                        int count = 0;
-
-                        ArrayList<String> stopwords = new ArrayList<String>();
-                        BufferedReader stop = new BufferedReader(new FileReader(getFilesDir() + "/stopwords.txt"));
-                        String line = "";
-                        while ((line = stop.readLine()) != null) {
-                            stopwords.add(line);
-                        }
-
-
-                        Map<String, String> map = new HashMap<String, String>();
-                        BufferedReader in = new BufferedReader(new FileReader(getFilesDir() + "/afinn.txt"));
-
-                        line = "";
-                        while ((line = in.readLine()) != null) {
-                            String parts[] = line.split("\t");
-                            map.put(parts[0], parts[1]);
-                            count++;
-                        }
-                        in.close();
-                        //   System.out.println(map.toString());
-
-                        if ((Contents != null)) {
-                            float score = 0;
-                            String[] word = Contents.split(" ");
-
-                            for (int i = 0; i < word.length; i++) {
-                                if (stopwords.contains(word[i].toLowerCase())) {
-
-                                } else {
-                                    if (map.get(word[i]) != null) {
-                                        String wordscore = map.get(word[i].toLowerCase());
-                                        score = (float) score + Integer.parseInt(wordscore);
-                                    }
-                                }
-                            }
-//                                    Map<String, Float> sentiment= new HashMap<String, Float>();
-//                                    sentiment.put("", score);
-
-                            resultText.setText("Analysis Result : " + score);
-
-                        }
-
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    Translation_And_Sentiment_Analysis translation_and_sentiment_analysis = new Translation_And_Sentiment_Analysis();
+                    translation_and_sentiment_analysis.execute(Contents);
                 }
-
-//                InsertDiary task = new InsertDiary();
-//                task.execute("http://capstone02.cafe24.com/insert_diary.php", ID, Date , Contents);
-
             }
         });
 
@@ -192,9 +140,7 @@ public class NewdiaryActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mRecognizer.startListening(i);
             }
-
         });
-
 
     }
 
@@ -215,11 +161,11 @@ public class NewdiaryActivity extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             String ID = (String) params[1];
-            String Date = (String) params[2];
-            String Contents = (String) params[3];
+            String Contents = (String) params[2];
+            String analysis_score = (String) params[3];
 
             String serverURL = (String) params[0];
-            String postParameters = "ID=" + ID + "&Date=" + Date + "&Contents=" + Contents;
+            String postParameters = "ID=" + ID + "&Contents=" + Contents + "&analysis_score=" + analysis_score;
 
             try {
                 URL url = new URL(serverURL);
@@ -265,7 +211,7 @@ public class NewdiaryActivity extends AppCompatActivity {
         }
     }
 
-    class Translation extends AsyncTask<String, Void, String> {
+    class Translation_And_Sentiment_Analysis extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -278,7 +224,6 @@ public class NewdiaryActivity extends AppCompatActivity {
             Gson gson = new Gson();
             JsonParser parser = new JsonParser();
             JsonElement target = parser.parse(result.toString()).getAsJsonObject().get("message").getAsJsonObject().get("result").getAsJsonObject().get("translatedText");
-
 
             result = target.toString();
             result = result.substring(1, result.length() - 1);
@@ -295,7 +240,6 @@ public class NewdiaryActivity extends AppCompatActivity {
                     stopwords.add(line);
                 }
 
-
                 Map<String, String> map = new HashMap<String, String>();
                 BufferedReader in = new BufferedReader(new FileReader(getFilesDir() + "/afinn.txt"));
 
@@ -306,11 +250,10 @@ public class NewdiaryActivity extends AppCompatActivity {
                     count++;
                 }
                 in.close();
-                //   System.out.println(map.toString());
 
-                if ((result != null)) {
+                if ((contentEdittext.toString() != null)) {
                     float score = 0;
-                    String[] word = result.split(" ");
+                    String[] word = contentEdittext.toString().split(" ");
 
                     for (int i = 0; i < word.length; i++) {
                         if (stopwords.contains(word[i].toLowerCase())) {
@@ -322,11 +265,9 @@ public class NewdiaryActivity extends AppCompatActivity {
                             }
                         }
                     }
-//                                    Map<String, Float> sentiment= new HashMap<String, Float>();
-//                                    sentiment.put("", score);
 
+                    analysis_score = score;
                     resultText.setText("Analysis Result : " + score);
-
                 }
 
             } catch (FileNotFoundException e) {
@@ -335,6 +276,8 @@ public class NewdiaryActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
+            InsertDiary insertdiary = new InsertDiary();
+            insertdiary.execute("http://capstone02.cafe24.com/insert_diary.php", user_id, Contents, Float.toString(analysis_score));
         }
 
         @Override

@@ -41,7 +41,7 @@ public class diary_listviewAdapter extends BaseAdapter {
         }
 
         // 화면에 표시될 View(Layout이 inflate된)으로부터 위젯에 대한 참조 획득
-        ImageView iconImageView = (ImageView) convertView.findViewById(R.id.dairy_image_view) ;
+        TextView analysis_scoreTextView = (TextView) convertView.findViewById(R.id.dairy_text_analysis_score) ;
         TextView contentTextView = (TextView) convertView.findViewById(R.id.dairy_text_content) ;
         TextView timeTextView = (TextView) convertView.findViewById(R.id.dairy_text_time) ;
 
@@ -49,17 +49,17 @@ public class diary_listviewAdapter extends BaseAdapter {
         diary_listview listViewItem = listviewItemList.get(position);
 
         // 아이템 내 각 위젯에 데이터 반영
-        iconImageView.setImageDrawable(listViewItem.getIcon());
+        analysis_scoreTextView.setText(listViewItem.getAnalysis_score());
         contentTextView.setText(listViewItem.getContent());
         timeTextView.setText(listViewItem.getTime());
 
         return convertView;
     }
 
-    public void addItem(Drawable icon, String content, String time) {
+    public void addItem(String analysis_score, String content, String time) {
         diary_listview item = new diary_listview();
 
-        item.setIcon(icon);
+        item.setAnalysis_score(analysis_score);
         item.setContent(content);
         item.setTime(time);
 

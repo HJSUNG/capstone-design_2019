@@ -21,6 +21,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static String user_id ="";
+
     private Button diaryButton, glucoseButton, medicationButton,logoutButton;
 
     @Override
