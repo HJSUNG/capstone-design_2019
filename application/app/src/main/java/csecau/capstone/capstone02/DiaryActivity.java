@@ -22,6 +22,8 @@ public class DiaryActivity extends AppCompatActivity {
 
     private String user_id = "24";
 
+    private String[] diary_list;
+
     private Button newdiaryButton;
 
     @Override
@@ -39,6 +41,9 @@ public class DiaryActivity extends AppCompatActivity {
             }
         });
 
+        Getdairylist getdairylist = new Getdairylist();
+        getdairylist.execute("", user_id);
+
         ListView listview;
         diary_listviewAdapter adapter;
 
@@ -47,12 +52,12 @@ public class DiaryActivity extends AppCompatActivity {
         listview = (ListView) findViewById(R.id. dairylistview);
         listview.setAdapter(adapter);
 
-        // 첫 번째 아이템 추가.
-        adapter.addItem("1", "First Dairy content", "2019.3.29") ;
-        // 두 번째 아이템 추가.
-        adapter.addItem("2.5", "Second Dairy content", "2019.3.30") ;
-        // 세 번째 아이템 추가.
-        adapter.addItem("-2.5", "Third Dairy content", "2019.3.31") ;
+        for (String diary : diary_list) {
+            adapter.addItem(diary.split("<comma>")[0],diary.split("<comma>")[1],diary.split("<comma>")[2]);
+        }
+
+//        // 첫 번째 아이템 추가.
+//        adapter.addItem("1", "First Dairy content", "2019.3.29") ;
     }
 
 
@@ -67,6 +72,8 @@ public class DiaryActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
+            String result_string = result;
+            diary_list = result_string.split("<br>");
         }
 
         @Override
