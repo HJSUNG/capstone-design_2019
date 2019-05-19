@@ -2,11 +2,11 @@ package csecau.capstone.capstone02;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,10 +19,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.DataOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
@@ -32,9 +32,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
+import static csecau.capstone.capstone02.MainActivity.user_id;
 
 public class NewdiaryActivity extends AppCompatActivity {
 
@@ -133,10 +132,6 @@ public class NewdiaryActivity extends AppCompatActivity {
                     Translation_And_Sentiment_Analysis translation_and_sentiment_analysis = new Translation_And_Sentiment_Analysis();
                     translation_and_sentiment_analysis.execute(Contents);
                 }
-
-//                InsertDiary task = new InsertDiary();
-//                task.execute("http://capstone02.cafe24.com/insert_diary.php", ID, Contents, analysis_score);
-
             }
         });
 
@@ -280,6 +275,9 @@ public class NewdiaryActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
+            InsertDiary insertdiary = new InsertDiary();
+            insertdiary.execute("http://capstone02.cafe24.com/insert_diary.php", user_id, Contents, Float.toString(analysis_score));
         }
 
         @Override

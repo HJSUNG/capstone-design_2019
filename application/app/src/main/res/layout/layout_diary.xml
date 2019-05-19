@@ -7,14 +7,17 @@ android:layout_height="70dp">
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:id="@+id/dairy_image_layout"
-    android:layout_alignParentLeft="true">
+    android:id="@+id/dairy_text_analysis_score_layout"
+    android:layout_alignParentLeft="true"
+    android:weightSum="0.1"
+    >
 
-    <ImageView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/dairy_image_view"
-        android:src="@drawable/image_good"/>
+        android:id="@+id/dairy_text_analysis_score"
+        android:textSize="30sp"
+        android:text="0"/>
 </LinearLayout>
 
 <LinearLayout
@@ -22,7 +25,8 @@ android:layout_height="70dp">
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/dairy_text_layout"
-    android:layout_toRightOf="@id/dairy_image_layout">
+    android:layout_toRightOf="@id/dairy_text_analysis_score_layout"
+    android:weightSum="0.9">
 
     <TextView
         android:layout_width="match_parent"
