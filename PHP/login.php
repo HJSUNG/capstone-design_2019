@@ -32,7 +32,7 @@ if(!isset($_COOKIE['user_id']) || !isset($_COOKIE['user_name'])) {
         if($stmt->rowCount() > 0) {
           $row=$stmt->fetch();
           echo("Login success!<br>");
-          echo("UserID: " . $row['UserID']."<br>");
+          echo($row['UserID']."<br>");
           $stmt = $con->prepare('SELECT * FROM User WHERE UserID = :UserID');
           $stmt->bindParam(':UserID', $ID);
           $stmt->execute();
@@ -53,5 +53,4 @@ if(!isset($_COOKIE['user_id']) || !isset($_COOKIE['user_name'])) {
     $user_id = $_COOKIE['user_id'];
     $user_name = $_COOKIE['user_name'];
     echo "<p>안녕하세요. $user_name($user_id)님</p>";
-    echo "<p><a href='logout.php'>로그아웃</a></p>";
 ?>

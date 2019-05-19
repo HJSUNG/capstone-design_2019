@@ -12,7 +12,7 @@
     // Connect to database.
     try {
         $con = new PDO("mysql:host={$host};dbname={$dbname};charset=utf8",$username, $password);
-        echo("Connected to database successfully!<br>");
+        //echo("Connected to database successfully!<br>");
     } catch(PDOException $e) {
         die("Failed to connect to the database: " . $e->getMessage());
     }

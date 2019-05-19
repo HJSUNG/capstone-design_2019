@@ -13,8 +13,9 @@ include('dbcon.php');
 
     if( (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['submit'])) || $android ) {
       $UserID=(int)$_POST['ID'];
-      $DateRegistered=$_POST['Date'];
+      //$DateRegistered=$_POST['Date'];
       $Contents=$_POST['Contents'];
+      $Value=$_POST['Value'];
 
       try {
         // timestamp: YYYY-MM-DD HH:MM:SS
@@ -27,11 +28,11 @@ include('dbcon.php');
           $e = "UserID not found.";
           throw($e);
         } else {
+          $stmt = $con->prepare("INSERT INTO Diary (UserID, Contents, Value) VALUES (:UserID, :Contents, :Value)");
           $stmt->bindParam(':UserID', $UserID);
-          $stmt = $con->prepare("INSERT INTO Diary (UserID, DateRegistered, Contents) VALUES (:UserID, :Date, :Contents)");
-          $stmt->bindParam(':UserID', $UserID);
-          $stmt->bindParam(':Date', $DateRegistered);
+          // $stmt->bindParam(':Date', $DateRegistered);
           $stmt->bindParam(':Contents', $Contents);
+          $stmt->bindParam(':Value', $Value);
           if($stmt->execute()){
             echo("Inserting diary data successful!");
           } else {
