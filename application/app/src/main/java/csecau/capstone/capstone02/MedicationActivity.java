@@ -27,8 +27,8 @@ public class MedicationActivity extends AppCompatActivity{
 
 //    @Override
 //    public void onClick(View v){
-//        TimePickerFragment mTimePickerFragment = new TimePickerFragment();
-//        mTimePickerFragment.show(getSupportFragmentManager(), TimePickerFragment.FRAGMENT_TAG);
+//        DatePickerFragment mTimePickerFragment = new DatePickerFragment();
+//        mTimePickerFragment.show(getSupportFragmentManager(), DatePickerFragment.FRAGMENT_TAG);
 //    }
 
     @Override
@@ -64,8 +64,8 @@ public class MedicationActivity extends AppCompatActivity{
                 //Alarm task = new Alarm();
                 //task.execute("http://capstone02.cafe24.com/insert_glucose.php", UserID, glucose, comment);
 
-                //TimePickerFragment mTimePickerFragment = new TimePickerFragment();
-                //mTimePickerFragment.show(getSupportFragmentManager(), TimePickerFragment.FRAGMENT_TAG);
+                //DatePickerFragment mTimePickerFragment = new DatePickerFragment();
+                //mTimePickerFragment.show(getSupportFragmentManager(), DatePickerFragment.FRAGMENT_TAG);
             }
         });
 

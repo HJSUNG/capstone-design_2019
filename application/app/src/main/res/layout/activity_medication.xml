@@ -11,6 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="약 먹는 시간을 정해주세요"
+        android:textStyle="bold"
+        android:textColor="@color/textcolor"
         android:gravity="center"
         android:textSize="30sp"
         android:layout_marginBottom="10dp"/>

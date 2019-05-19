@@ -18,6 +18,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static csecau.capstone.capstone02.MainActivity.user_id;
+
 public class MealActivity extends AppCompatActivity {
 
     private String TAG = "Mealfunction";
@@ -48,7 +50,7 @@ public class MealActivity extends AppCompatActivity {
                 String Meal3 = meal3.getText().toString();
                 String Meal4 = meal4.getText().toString();
                 String Meal5 = meal5.getText().toString();
-                String UserID = "6";
+                String UserID = user_id;
 
                 Meal task = new Meal();
                 task.execute("http://capstone02.cafe24.com/insert_meal.php", UserID, Meal1, Meal2, Meal3, Meal4, Meal5);

@@ -18,6 +18,8 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static csecau.capstone.capstone02.MainActivity.user_id;
+
 public class GlucoseActivity extends AppCompatActivity {
 
     private String TAG = "Glucosefunction";
@@ -44,7 +46,7 @@ public class GlucoseActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String glucose = GlucoseEdittext.getText().toString();
                 String comment = ComentEdittext.getText().toString();
-                String UserID = "6";
+                String UserID =  user_id;
                 //6말고 UserID값이 자동으로 들어와야된다.
 
                 Glucose task = new Glucose();
