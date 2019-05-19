@@ -1,9 +1,9 @@
 package csecau.capstone.capstone02;
 
-
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -18,49 +18,45 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class GlucoseActivity extends AppCompatActivity {
+public class ExerciseActivity extends AppCompatActivity {
 
-    private String TAG = "Glucosefunction";
+    private String TAG = "Exercisefunction";
 
-    private Button GlucoseSaveBtn;
+    private Button ExerciseSaveBtn;
 
-    private EditText GlucoseEdittext;
-    private EditText ComentEdittext;
-
-    /////////////////////////////////////////
+    private EditText ExerciseEdittext;
+    private EditText TimeEdittext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_glucose);
+        setContentView(R.layout.activity_exercise);
 
-        GlucoseSaveBtn = (Button)findViewById(R.id.GlucoseSaveBtn);
+        ExerciseSaveBtn = (Button)findViewById(R.id.ExerciseSaveBtn);
 
-        GlucoseEdittext = (EditText)findViewById(R.id.GlucoseValue);
-        ComentEdittext = (EditText)findViewById(R.id.coment_explain);
+        ExerciseEdittext = (EditText)findViewById(R.id.exercise);
+        TimeEdittext = (EditText)findViewById(R.id.exe_time);
 
-        GlucoseSaveBtn.setOnClickListener(new View.OnClickListener() {
+        ExerciseSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String glucose = GlucoseEdittext.getText().toString();
-                String comment = ComentEdittext.getText().toString();
-                String UserID = "6";
-                //6말고 UserID값이 자동으로 들어와야된다.
+                String exercise = ExerciseEdittext.getText().toString();
+                String exe_time = TimeEdittext.getText().toString();
+                String UserID = "24";
 
-                Glucose task = new Glucose();
-                task.execute("http://capstone02.cafe24.com/insert_glucose.php", UserID, glucose, comment);
+                Exercsie task = new Exercsie();
+                task.execute("http://capstone02.cafe24.com/insert_exercise.php", UserID, exercise, exe_time);
             }
         });
-
     }
 
-    class Glucose extends AsyncTask<String, Void, String>{
+    class Exercsie extends AsyncTask<String, Void, String>{
         ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = ProgressDialog.show(GlucoseActivity.this,"Please Wait", null, true, true);
+            progressDialog = ProgressDialog.show(ExerciseActivity.this,"Please Wait", null, true, true);
         }
 
         @Override
@@ -69,13 +65,13 @@ public class GlucoseActivity extends AppCompatActivity {
             progressDialog.dismiss();
 
             String input_string = result;
-            boolean Glucose = input_string.contains("Error");
+            boolean Exercise = input_string.contains("Error");
             Log.d(TAG, input_string);
 
-            if(Glucose) {
-                Toast.makeText(GlucoseActivity.this, "Error", Toast.LENGTH_SHORT).show();
+            if(Exercise) {
+                Toast.makeText(ExerciseActivity.this, "Error", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(GlucoseActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ExerciseActivity.this, "Success", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
@@ -83,12 +79,12 @@ public class GlucoseActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... params) {
 
-            String userID = (String)params[1];
-            String glucose = (String)params[2];
-            String comment = (String)params[3];
-
             String serverURL = (String)params[0];
-            String postParameters = "ID=" + userID + "&Value=" + glucose + "&Comment=" + comment;
+            String userID = (String)params[1];
+            String exercise = (String)params[2];
+            String exe_time = (String)params[3];
+            
+            String postParameters = "ID=" + userID + "&Exercise=" + exercise + "&Time=" + exe_time;
 
             try {
                 URL url = new URL(serverURL);
@@ -133,6 +129,4 @@ public class GlucoseActivity extends AppCompatActivity {
             }
         }
     }
-
-
 }
