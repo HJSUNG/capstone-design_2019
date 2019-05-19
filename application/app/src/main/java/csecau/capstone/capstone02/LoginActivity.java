@@ -22,6 +22,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static csecau.capstone.capstone02.MainActivity.user_id;
 
 public class LoginActivity extends AppCompatActivity {
     private static boolean login_check = false;
@@ -81,6 +82,8 @@ public class LoginActivity extends AppCompatActivity {
         if(loginId != null && loginPw != null) {
             String ID = loginId;
             String PW = loginPw;
+            IDEdittext.setText(ID);
+            PWEdittext.setText(PW);
 
             Login task = new Login();
             task.execute("http://capstone02.cafe24.com/login.php", ID, PW);
@@ -158,6 +161,8 @@ public class LoginActivity extends AppCompatActivity {
             String input_string = result;
             boolean SameLogin = input_string.contains("Fail");
             Log.d("11",input_string);
+
+            user_id = input_string.split("<br>")[2];
 
 
             if(SameLogin) {

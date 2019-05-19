@@ -14,8 +14,7 @@ include('dbcon.php');
     if( (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['submit'])) || $android ) {
       $UserID=(int)$_POST['ID'];
 //      $Date=$_POST['Date'];
-      $Value=$_POST['Value'];
-      $Comment=$_POST['Comment'];
+      $Contents=$_POST['Contents'];
 
       try {
         // timestamp: YYYY-MM-DD HH:MM:SS
@@ -28,11 +27,10 @@ include('dbcon.php');
           $e = "UserID not found.";
           throw($e);
         } else {
-          $stmt = $con->prepare("INSERT INTO BloodGlucose (UserID, Value, Comment) VALUES (:UserID, :Value, :Comment)");
+          $stmt = $con->prepare("INSERT INTO Meal (UserID, Contents) VALUES (:UserID, :Contents)");
           $stmt->bindParam(':UserID', $UserID);
 //          $stmt->bindParam(':Date', $DateRegistered);
-          $stmt->bindParam(':Value', $Value);
-          $stmt->bindParam(':Comment', $Comment);
+          $stmt->bindParam(':Contents', $Contents);
           if($stmt->execute()){
             echo("Inserting blood glucose data successful!");
           } else {
@@ -45,6 +43,4 @@ include('dbcon.php');
         die("Error!" . $e->getMessage());
       }
     }
-
 ?>
-

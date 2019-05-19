@@ -5,8 +5,6 @@
 
 // Connect to the databse
 include('dbcon.php');
-// include('pbkdf2.compat.php');
-
 
     $android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
 
@@ -15,7 +13,10 @@ include('dbcon.php');
       $UserID=(int)$_POST['ID'];
 //      $Date=$_POST['Date'];
       $Value=$_POST['Value'];
-      $Comment=$_POST['Comment'];
+      //$Positive=$_POST['Positive'];
+      //$Compound=$_POST['Compound'];
+      //$Neutral=$_POST['Neutral'];
+      //$Negative=$_POST['Negative'];
 
       try {
         // timestamp: YYYY-MM-DD HH:MM:SS
@@ -28,13 +29,17 @@ include('dbcon.php');
           $e = "UserID not found.";
           throw($e);
         } else {
-          $stmt = $con->prepare("INSERT INTO BloodGlucose (UserID, Value, Comment) VALUES (:UserID, :Value, :Comment)");
+          $stmt = $con->prepare("INSERT INTO Sentiment (UserID, value) 
+              VALUES (:UserID, :Value");
           $stmt->bindParam(':UserID', $UserID);
 //          $stmt->bindParam(':Date', $DateRegistered);
           $stmt->bindParam(':Value', $Value);
-          $stmt->bindParam(':Comment', $Comment);
+          //$stmt->bindParam(':Positive', $Positive);
+          //$stmt->bindParam(':Compound', $Compound);
+          //$stmt->bindParam(':Neutral', $Neutral);
+          //$stmt->bindParam(':Negative', $Negative);
           if($stmt->execute()){
-            echo("Inserting blood glucose data successful!");
+            echo("Inserting sentiment data successful!");
           } else {
             echo("Error inserting data values!");
           }
@@ -47,4 +52,3 @@ include('dbcon.php');
     }
 
 ?>
-

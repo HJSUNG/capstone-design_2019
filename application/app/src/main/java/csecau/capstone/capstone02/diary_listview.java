@@ -3,12 +3,12 @@ package csecau.capstone.capstone02;
 import android.graphics.drawable.Drawable;
 
 public class diary_listview {
-    private Drawable icon;
+    private String analysis_score;
     private String content;
-    private String Time;
+    private String time;
 
-    public Drawable getIcon() {
-        return icon;
+    public String getAnalysis_score() {
+        return analysis_score;
     }
 
     public String getContent() {
@@ -16,11 +16,11 @@ public class diary_listview {
     }
 
     public String getTime() {
-        return Time;
+        return time;
     }
 
-    public void setIcon(Drawable icon) {
-        this.icon = icon;
+    public void setAnalysis_score(String analysis_score) {
+        this.analysis_score = analysis_score;
     }
 
     public void setContent(String content) {
@@ -28,6 +28,6 @@ public class diary_listview {
     }
 
     public void setTime(String time) {
-        Time = time;
+        this.time = time;
     }
 }

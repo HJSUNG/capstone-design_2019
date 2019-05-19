@@ -21,7 +21,10 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+
     private Button diaryButton, glucoseButton, medicationButton, logoutButton, exerciseButton, mealButton;
+    public static String user_id ="";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
