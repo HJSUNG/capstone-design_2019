@@ -11,7 +11,7 @@ $android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
     if( (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['submit'])) || $android ) {
         try {
             $ID = (int)$_POST['ID'];
-            $stmt = $con->prepare('SELECT * FROM Diary WHERE UserID = :ID ORDER BY DateRegistered DESC');
+            $stmt = $con->prepare('SELECT * FROM Meal WHERE UserID = :ID ORDER BY DateRegistered DESC');
             $stmt->bindParam(':ID', $ID);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_BOTH);
@@ -26,7 +26,7 @@ $android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
                 // UserID, DateRegistered, Contents,
                 // Value, positive, compound, neutral, negative, DiaryID
                 //echo($row['UserID']."<br>");
-                echo($row[2] . '<comma>' . $row[1] . '<comma>' . $row[3] . '<comma>' . '<br>');
+                echo($row[1] . '<comma>' . $row[2] . '<comma>' . $row[3] . '<comma>' . $row[4] . '<comma>' . $row[5] . '<comma>' . $row[6] . '<br>');
             }
         }
         catch(PDOException $e) {

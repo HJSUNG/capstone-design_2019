@@ -33,7 +33,7 @@ include('dbcon.php');
         } else {
           $stmt = $con->prepare("INSERT INTO Meal 
             (UserID, Contents1, Contents2, Contents3, Contents4, Contents5)
-             VALUES (:UserID, :Contents1, :Contents2,, :Contents3, :Contents4, :Contents5)");
+             VALUES (:UserID, :Contents1, :Contents2, :Contents3, :Contents4, :Contents5)");
           $stmt->bindParam(':UserID', $UserID);
 //          $stmt->bindParam(':Date', $DateRegistered);
           $stmt->bindParam(':Contents1', $Contents1);
