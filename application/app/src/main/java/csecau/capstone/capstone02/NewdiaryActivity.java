@@ -37,6 +37,8 @@ import static csecau.capstone.capstone02.MainActivity.user_id;
 
 public class NewdiaryActivity extends AppCompatActivity {
 
+    public static NewdiaryActivity activity = null;
+
     private float analysis_score = 0;
     private static String Contents = "";
 
@@ -105,6 +107,9 @@ public class NewdiaryActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        activity = this;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newdiary);
 
@@ -171,6 +176,16 @@ public class NewdiaryActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+
+            if(DiaryActivity.activity != null) {
+                DiaryActivity activity = (DiaryActivity)DiaryActivity.activity;
+                activity.finish();
+            }
+
+            NewdiaryActivity.activity.finish();
+
+            Intent intent = new Intent(getApplicationContext(), DiaryActivity.class);
+            startActivity(intent);
 
             Toast.makeText(NewdiaryActivity.this, result, Toast.LENGTH_SHORT).show();
         }
