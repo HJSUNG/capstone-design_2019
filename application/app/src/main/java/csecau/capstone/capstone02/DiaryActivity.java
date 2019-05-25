@@ -5,10 +5,18 @@ import android.os.AsyncTask;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -17,24 +25,92 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import static csecau.capstone.capstone02.MainActivity.user_id;
 
-public class DiaryActivity extends AppCompatActivity {
+public class DiaryActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     private String[] diary_list;
 
     private Button newdiaryButton;
+    private EditText searchEdittext;
+    private Spinner spinner;
 
+    public static DiaryActivity activity = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        activity = this;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dairy);
 
         newdiaryButton = (Button) findViewById(R.id.newdiarybutton);
+        searchEdittext = (EditText) findViewById(R.id.search_edittext);
 
-        newdiaryButton.setOnClickListener(new View.OnClickListener() {
+        final ListView listview;
+        final diary_listviewAdapter adapter;
+
+        adapter = new diary_listviewAdapter();
+
+        listview = (ListView) findViewById(R.id.dairylistview);
+        listview.setAdapter(adapter);
+
+        spinner = (Spinner) findViewById(R.id.spinner);
+
+        spinner.setOnItemSelectedListener(this);
+
+        String[] item = new String[]{"내용", "날짜", "점수"};
+
+        final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, item);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(spinnerAdapter);
+
+        searchEdittext.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                diary_listviewAdapter newadapter = new diary_listviewAdapter();
+                String input_type = spinner.getSelectedItem().toString();
+                String input_text = searchEdittext.getText().toString();
+
+                if(searchEdittext.getText().toString().contentEquals("")) {
+                    for (String diary : diary_list){
+                        newadapter.addItem(diary.split("<comma>")[2], diary.split("<comma>")[0], diary.split("<comma>")[1]);
+                    }
+                }
+
+                for (String diary : diary_list) {
+                    if (input_type.contentEquals("내용")) {
+                        if (diary.split("<comma>")[0].contains(searchEdittext.getText().toString())) {
+                            newadapter.addItem(diary.split("<comma>")[2], diary.split("<comma>")[0], diary.split("<comma>")[1]);
+                        }
+                    }else if (input_type.contentEquals("날짜")) {
+                            if (diary.split("<comma>")[1].contains(searchEdittext.getText().toString())) {
+                                newadapter.addItem(diary.split("<comma>")[2], diary.split("<comma>")[0], diary.split("<comma>")[1]);
+                            }
+                        } else if (input_type.contentEquals("점수")) {
+                            if (diary.split("<comma>")[2].contains(searchEdittext.getText().toString())) {
+                                newadapter.addItem(diary.split("<comma>")[2], diary.split("<comma>")[0], diary.split("<comma>")[1]);
+                            }
+                        }
+                    }
+                listview.setAdapter(newadapter);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
+
+        newdiaryButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), NewdiaryActivity.class);
@@ -43,11 +119,18 @@ public class DiaryActivity extends AppCompatActivity {
         });
 
         Getdairylist getdairylist = new Getdairylist();
-        getdairylist.execute("http://capstone02.cafe24.com/retrieve_diary.php", user_id);
+        getdairylist.execute("http://capstone02.cafe24.com/retrieve_diary.php",user_id);
+    }
 
 
-//        // 첫 번째 아이템 추가.
-//        adapter.addItem("1", "First Dairy content", "2019.3.29") ;
+    @Override
+    public void onItemSelected (AdapterView < ? > adapterView, View view,int i, long l){
+
+    }
+
+    @Override
+    public void onNothingSelected (AdapterView < ? > adapterView){
+
     }
 
 
@@ -71,9 +154,6 @@ public class DiaryActivity extends AppCompatActivity {
 
             listview = (ListView) findViewById(R.id.dairylistview);
             listview.setAdapter(adapter);
-
-            String test_sentence = diary_list[0];
-            boolean test_contains = result.contains("comma");
 
             if (result.contains("<comma>")) {
                 for (String diary : diary_list) {

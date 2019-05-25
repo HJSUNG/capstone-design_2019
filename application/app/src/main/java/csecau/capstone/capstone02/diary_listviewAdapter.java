@@ -65,4 +65,8 @@ public class diary_listviewAdapter extends BaseAdapter {
 
         listviewItemList.add(item);
     }
+
+    public void clear() {
+        listviewItemList.clear();
+    }
 }

@@ -17,19 +17,17 @@
             android:gravity="right"
             android:id="@+id/dairylayout_first">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <Spinner
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
-                android:text="Diary Activity"
-                android:layout_weight="1"
-                android:textSize="20sp"/>
+                android:id="@+id/spinner"
+                android:layout_weight="3"></Spinner>
 
-            <Button
-                android:layout_width="wrap_content"
+            <EditText
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
-                android:id="@+id/searchbutton"
-                android:text="search"
-                android:visibility="invisible"/>
+                android:id="@+id/search_edittext"
+                android:layout_weight="5"/>
 
             <Button
                 android:layout_width="wrap_content"
