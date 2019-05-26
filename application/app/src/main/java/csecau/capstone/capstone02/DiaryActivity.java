@@ -62,7 +62,7 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
 
         spinner.setOnItemSelectedListener(this);
 
-        final String[] item = new String[]{"내용", "날짜", "점수"};
+        final String[] item = new String[]{"내용", "시간", "점수"};
 
         final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -91,7 +91,7 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
                         if (diary.split("<comma>")[0].contains(searchEdittext.getText().toString())) {
                             newadapter.addItem(diary.split("<comma>")[2], diary.split("<comma>")[0], diary.split("<comma>")[1]);
                         }
-                    } else if (input_type.contentEquals("날짜")) {
+                    } else if (input_type.contentEquals("시간")) {
                         if (diary.split("<comma>")[1].contains(searchEdittext.getText().toString())) {
                             newadapter.addItem(diary.split("<comma>")[2], diary.split("<comma>")[0], diary.split("<comma>")[1]);
                         }
