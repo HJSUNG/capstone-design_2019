@@ -5,17 +5,18 @@
 
 // Connect to the databse
 include('dbcon.php');
-// include('pbkdf2.compat.php');
-
+include('./php-vadersentiment/vadersentiment.php');
 
     $android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
-
-
+    
     if( (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['submit'])) || $android ) {
       $UserID=(int)$_POST['ID'];
       //$DateRegistered=$_POST['Date'];
       $Contents=$_POST['Contents'];
-      $Value=$_POST['Value'];
+      //$Value=$_POST['Value'];
+      $sentimenter = new SentimentIntensityAnalyzer();
+      $Value = (int)$sentimenter->getSentiment($Contents);
+      
 
       try {
         // timestamp: YYYY-MM-DD HH:MM:SS
