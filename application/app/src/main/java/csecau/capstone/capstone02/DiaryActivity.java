@@ -34,9 +34,13 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
 
     private String[] diary_list;
 
+
     private Button newdiaryButton;
     private EditText searchEdittext;
     private Spinner spinner;
+
+    public ListView diary_listview;
+    public diary_listviewAdapter adapter = new diary_listviewAdapter();
 
     public static DiaryActivity activity = null;
 
@@ -51,19 +55,14 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
         newdiaryButton = (Button) findViewById(R.id.newdiarybutton);
         searchEdittext = (EditText) findViewById(R.id.search_edittext);
 
-        final ListView listview;
-        final diary_listviewAdapter adapter;
-
-        adapter = new diary_listviewAdapter();
-
-        listview = (ListView) findViewById(R.id.dairylistview);
-        listview.setAdapter(adapter);
+        diary_listview = (ListView) findViewById(R.id.dairylistview);
+        diary_listview.setAdapter(adapter);
 
         spinner = (Spinner) findViewById(R.id.spinner);
 
         spinner.setOnItemSelectedListener(this);
 
-        String[] item = new String[]{"내용", "날짜", "점수"};
+        final String[] item = new String[]{"내용", "날짜", "점수"};
 
         final ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -81,8 +80,8 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
                 String input_type = spinner.getSelectedItem().toString();
                 String input_text = searchEdittext.getText().toString();
 
-                if(searchEdittext.getText().toString().contentEquals("")) {
-                    for (String diary : diary_list){
+                if (searchEdittext.getText().toString().contentEquals("")) {
+                    for (String diary : diary_list) {
                         newadapter.addItem(diary.split("<comma>")[2], diary.split("<comma>")[0], diary.split("<comma>")[1]);
                     }
                 }
@@ -92,17 +91,29 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
                         if (diary.split("<comma>")[0].contains(searchEdittext.getText().toString())) {
                             newadapter.addItem(diary.split("<comma>")[2], diary.split("<comma>")[0], diary.split("<comma>")[1]);
                         }
-                    }else if (input_type.contentEquals("날짜")) {
-                            if (diary.split("<comma>")[1].contains(searchEdittext.getText().toString())) {
-                                newadapter.addItem(diary.split("<comma>")[2], diary.split("<comma>")[0], diary.split("<comma>")[1]);
+                    } else if (input_type.contentEquals("날짜")) {
+                        if (diary.split("<comma>")[1].contains(searchEdittext.getText().toString())) {
+                            newadapter.addItem(diary.split("<comma>")[2], diary.split("<comma>")[0], diary.split("<comma>")[1]);
+                        }
+                    } else if (input_type.contentEquals("점수")) {
+                        try {
+                            if (searchEdittext.getText().toString().contentEquals("")) {
+
+                            } else if (Integer.parseInt(searchEdittext.getText().toString()) >= 0) {
+                                if (Integer.parseInt(diary.split("<comma>")[2]) >= 0) {
+                                    newadapter.addItem(diary.split("<comma>")[2], diary.split("<comma>")[0], diary.split("<comma>")[1]);
+                                }
+                            } else if (Integer.parseInt(searchEdittext.getText().toString()) < 0) {
+                                if (Integer.parseInt(diary.split("<comma>")[2]) < 0) {
+                                    newadapter.addItem(diary.split("<comma>")[2], diary.split("<comma>")[0], diary.split("<comma>")[1]);
+                                }
                             }
-                        } else if (input_type.contentEquals("점수")) {
-                            if (diary.split("<comma>")[2].contains(searchEdittext.getText().toString())) {
-                                newadapter.addItem(diary.split("<comma>")[2], diary.split("<comma>")[0], diary.split("<comma>")[1]);
-                            }
+                        } catch (Exception e) {
+
                         }
                     }
-                listview.setAdapter(newadapter);
+                }
+                diary_listview.setAdapter(newadapter);
             }
 
             @Override
@@ -110,7 +121,7 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
             }
         });
 
-        newdiaryButton.setOnClickListener(new View.OnClickListener(){
+        newdiaryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), NewdiaryActivity.class);
@@ -118,21 +129,39 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
             }
         });
 
+        diary_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String clicked_content = ((diary_listview) adapter.getItem(position)).getContent();
+                String clicked_score = ((diary_listview) adapter.getItem(position)).getAnalysis_score();
+                ;
+                String clicked_time = ((diary_listview) adapter.getItem(position)).getTime();
+                ;
+
+                Intent intent = new Intent(getApplicationContext(), DiaryshowActivity.class);
+                intent.putExtra("content", clicked_content);
+                intent.putExtra("score", clicked_score);
+                intent.putExtra("time", clicked_time);
+
+                startActivity(intent);
+
+            }
+        });
+
         Getdairylist getdairylist = new Getdairylist();
-        getdairylist.execute("http://capstone02.cafe24.com/retrieve_diary.php",user_id);
+        getdairylist.execute("http://capstone02.cafe24.com/retrieve_diary.php", user_id);
     }
 
 
     @Override
-    public void onItemSelected (AdapterView < ? > adapterView, View view,int i, long l){
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
     }
 
     @Override
-    public void onNothingSelected (AdapterView < ? > adapterView){
+    public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
-
 
     class Getdairylist extends AsyncTask<String, Void, String> {
         @Override
@@ -147,13 +176,13 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
             String result_string = result;
             diary_list = result_string.split("<br>");
 
-            ListView listview;
-            diary_listviewAdapter adapter;
+//            ListView listview;
+//            diary_listviewAdapter adapter;
+//
+//            adapter = new diary_listviewAdapter();
 
-            adapter = new diary_listviewAdapter();
-
-            listview = (ListView) findViewById(R.id.dairylistview);
-            listview.setAdapter(adapter);
+            diary_listview = (ListView) findViewById(R.id.dairylistview);
+            diary_listview.setAdapter(adapter);
 
             if (result.contains("<comma>")) {
                 for (String diary : diary_list) {

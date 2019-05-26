@@ -83,15 +83,18 @@ public class NewdiaryActivity extends AppCompatActivity {
 
         @Override
         public void onResults(Bundle results) {
+            String existing_sentence = contentEdittext.getText().toString();
             String recognition_result = "";
             recognition_result = SpeechRecognizer.RESULTS_RECOGNITION;
             ArrayList<String> mResult = results.getStringArrayList(recognition_result);
             String[] result_string = new String[mResult.size()];
             mResult.toArray(result_string);
-            contentEdittext.setText("" + result_string[0]);
-//            for (int i = 0; i < mResult.size(); i++) {
-//                contentEdittext.append(" " + result_string[i]);
-//            }
+
+            if (existing_sentence.contentEquals("")) {
+                contentEdittext.setText(result_string[0]);
+            } else {
+                contentEdittext.setText(existing_sentence + " " + result_string[0]);
+            }
         }
 
         @Override
@@ -177,8 +180,8 @@ public class NewdiaryActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            if(DiaryActivity.activity != null) {
-                DiaryActivity activity = (DiaryActivity)DiaryActivity.activity;
+            if (DiaryActivity.activity != null) {
+                DiaryActivity activity = (DiaryActivity) DiaryActivity.activity;
                 activity.finish();
             }
 
@@ -359,5 +362,4 @@ public class NewdiaryActivity extends AppCompatActivity {
             }
         }
     }
-
 }
