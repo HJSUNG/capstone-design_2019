@@ -131,7 +131,7 @@
                 android:layout_width="220dp"
                 android:layout_height="50dp"
                 android:imeOptions="actionNext"
-                android:inputType="text" />
+                android:inputType="textEmailAddress" />
         </LinearLayout>
 
         <LinearLayout
