@@ -26,7 +26,7 @@ $android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
                 // UserID, DateRegistered, Contents,
                 // Value, positive, compound, neutral, negative, DiaryID
                 //echo($row['UserID']."<br>");
-                echo($row[1] . '<comma>' . $row[2] . '<comma>' . $row[3] . '<comma>' . $row[4] . '<comma>' . $row[5] . '<comma>' . $row[6] . '<br>');
+                echo($row[1] . '<comma>' . $row[2] . '<comma>' . $row[3] . '<comma>' . $row[4] . '<comma>' . $row[5] . '<comma>' . $row[6] . '<comma>' . '<br>');
             }
         }
         catch(PDOException $e) {
