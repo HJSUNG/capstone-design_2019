@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".MealActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,104 +14,47 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/textcolor"
-                android:textStyle="bold"
-                android:text="식사하신 음식을 적어주세요"
-                android:textSize="30sp"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"/>
+            android:gravity="right"
+            android:id="@+id/meallayout_first">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:text="음식1"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/mealtext1"
-                android:layout_marginBottom="15dp"/>
+                android:text="Meal Activity"
+                android:layout_weight="1"
+                android:textSize="20sp"/>
 
-            <TextView
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:text="음식2"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/mealtext2"
-                android:layout_marginBottom="15dp"/>
+                android:id="@+id/searchbutton"
+                android:text="search"
+                android:visibility="invisible"/>
 
-            <TextView
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:text="음식3"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/mealtext3"
-                android:layout_marginBottom="15dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:text="음식4"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/mealtext4"
-                android:layout_marginBottom="15dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:textSize="20dp"
-                android:textColor="@color/black"
-                android:text="음식5"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/mealtext5"
-                android:layout_marginBottom="15dp"/>
-
+                android:id="@+id/newmealbutton"
+                android:text="New" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/meallayout_second">
 
-            <Button
-                android:id="@+id/MealSaveBtn"
-                android:layout_gravity="center"
-                android:layout_width="100dp"
-                android:layout_height="60dp"
-                android:clickable="true"
-                android:backgroundTint="@android:color/holo_orange_light"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
-                android:textSize="30dp"
-                android:text="저장"/>
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/meallistview">
+
+            </ListView>
+
 
         </LinearLayout>
+
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

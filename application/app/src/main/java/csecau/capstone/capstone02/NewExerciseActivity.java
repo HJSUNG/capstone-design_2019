@@ -1,14 +1,13 @@
 package csecau.capstone.capstone02;
 
-import android.content.Intent;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -20,77 +19,73 @@ import java.net.URL;
 
 import static csecau.capstone.capstone02.MainActivity.user_id;
 
-public class DiaryActivity extends AppCompatActivity {
+public class NewExerciseActivity extends AppCompatActivity {
 
-    private String[] diary_list;
+    private String TAG = "Exercisefunction";
 
-    private Button newdiaryButton;
+    private Button ExerciseSaveBtn;
 
+    private EditText ExerciseEdittext;
+    private EditText TimeEdittext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dairy);
+        setContentView(R.layout.activity_newexercise);
 
-        newdiaryButton = (Button) findViewById(R.id.newdiarybutton);
+        ExerciseSaveBtn = (Button)findViewById(R.id.ExerciseSaveBtn);
 
-        newdiaryButton.setOnClickListener(new View.OnClickListener() {
+        ExerciseEdittext = (EditText)findViewById(R.id.exercise);
+        TimeEdittext = (EditText)findViewById(R.id.exe_time);
+
+        ExerciseSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), NewdiaryActivity.class);
-                startActivity(intent);
+            public void onClick(View view) {
+                String exercise = ExerciseEdittext.getText().toString();
+                String exe_time = TimeEdittext.getText().toString();
+                String UserID = user_id;
+
+                Exercsie task = new Exercsie();
+                task.execute("http://capstone02.cafe24.com/insert_exercise.php", UserID, exercise, exe_time);
             }
         });
-
-        Getdairylist getdairylist = new Getdairylist();
-        getdairylist.execute("http://capstone02.cafe24.com/retrieve_diary.php", user_id);
-
-
-//        // 첫 번째 아이템 추가.
-//        adapter.addItem("1", "First Dairy content", "2019.3.29") ;
     }
 
+    class Exercsie extends AsyncTask<String, Void, String>{
+        ProgressDialog progressDialog;
 
-    class Getdairylist extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog = ProgressDialog.show(NewExerciseActivity.this,"Please Wait", null, true, true);
         }
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            progressDialog.dismiss();
 
-            String result_string = result;
-            diary_list = result_string.split("<br>");
+            String input_string = result;
+            boolean Exercise = input_string.contains("Error");
+            Log.d(TAG, input_string);
 
-            ListView listview;
-            diary_listviewAdapter adapter;
-
-            adapter = new diary_listviewAdapter();
-
-            listview = (ListView) findViewById(R.id.dairylistview);
-            listview.setAdapter(adapter);
-
-            String test_sentence = diary_list[0];
-            boolean test_contains = result.contains("comma");
-
-            if (result.contains("<comma>")) {
-                for (String diary : diary_list) {
-                    String diary_split[] = diary.split("<comma>");
-                    adapter.addItem(diary_split[2], diary_split[0], diary_split[1]);
-                    //time,score,content
-                }
+            if(Exercise) {
+                Toast.makeText(NewExerciseActivity.this, "Error", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(NewExerciseActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
 
         @Override
         protected String doInBackground(String... params) {
 
-            String user_id = (String) params[1];
-
-            String serverURL = (String) params[0];
-            String postParameters = "ID=" + user_id;
+            String serverURL = (String)params[0];
+            String userID = (String)params[1];
+            String exercise = (String)params[2];
+            String exe_time = (String)params[3];
+            
+            String postParameters = "ID=" + userID + "&ActivityName=" + exercise + "&Value=" + exe_time;
 
             try {
                 URL url = new URL(serverURL);
@@ -110,9 +105,10 @@ public class DiaryActivity extends AppCompatActivity {
                 Log.d("@@@", "POST response code - " + responseStatusCode);
 
                 InputStream inputStream;
-                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
                     inputStream = httpURLConnection.getInputStream();
-                } else {
+                }
+                else{
                     inputStream = httpURLConnection.getErrorStream();
                 }
 
@@ -122,16 +118,15 @@ public class DiaryActivity extends AppCompatActivity {
                 StringBuilder sb = new StringBuilder();
                 String line = null;
 
-                while ((line = bufferedReader.readLine()) != null) {
+                while((line = bufferedReader.readLine()) != null){
                     sb.append(line);
                 }
 
                 bufferedReader.close();
 
-                return sb.toString();
+                return sb.toString().trim();
             } catch (Exception e) {
-                Log.e("@@@", "exception", e);
-                return new String("Same ID exists !");
+                return new String("Error: " + e.getMessage());
             }
         }
     }
