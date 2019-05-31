@@ -1,13 +1,15 @@
 package csecau.capstone.capstone02;
 
-import android.content.Intent;
+
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -18,73 +20,77 @@ import java.net.URL;
 
 import static csecau.capstone.capstone02.MainActivity.user_id;
 
-public class ExerciseActivity extends AppCompatActivity {
+public class NewGlucoseActivity extends AppCompatActivity {
 
-    private String[] exercise_list;
+    private String TAG = "Glucosefunction";
 
-    private Button newExerciseButton;
+    private Button GlucoseSaveBtn;
 
+    private EditText GlucoseEdittext;
+    private EditText ComentEdittext;
+
+    /////////////////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_exercise);
+        setContentView(R.layout.activity_newglucose);
 
-        newExerciseButton = (Button) findViewById(R.id.newexercisebutton);
+        GlucoseSaveBtn = (Button)findViewById(R.id.GlucoseSaveBtn);
 
-        newExerciseButton.setOnClickListener(new View.OnClickListener() {
+        GlucoseEdittext = (EditText)findViewById(R.id.GlucoseValue);
+        ComentEdittext = (EditText)findViewById(R.id.coment_explain);
+
+        GlucoseSaveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), NewExerciseActivity.class);
-                startActivity(intent);
+            public void onClick(View view) {
+                String glucose = GlucoseEdittext.getText().toString();
+                String comment = ComentEdittext.getText().toString();
+                String UserID =  user_id;
+                //6말고 UserID값이 자동으로 들어와야된다.
+
+                Glucose task = new Glucose();
+                task.execute("http://capstone02.cafe24.com/insert_glucose.php", UserID, glucose, comment);
             }
         });
 
-        Getexerciselist getexerciselist = new Getexerciselist();
-        getexerciselist.execute("http://capstone02.cafe24.com/retrieve_exercise.php", user_id);
-
     }
 
+    class Glucose extends AsyncTask<String, Void, String>{
+        ProgressDialog progressDialog;
 
-    class Getexerciselist extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            progressDialog = ProgressDialog.show(NewGlucoseActivity.this,"Please Wait", null, true, true);
         }
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            progressDialog.dismiss();
 
-            String result_string = result;
-            exercise_list = result_string.split("<br>");
+            String input_string = result;
+            boolean Glucose = input_string.contains("Error");
+            Log.d(TAG, input_string);
 
-            ListView listview;
-            exercise_listviewAdapter adapter;
-
-            adapter = new exercise_listviewAdapter();
-
-            listview = (ListView) findViewById(R.id.exerciselistview);
-            listview.setAdapter(adapter);
-
-            String test_sentence = exercise_list[0];
-            boolean test_contains = result.contains("comma");
-
-            if (result.contains("<comma>")) {
-                for (String exercise : exercise_list) {
-                    String exercise_split[] = exercise.split("<comma>");
-                    adapter.addItem(exercise_split[1], exercise_split[2], exercise_split[3]);
-                }
+            if(Glucose) {
+                Toast.makeText(NewGlucoseActivity.this, "Error", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(NewGlucoseActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                finish();
             }
         }
 
         @Override
         protected String doInBackground(String... params) {
 
-            String user_id = (String) params[1];
+            String userID = (String)params[1];
+            String glucose = (String)params[2];
+            String comment = (String)params[3];
 
-            String serverURL = (String) params[0];
-            String postParameters = "ID=" + user_id;
+            String serverURL = (String)params[0];
+            String postParameters = "ID=" + userID + "&Value=" + glucose + "&Comment=" + comment;
 
             try {
                 URL url = new URL(serverURL);
@@ -104,9 +110,10 @@ public class ExerciseActivity extends AppCompatActivity {
                 Log.d("@@@", "POST response code - " + responseStatusCode);
 
                 InputStream inputStream;
-                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
+                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
                     inputStream = httpURLConnection.getInputStream();
-                } else {
+                }
+                else{
                     inputStream = httpURLConnection.getErrorStream();
                 }
 
@@ -116,17 +123,18 @@ public class ExerciseActivity extends AppCompatActivity {
                 StringBuilder sb = new StringBuilder();
                 String line = null;
 
-                while ((line = bufferedReader.readLine()) != null) {
+                while((line = bufferedReader.readLine()) != null){
                     sb.append(line);
                 }
 
                 bufferedReader.close();
 
-                return sb.toString();
+                return sb.toString().trim();
             } catch (Exception e) {
-                Log.e("@@@", "exception", e);
-                return new String("Same ID exists !");
+                return new String("Error: " + e.getMessage());
             }
         }
     }
+
+
 }

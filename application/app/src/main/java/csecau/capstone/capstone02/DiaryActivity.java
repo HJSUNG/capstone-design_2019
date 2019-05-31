@@ -159,6 +159,7 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
                 for (String diary : diary_list) {
                     String diary_split[] = diary.split("<comma>");
                     adapter.addItem(diary_split[2], diary_split[0], diary_split[1]);
+                    //time,score,content
                 }
             }
         }

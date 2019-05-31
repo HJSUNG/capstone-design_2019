@@ -3,6 +3,7 @@ package csecau.capstone.capstone02;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -28,22 +30,26 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class RegistrationActivity extends AppCompatActivity {
+public class RegistrationActivity extends AppCompatActivity  {
     private static boolean IDcheck_done = false;
 
     private EditText IDEdittext;
     private EditText PWEdittext;
     private EditText confirmPWEdittext;
     private EditText NameEdittext;
-    private EditText EmailEdittext;
-    private EditText DOBEdittext;
+    private EditText Email_First_Edittext;
+    private EditText Email_Second_Edittext;
     private EditText phoneEdittext_first;
     private EditText phoneEdittext_second;
     private EditText phoneEdittext_third;
 
     private Button checkButton;
     private Button doneButton;
-    private DatePickerDialog datePicker;
+
+
+    private DatePicker mDate;
+    private TextView dateText;
+    String strDate;
 
     private TextView textResult;
 
@@ -57,8 +63,9 @@ public class RegistrationActivity extends AppCompatActivity {
         PWEdittext = (EditText) findViewById(R.id.PWregister);
         confirmPWEdittext = (EditText)findViewById(R.id.ConfirmPW);
         NameEdittext = (EditText)findViewById(R.id.NameRegister);
-        EmailEdittext = (EditText)findViewById(R.id.EmailRegister);
-//        DOBEdittext = (EditText)findViewById(R.id.DOBRegister);
+        Email_First_Edittext = (EditText)findViewById(R.id.Email_First_Register);
+        Email_Second_Edittext = (EditText)findViewById(R.id.Email_Second_Register);
+        mDate = (DatePicker)findViewById(R.id.datePicker);
         phoneEdittext_first = (EditText) findViewById(R.id.first_num);
         phoneEdittext_second = (EditText) findViewById(R.id.second_num);
         phoneEdittext_third = (EditText) findViewById(R.id.third_num);
@@ -66,6 +73,20 @@ public class RegistrationActivity extends AppCompatActivity {
         doneButton = (Button) findViewById(R.id.DoneRegister);
 
         textResult = (TextView) findViewById(R.id.TextResultRegister);
+        dateText = (TextView) findViewById(R.id.dateText);
+
+
+        mDate.init(mDate.getYear(), mDate.getMonth(), mDate.getDayOfMonth(),
+                new DatePicker.OnDateChangedListener() {
+                    @Override
+                    public void onDateChanged(DatePicker view, int year, int month,
+                                              int day) {
+
+                        strDate = Integer.toString(year) + "/" +Integer.toString(month+1)
+                                +"/" + Integer.toString(day);
+                        Log.d("date",strDate);
+                    }
+                });
 
 
         checkButton.setOnClickListener(new View.OnClickListener(){
@@ -91,14 +112,15 @@ public class RegistrationActivity extends AppCompatActivity {
                 String PW = PWEdittext.getText().toString();
                 String confirmPW = confirmPWEdittext.getText().toString();
                 String Name = NameEdittext.getText().toString();
-                String Email = EmailEdittext.getText().toString();
-                String DOB = DOBEdittext.getText().toString();
+                String Email = Email_First_Edittext.getText().toString() + "@" + Email_Second_Edittext.getText().toString();
+//                String DOB = String.valueOf(mDate.getYear() + mDate.getMonth() + mDate.getDayOfMonth());
+                String DOB = strDate;
                 String phone = phoneEdittext_first.getText().toString()+"-"+phoneEdittext_second.getText().toString()+"-"+phoneEdittext_third.getText().toString();
 
                 boolean checkConfirmPW;
                 checkConfirmPW = PW.equals(confirmPW);
 
-                if(ID.contentEquals("") || PW.contentEquals("") || confirmPW.contentEquals("") ||Name.contentEquals("") || Email.contentEquals("") || DOB.contentEquals("") ||phone.contentEquals("")) {
+                if(ID.contentEquals("") || PW.contentEquals("") || confirmPW.contentEquals("") ||Name.contentEquals("") || Email.contentEquals("") || phone.contentEquals("")) {
                     Toast.makeText(RegistrationActivity.this, "Fill out the form", Toast.LENGTH_SHORT).show();
                 } else if (IDcheck_done == false) {
                     Toast.makeText(RegistrationActivity.this, "Check your ID first", Toast.LENGTH_SHORT).show();
@@ -111,8 +133,8 @@ public class RegistrationActivity extends AppCompatActivity {
                         PWEdittext.setText("");
                         confirmPWEdittext.setText("");
                         NameEdittext.setText("");
-                        EmailEdittext.setText("");
-                        DOBEdittext.setText("");
+                        Email_First_Edittext.setText("");
+                        Email_Second_Edittext.setText("");
                         phoneEdittext_first.setText("");
                         phoneEdittext_second.setText("");
                         phoneEdittext_third.setText("");
@@ -125,6 +147,13 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
     }
+
+//    @Override
+//    public void onDateChanged(DatePicker view, int year, int monthOfYear,
+//                              int dayOfMonth) {
+//        dateText.setText(String.valueOf(year) + String.valueOf(monthOfYear+1) + String.valueOf(dayOfMonth));
+//        Log.d("date", String.valueOf(year) + String.valueOf(monthOfYear+1) + String.valueOf(dayOfMonth));
+//    }
 
     class CheckID extends AsyncTask<String, Void, String>{
         ProgressDialog progressDialog;

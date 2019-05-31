@@ -80,5 +80,7 @@ public class MedicationActivity extends AppCompatActivity{
         adapter.addItem("오전 8:30");
         adapter.addItem("오전 11:30");
         adapter.addItem("오후 5:30");
+        adapter.addItem("오후 8:30");
+        adapter.addItem("오후 10:30");
     }
 }

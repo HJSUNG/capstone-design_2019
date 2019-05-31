@@ -20,11 +20,14 @@
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".RegistrationActivity"></activity>
         <activity android:name=".GlucoseActivity"></activity>
+        <activity android:name=".NewGlucoseActivity"></activity>
         <activity android:name=".DiaryActivity"></activity>
         <activity android:name=".NewdiaryActivity"></activity>
         <activity android:name=".MedicationActivity"></activity>
         <activity android:name=".MealActivity"></activity>
+        <activity android:name=".NewMealActivity"></activity>
         <activity android:name=".ExerciseActivity"></activity>
+        <activity android:name=".NewExerciseActivity"></activity>
     </application>
 
 </manifest>
