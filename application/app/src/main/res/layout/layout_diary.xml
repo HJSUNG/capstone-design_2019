@@ -18,7 +18,16 @@ android:layout_height="70dp">
             android:textSize="30sp"
             android:textAlignment="center"
             android:gravity="center_vertical"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:id="@+id/vertical_line"
+            android:background="#111111"
+            android:layout_marginTop="15px"
+            android:layout_marginBottom="15px"></View>
     </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/dairy_text_layout"
@@ -26,7 +35,7 @@ android:layout_height="70dp">
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="60dp"
+        android:layout_marginStart="70dp"
         android:orientation="vertical">
 
         <TextView
@@ -35,14 +44,17 @@ android:layout_height="70dp">
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="Content of dairy"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:layout_marginTop="20px"/>
 
         <TextView
             android:id="@+id/dairy_text_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Time of dairy" />
+            android:text="Time of dairy"
+            android:textAlignment="textEnd"
+            android:layout_marginRight="20px"/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -15,6 +15,8 @@ public class DiaryshowActivity extends AppCompatActivity {
 
     private Intent intent;
 
+    private String posVsNeg = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +28,16 @@ public class DiaryshowActivity extends AppCompatActivity {
 
         intent = getIntent();
 
+        if(Integer.parseInt(intent.getStringExtra("score")) > 0) {
+            posVsNeg = "긍정적";
+        } else if (Integer.parseInt(intent.getStringExtra("score")) < 0) {
+            posVsNeg = "부정적";
+        } else {
+            posVsNeg = "중립적";
+        }
+
         timeTextview.setText("작성일시 : " + intent.getStringExtra("time"));
-        scoreTextview.setText("분석결과 : " + intent.getStringExtra("score"));
+        scoreTextview.setText("분석결과 : " + posVsNeg + " (점수 : " + intent.getStringExtra("score")+ "점)");
         contentTextview.setText(intent.getStringExtra("content"));
     }
 }
