@@ -22,11 +22,20 @@ include('dbcon.php');
           $e = "UserID not found.";
           throw($e);
         } else {
+          $stmt = $con->prepare("SELECT UserID FROM MedicationAlarm WHERE (UserID = :UserID AND Time = :Time)");
+          $stmt->bindParam(':UserID', $UserID);
+          $stmt->bindParam(':Time', $Time);
+          $stmt->execute();
+          if( ($stmt->fetch(PDO::FETCH_ASSOC)) ) {
+            $e = "same value";
+            throw($e);
+          }
+
           $stmt = $con->prepare("INSERT INTO MedicationAlarm (UserID, Time) VALUES (:UserID, :Time)");
           $stmt->bindParam(':UserID', $UserID);
           $stmt->bindParam(':Time', $Time);
           if($stmt->execute()){
-            echo("Inserting alarm data successful!");
+            echo("success");
           } else {
             echo("Error inserting data values!");
           }
@@ -34,6 +43,8 @@ include('dbcon.php');
         
       }
       catch(PDOException $e) {
+        if($e = "same value")
+          echo("fail");
         die("Error!" . $e->getMessage());
       }
     }

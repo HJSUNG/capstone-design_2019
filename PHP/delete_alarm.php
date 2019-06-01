@@ -22,7 +22,7 @@ include('dbcon.php');
           $e = "UserID not found.";
           throw($e);
         } else {
-          $stmt = $con->prepare("DELETE * FROM MedicationAlarm WHERE (UserID = :UserID AND Time = :Time)");
+          $stmt = $con->prepare("DELETE FROM MedicationAlarm WHERE (UserID = :UserID AND Time = :Time)");
           $stmt->bindParam(':UserID', $UserID);
           $stmt->bindParam(':Time', $Time);
           if($stmt->execute()){
