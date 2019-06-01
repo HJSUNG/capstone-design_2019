@@ -44,6 +44,12 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
 
     Calendar cal = Calendar.getInstance();
 
+    private int selected_year;
+    private int selected_month;
+    private int selected_day;
+
+    private String parsed_selected;
+
     public ListView diary_listview;
     public diary_listviewAdapter adapter = new diary_listviewAdapter();
 
@@ -59,7 +65,7 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
 
         newdiaryButton = (Button) findViewById(R.id.newdiarybutton);
         searchEdittext = (EditText) findViewById(R.id.search_edittext);
-        search_dateTextview = (TextView)findViewById(R.id.search_date);
+        search_dateTextview = (TextView) findViewById(R.id.search_date);
 
         diary_listview = (ListView) findViewById(R.id.dairylistview);
         diary_listview.setAdapter(adapter);
@@ -77,13 +83,16 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(spinner.getItemAtPosition(position).toString().contentEquals("시간")){
+                if (spinner.getItemAtPosition(position).toString().contentEquals("시간")) {
+                    searchEdittext.setText("");
                     search_dateTextview.setVisibility(View.VISIBLE);
                     search_dateTextview.setClickable(true);
                     searchEdittext.setVisibility(View.INVISIBLE);
                     searchEdittext.setClickable(false);
-                }
-                else {
+                } else {
+                    if (diary_list != null) {
+                        searchEdittext.setText("");
+                    }
                     searchEdittext.setVisibility(View.VISIBLE);
                     searchEdittext.setClickable(true);
                     search_dateTextview.setVisibility(View.INVISIBLE);
@@ -103,9 +112,29 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
                 DatePickerDialog datePickerDialog = new DatePickerDialog(DiaryActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        search_dateTextview.setText(year+"년"+(month+1)+"월"+dayOfMonth+"일");
+                        search_dateTextview.setText(year + "년" + (month + 1) + "월" + dayOfMonth + "일");
+
+                        selected_year = year;
+                        selected_month = month + 1;
+                        selected_day = dayOfMonth;
+
+                        if (selected_month < 10) {
+                            if (selected_day < 10) {
+                                parsed_selected = Integer.toString(year) + "-0" + Integer.toString(selected_month) + "-0" + Integer.toString(selected_day);
+                            } else {
+                                parsed_selected = Integer.toString(year) + "-0" + Integer.toString(selected_month) + "-" + Integer.toString(selected_day);
+                            }
+                        } else {
+                            if (selected_day < 10) {
+                                parsed_selected = Integer.toString(year) + "-" + Integer.toString(selected_month) + "-0" + Integer.toString(selected_day);
+                            } else {
+                                parsed_selected = Integer.toString(year) + "-" + Integer.toString(selected_month) + "-" + Integer.toString(selected_day);
+                            }
+                        }
+
+                        searchEdittext.setText(parsed_selected);
                     }
-                },cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
+                }, cal.get(Calendar.YEAR), cal.get(Calendar.MONTH), cal.get(Calendar.DATE));
 
                 datePickerDialog.show();
 
@@ -192,7 +221,6 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
         });
 
 
-
         Getdairylist getdairylist = new Getdairylist();
         getdairylist.execute("http://capstone02.cafe24.com/retrieve_diary.php", user_id);
     }
@@ -220,11 +248,6 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
 
             String result_string = result;
             diary_list = result_string.split("<br>");
-
-//            ListView listview;
-//            diary_listviewAdapter adapter;
-//
-//            adapter = new diary_listviewAdapter();
 
             diary_listview = (ListView) findViewById(R.id.dairylistview);
             diary_listview.setAdapter(adapter);
