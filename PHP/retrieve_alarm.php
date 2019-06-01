@@ -2,8 +2,15 @@
 // error_reporting(E_ALL);
 // ini_set('display_errors',1);
 
-// Connect to the databse
+// Connect to the database
 include('dbcon.php');
+
+function remove_utf8_bom($text)
+{
+    $bom = pack('H*','EFBBBF');
+    $text = preg_replace("/^$bom/", '', $text);
+    return $text;
+}
 
 $android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
 
@@ -24,7 +31,7 @@ $android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
 
             while( $row=$stmt->fetch() ) {
                 // UserID, Time
-                echo($row[0] . '<comma>' . $row[1] . '<comma>' . '<br>');
+                echo( '<comma>' . remove_utf8_bom($row[1]) );
             }
         }
         catch(PDOException $e) {
