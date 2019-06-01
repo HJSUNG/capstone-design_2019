@@ -9,4 +9,9 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="diarylist_datepickerdialog" parent="@android:style/Widget.Material.Light.DatePicker">
+        <item name="android:headerBackground">@color/diarylist_datepickerdialog_background</item>
+    </style>
+
+
 </resources>

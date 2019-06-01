@@ -199,9 +199,10 @@ public class NewdiaryActivity extends AppCompatActivity {
             String ID = (String) params[1];
             String Contents = (String) params[2];
             String analysis_score = (String) params[3];
+            String english_contents = (String) params[4];
 
             String serverURL = (String) params[0];
-            String postParameters = "ID=" + ID + "&Contents=" + Contents + "&Value=" + analysis_score;
+            String postParameters = "ID=" + ID + "&Contents=" + Contents + "&Value=" + analysis_score + "&english_contents=" + english_contents;
 
             try {
                 URL url = new URL(serverURL);
@@ -317,7 +318,7 @@ public class NewdiaryActivity extends AppCompatActivity {
             }
 
             InsertDiary insertdiary = new InsertDiary();
-            insertdiary.execute("http://capstone02.cafe24.com/insert_diary.php", user_id, Contents, Float.toString(analysis_score));
+            insertdiary.execute("http://capstone02.cafe24.com/insert_diary.php", user_id, Contents, Float.toString(analysis_score), result);
         }
 
         @Override
