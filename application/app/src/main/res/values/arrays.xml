@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="email">
+        <item>"@naver.com"</item>
+        <item>"@hanmail.net"</item>
+        <item>"@gmail.com"</item>
+        <item>"@cau.ac.kr"</item>
+    </string-array>
+</resources>
