@@ -135,6 +135,9 @@ public class MainActivity extends AppCompatActivity {
         LineChart lineChart = (LineChart) findViewById(R.id.chart);
 
         ArrayList<Entry> entries = new ArrayList<>();
+        for(int i=0;i<glucose_list.length;i++){
+
+        }
 
 
 //        entries.add(new Entry(100, 2));
@@ -273,7 +276,7 @@ public class MainActivity extends AppCompatActivity {
             if (result.contains("<comma>")) {
                 for (String glucose : glucose_list) {
                     String glucose_split[] = glucose.split("<comma>");
-                    entries.add(glucose_split[1], glucose_split[0]);
+//                    entries.add(glucose_split[1], glucose_split[0]);
                 }
             }
         }
@@ -329,6 +332,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-    
+
 
 }
