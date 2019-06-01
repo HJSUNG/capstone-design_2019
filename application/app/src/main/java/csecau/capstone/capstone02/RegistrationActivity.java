@@ -1,20 +1,16 @@
 package csecau.capstone.capstone02;
 
 import android.annotation.SuppressLint;
-import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,9 +22,6 @@ import java.io.OutputStream;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class RegistrationActivity extends AppCompatActivity  {
     private static boolean IDcheck_done = false;
@@ -53,6 +46,9 @@ public class RegistrationActivity extends AppCompatActivity  {
 
     private TextView textResult;
 
+    private EditText mobileNum;
+    private Spinner spinner_email;
+
     @SuppressLint("WrongViewCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +60,15 @@ public class RegistrationActivity extends AppCompatActivity  {
         confirmPWEdittext = (EditText)findViewById(R.id.ConfirmPW);
         NameEdittext = (EditText)findViewById(R.id.NameRegister);
         Email_First_Edittext = (EditText)findViewById(R.id.Email_First_Register);
-        Email_Second_Edittext = (EditText)findViewById(R.id.Email_Second_Register);
+//        Email_Second_Edittext = (EditText)findViewById(R.id.Email_Second_Register);
         mDate = (DatePicker)findViewById(R.id.datePicker);
-        phoneEdittext_first = (EditText) findViewById(R.id.first_num);
-        phoneEdittext_second = (EditText) findViewById(R.id.second_num);
-        phoneEdittext_third = (EditText) findViewById(R.id.third_num);
+//        phoneEdittext_first = (EditText) findViewById(R.id.first_num);
+//        phoneEdittext_second = (EditText) findViewById(R.id.second_num);
+//        phoneEdittext_third = (EditText) findViewById(R.id.third_num);
+
+        mobileNum = (EditText)findViewById(R.id.mobileNO);
+        spinner_email = (Spinner)findViewById(R.id.Email_Second_Register);
+
         checkButton = (Button) findViewById(R.id.IDcheck);
         doneButton = (Button) findViewById(R.id.DoneRegister);
 
@@ -112,10 +112,10 @@ public class RegistrationActivity extends AppCompatActivity  {
                 String PW = PWEdittext.getText().toString();
                 String confirmPW = confirmPWEdittext.getText().toString();
                 String Name = NameEdittext.getText().toString();
-                String Email = Email_First_Edittext.getText().toString() + "@" + Email_Second_Edittext.getText().toString();
-//                String DOB = String.valueOf(mDate.getYear() + mDate.getMonth() + mDate.getDayOfMonth());
+                String Email = Email_First_Edittext.getText().toString() + spinner_email.getSelectedItem().toString();
                 String DOB = strDate;
-                String phone = phoneEdittext_first.getText().toString()+"-"+phoneEdittext_second.getText().toString()+"-"+phoneEdittext_third.getText().toString();
+                String phone = mobileNum.getText().toString();
+//                String phone = phoneEdittext_first.getText().toString()+"-"+phoneEdittext_second.getText().toString()+"-"+phoneEdittext_third.getText().toString();
 
                 boolean checkConfirmPW;
                 checkConfirmPW = PW.equals(confirmPW);
@@ -134,10 +134,10 @@ public class RegistrationActivity extends AppCompatActivity  {
                         confirmPWEdittext.setText("");
                         NameEdittext.setText("");
                         Email_First_Edittext.setText("");
-                        Email_Second_Edittext.setText("");
-                        phoneEdittext_first.setText("");
-                        phoneEdittext_second.setText("");
-                        phoneEdittext_third.setText("");
+//                        Email_Second_Edittext.setText("");
+//                        phoneEdittext_first.setText("");
+//                        phoneEdittext_second.setText("");
+//                        phoneEdittext_third.setText("");
                         finish();
                     } else {
                         Toast.makeText(RegistrationActivity.this, "Check PW again", Toast.LENGTH_SHORT).show();

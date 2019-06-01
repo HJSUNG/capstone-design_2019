@@ -47,7 +47,7 @@ public class GlucoseActivity extends AppCompatActivity{
 
 
 //        glucose_listviewAdapter adapter = new glucose_listviewAdapter();
-//        adapter.addItem("100","test", "2019.5.26");
+//        adapter.addItem("100","activity_registration", "2019.5.26");
     }
 
 
