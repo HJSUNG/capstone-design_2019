@@ -16,8 +16,8 @@ include('./php-vadersentiment/vadersentiment.php');
       $Contents_translated=$_POST['english_contents'];
       //$Value=$_POST['Value'];
       $sentimenter = new SentimentIntensityAnalyzer();
-      $Value = (int)$sentimenter->getSentiment($Contents_translated);
-      
+      $result = $sentimenter->getSentiment($Contents_translated);
+      $Value = (int)($result['compound']*100);
 
       try {
         // timestamp: YYYY-MM-DD HH:MM:SS
