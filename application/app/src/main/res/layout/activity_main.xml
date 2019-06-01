@@ -69,16 +69,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/medicationtext"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_below="@+id/button_second">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Medication information here"
+                android:text="가장 가까운 약 알람"
                 android:gravity="center_horizontal"
-                android:textSize="40sp"
+                android:textSize="30sp"
                 android:textColor="@android:color/holo_blue_bright"/>
+            <ListView
+                android:id="@+id/main_medication_alarm"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"/>
+
         </LinearLayout>
 
         <com.github.mikephil.charting.charts.LineChart
