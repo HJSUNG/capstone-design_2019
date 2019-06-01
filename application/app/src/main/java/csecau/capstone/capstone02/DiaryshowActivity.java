@@ -26,8 +26,8 @@ public class DiaryshowActivity extends AppCompatActivity {
 
         intent = getIntent();
 
-        timeTextview.setText(intent.getStringExtra("time"));
-        scoreTextview.setText(intent.getStringExtra("score"));
+        timeTextview.setText("작성일시 : " + intent.getStringExtra("time"));
+        scoreTextview.setText("분석결과 : " + intent.getStringExtra("score"));
         contentTextview.setText(intent.getStringExtra("content"));
     }
 }

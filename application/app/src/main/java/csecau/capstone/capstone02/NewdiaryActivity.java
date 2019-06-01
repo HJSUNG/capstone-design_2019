@@ -78,7 +78,51 @@ public class NewdiaryActivity extends AppCompatActivity {
 
         @Override
         public void onError(int error) {
-            Toast.makeText(getApplicationContext(), String.valueOf(error), Toast.LENGTH_SHORT).show();
+
+            String error_string = "";
+
+            switch (error) {
+                case 1:
+                case 2:
+                    error_string = "연결상태를 확인하세요";
+                    break;
+
+                case 3:
+                case 4:
+                case 5:
+                case 7:
+                case 8:
+                    error_string = "다시 한번 말씀해 주세요";
+                    break;
+
+                case 6:
+                    error_string = "조금 더 크게 말씀해 주세요";
+                    break;
+
+                case 9:
+                    error_string = "마이크 사용권한을 설정하세요";
+                    break;
+            }
+
+            Toast.makeText(getApplicationContext(), error_string, Toast.LENGTH_SHORT).show();
+
+//                1 ERROR_NETWORK_TIMEOUT : 네트워크 타임아웃
+//
+//                2 ERROR_NETWORK :  그 외 네트워크 에러
+//
+//                3 ERROR_AUDIO :  녹음 에러
+//
+//                4 ERROR_SERVER :  서버에서 에러를 보냄
+//
+//                5 ERROR_CLIENT :  클라이언트 에러
+//
+//                6 ERROR_SPEECH_TIMEOUT :  아무 음성도 듣지 못했을 때
+//
+//                7 ERROR_NO_MATCH :  적당한 결과를 찾지 못했을 때
+//
+//                8 ERROR_RECOGNIZER_BUSY :  RecognitionService가 바쁠 때
+//
+//                9 ERROR_INSUFFICIENT_PERMISSIONS: uses-permission(즉 RECORD_AUDIO) 이 없을 때
         }
 
         @Override
@@ -147,24 +191,6 @@ public class NewdiaryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mRecognizer.startListening(i);
-//                1 ERROR_NETWORK_TIMEOUT : 네트워크 타임아웃
-//
-//                2 ERROR_NETWORK :  그 외 네트워크 에러
-//
-//                3 ERROR_AUDIO :  녹음 에러
-//
-//                4 ERROR_SERVER :  서버에서 에러를 보냄
-//
-//                5 ERROR_CLIENT :  클라이언트 에러
-//
-//                6 ERROR_SPEECH_TIMEOUT :  아무 음성도 듣지 못했을 때
-//
-//                7 ERROR_NO_MATCH :  적당한 결과를 찾지 못했을 때
-//
-//                8 ERROR_RECOGNIZER_BUSY :  RecognitionService가 바쁠 때
-//
-//                9 ERROR_INSUFFICIENT_PERMISSIONS: uses-permission(즉 RECORD_AUDIO) 이 없을 때
-
             }
         });
 

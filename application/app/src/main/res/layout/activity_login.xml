@@ -11,20 +11,22 @@
         android:gravity="center"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="250dp"
             android:text="Diabetes Tracker"
             android:textSize="50dp"
             android:textColor="@color/textcolor"
             android:gravity="center_horizontal"
             android:textStyle="bold"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="30dp">
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="50dp">
 
             <TextView
                 android:layout_width="80dp"
@@ -71,24 +73,34 @@
         <LinearLayout
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="60dp">
+            android:layout_height="150dp"
+            android:orientation="vertical"
+            android:layout_marginTop="30dp">
             <Button
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:text="Log in"
                 android:id="@+id/loginButton"
                 android:textAllCaps="false"
                 android:layout_below="@+id/passwordinput"
-                android:layout_toStartOf="@+id/signupButton"/>
+                android:layout_toStartOf="@+id/signupButton"
+                android:layout_marginLeft="50px"
+                android:layout_marginRight="50px"
+                android:background="#6be7af"/>
 
             <Button
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:text="Sign up"
                 android:id="@+id/signupButton"
                 android:textAllCaps="false"
                 android:layout_alignTop="@+id/loginButton"
-                android:layout_alignEnd="@+id/passwordinput"/>
+                android:layout_alignEnd="@+id/passwordinput"
+                android:layout_marginTop="20px"
+                android:layout_marginLeft="50px"
+                android:layout_marginRight="50px"
+                android:background="#d6d6d6"
+                />
         </LinearLayout>
 
         <TextView

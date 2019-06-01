@@ -54,6 +54,13 @@
                 android:text="New" />
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10px"
+            android:background="#246391"
+            android:layout_marginLeft="25px"
+            android:layout_marginRight="25px"/>
+
         <LinearLayout
             android:id="@+id/dairylayout_second"
             android:layout_width="match_parent"
@@ -63,7 +70,8 @@
             <ListView
                 android:id="@+id/dairylistview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="10px">
 
             </ListView>
 

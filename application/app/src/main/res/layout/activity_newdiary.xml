@@ -65,19 +65,28 @@
             <Button
                 android:id="@+id/RecognizeButton"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:text="음성 인식"
                 android:textAlignment="center"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:layout_marginLeft="50px"
+                android:layout_marginRight="50px"
+                android:background="#d6d6d6"
+                android:layout_marginTop="25px"
+                android:layout_marginBottom="12px"/>
 
             <Button
                 android:id="@+id/DoneButton"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:text="확인"
                 android:textAlignment="center"
                 android:layout_below="@+id/RecognizeButton"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:layout_marginLeft="50px"
+                android:layout_marginRight="50px"
+                android:background="#6be7af"
+                android:layout_marginTop="12px"/>
 
         </RelativeLayout>
 
