@@ -121,9 +121,9 @@ public class RegistrationActivity extends AppCompatActivity  {
                 checkConfirmPW = PW.equals(confirmPW);
 
                 if(ID.contentEquals("") || PW.contentEquals("") || confirmPW.contentEquals("") ||Name.contentEquals("") || Email.contentEquals("") || phone.contentEquals("")) {
-                    Toast.makeText(RegistrationActivity.this, "Fill out the form", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistrationActivity.this, "항목을 모두 채워주세요", Toast.LENGTH_SHORT).show();
                 } else if (IDcheck_done == false) {
-                    Toast.makeText(RegistrationActivity.this, "Check your ID first", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistrationActivity.this, "ID 중복확인을 해주세요", Toast.LENGTH_SHORT).show();
                 } else {
                     if (checkConfirmPW) {
                         InsertData task = new InsertData();
@@ -140,7 +140,7 @@ public class RegistrationActivity extends AppCompatActivity  {
 //                        phoneEdittext_third.setText("");
                         finish();
                     } else {
-                        Toast.makeText(RegistrationActivity.this, "Check PW again", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegistrationActivity.this, "비밀번호를 다시 확인하세요", Toast.LENGTH_SHORT).show();
                         confirmPWEdittext.setText("");
                     }
                 }
@@ -176,12 +176,12 @@ public class RegistrationActivity extends AppCompatActivity  {
             progressDialog.dismiss();
 
             if (!sameID) {
-                Toast.makeText(RegistrationActivity.this, "You can use this ID", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegistrationActivity.this, "사용 가능한 ID 입니다", Toast.LENGTH_SHORT).show();
                 IDcheck_done = true;
                 IDEdittext.setFocusable(false);
                 IDEdittext.setClickable(false);
             } else {
-                Toast.makeText(RegistrationActivity.this, "Same ID exists", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegistrationActivity.this, "중복된 ID가 있습니다", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -248,7 +248,11 @@ public class RegistrationActivity extends AppCompatActivity  {
             super.onPostExecute(result);
             Log.d("a",result);
 
-            Toast.makeText(RegistrationActivity.this,result,Toast.LENGTH_SHORT).show();
+            if(result.contains("successful")) {
+                Toast.makeText(RegistrationActivity.this, "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(RegistrationActivity.this, "에러가 발생했습니다. 다시 시도해주세요", Toast.LENGTH_SHORT).show();
+            }
         }
 
         @Override

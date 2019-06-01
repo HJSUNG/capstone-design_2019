@@ -70,9 +70,9 @@ public class NewExerciseActivity extends AppCompatActivity {
             Log.d(TAG, input_string);
 
             if(Exercise) {
-                Toast.makeText(NewExerciseActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewExerciseActivity.this, "다시 시도해주세요", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(NewExerciseActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewExerciseActivity.this, "처리 완료", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }

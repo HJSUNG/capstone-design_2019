@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Integer> jsonList = new ArrayList<>();
     ArrayList<String> labelList = new ArrayList<>();
 
-    private String[] glucose_list;
+//    private String[] glucose_list;
 
 
     private Button diaryButton, glucoseButton, medicationButton, logoutButton, exerciseButton, mealButton;
@@ -134,10 +134,10 @@ public class MainActivity extends AppCompatActivity {
 
         LineChart lineChart = (LineChart) findViewById(R.id.chart);
 
-        ArrayList<Entry> entries = new ArrayList<>();
-        for(int i=0;i<glucose_list.length;i++){
-
-        }
+//        ArrayList<Entry> entries = new ArrayList<>();
+//        for(int i=0;i<glucose_list.length;i++){
+//
+//        }
 
 
 //        entries.add(new Entry(100, 2));
@@ -152,10 +152,10 @@ public class MainActivity extends AppCompatActivity {
 //        entries.add(new Entry(90, 36));
 //        entries.add(new Entry(120, 81 ));
 
-        LineDataSet dataset = new LineDataSet(entries, "Blood Glucose");
-        dataset.setColor(Color.parseColor("#FF0000"));
-        dataset.setCircleColor(R.color.black);
-        dataset.setCircleColorHole(R.color.black);
+//        LineDataSet dataset = new LineDataSet(entries, "Blood Glucose");
+//        dataset.setColor(Color.parseColor("#FF0000"));
+//        dataset.setCircleColor(R.color.black);
+//        dataset.setCircleColorHole(R.color.black);
 
 
         ArrayList<String> labels = new ArrayList<String>();
@@ -245,13 +245,13 @@ public class MainActivity extends AppCompatActivity {
 //        labels.add("04-27 12pm");
 
 
-        LineData data = new LineData(labels, dataset);
+//        LineData data = new LineData(labels, dataset);
 //        dataset.setColors(ColorTemplate.COLORFUL_COLORS); //
         /*dataset.setDrawCubic(true); //선 둥글게 만들기
         dataset.setDrawFilled(true); //그래프 밑부분 색칠*/
 
-        lineChart.setData(data);
-        lineChart.animateY(5000);
+//        lineChart.setData(data);
+//        lineChart.animateY(5000);
 
         MainActivity.Getglucoselist getglucoselist = new Getglucoselist();
         getglucoselist.execute("http://capstone02.cafe24.com/retrieve_glucose.php", user_id);
@@ -268,17 +268,17 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(result);
 
             String result_string = result;
-            glucose_list = result_string.split("<br>");
-
-            String test_sentence = glucose_list[0];
-            boolean test_contains = result.contains("comma");
-
-            if (result.contains("<comma>")) {
-                for (String glucose : glucose_list) {
-                    String glucose_split[] = glucose.split("<comma>");
-//                    entries.add(glucose_split[1], glucose_split[0]);
-                }
-            }
+//            glucose_list = result_string.split("<br>");
+//
+//            String test_sentence = glucose_list[0];
+//            boolean test_contains = result.contains("comma");
+//
+//            if (result.contains("<comma>")) {
+//                for (String glucose : glucose_list) {
+//                    String glucose_split[] = glucose.split("<comma>");
+////                    entries.add(glucose_split[1], glucose_split[0]);
+//                }
+//            }
         }
 
         @Override
