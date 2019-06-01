@@ -15,7 +15,8 @@
         android:textColor="@color/textcolor"
         android:gravity="center"
         android:textSize="30sp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"/>
 
     <LinearLayout
         android:orientation="vertical"
