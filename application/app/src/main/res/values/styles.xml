@@ -7,6 +7,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="android:statusBarColor">#76d1a7</item>
     </style>
 
     <style name="diarylist_datepickerdialog" parent="@android:style/Widget.Material.Light.DatePicker">

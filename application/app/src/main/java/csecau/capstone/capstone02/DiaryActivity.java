@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -37,7 +38,7 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
 
     private String[] diary_list;
 
-    private Button newdiaryButton;
+    private Button newdiaryButton, positiveButton, negativeButton;
     private EditText searchEdittext;
     private TextView search_dateTextview;
     private Spinner spinner;
@@ -50,8 +51,8 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
 
     private String parsed_selected;
 
-    public ListView diary_listview;
-    public diary_listviewAdapter adapter = new diary_listviewAdapter();
+    private ListView diary_listview;
+    private diary_listviewAdapter adapter = new diary_listviewAdapter();
 
     public static DiaryActivity activity = null;
 
@@ -64,6 +65,9 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
         setContentView(R.layout.activity_dairy);
 
         newdiaryButton = (Button) findViewById(R.id.newdiarybutton);
+        positiveButton = (Button) findViewById(R.id.positiveButton);
+        negativeButton = (Button) findViewById(R.id.negativeButton);
+
         searchEdittext = (EditText) findViewById(R.id.search_edittext);
         search_dateTextview = (TextView) findViewById(R.id.search_date);
 
@@ -89,7 +93,11 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
                     search_dateTextview.setClickable(true);
                     searchEdittext.setVisibility(View.INVISIBLE);
                     searchEdittext.setClickable(false);
-                } else {
+                    positiveButton.setVisibility(View.INVISIBLE);
+                    positiveButton.setClickable(false);
+                    negativeButton.setVisibility(View.INVISIBLE);
+                    negativeButton.setClickable(false);
+                } else if ((spinner.getItemAtPosition(position).toString().contentEquals("내용"))){
                     if (diary_list != null) {
                         searchEdittext.setText("");
                     }
@@ -97,6 +105,19 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
                     searchEdittext.setClickable(true);
                     search_dateTextview.setVisibility(View.INVISIBLE);
                     search_dateTextview.setClickable(false);
+                    positiveButton.setVisibility(View.INVISIBLE);
+                    positiveButton.setClickable(false);
+                    negativeButton.setVisibility(View.INVISIBLE);
+                    negativeButton.setClickable(false);
+                } else {
+                    searchEdittext.setVisibility(View.INVISIBLE);
+                    searchEdittext.setClickable(false);
+                    search_dateTextview.setVisibility(View.INVISIBLE);
+                    search_dateTextview.setClickable(false);
+                    positiveButton.setVisibility(View.VISIBLE);
+                    positiveButton.setClickable(true);
+                    negativeButton.setVisibility(View.VISIBLE);
+                    negativeButton.setClickable(true);
                 }
             }
 
@@ -151,7 +172,6 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 diary_listviewAdapter newadapter = new diary_listviewAdapter();
                 String input_type = spinner.getSelectedItem().toString();
-                String input_text = searchEdittext.getText().toString();
 
                 if (searchEdittext.getText().toString().contentEquals("")) {
                     for (String diary : diary_list) {
@@ -202,14 +222,26 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
             }
         });
 
+        positiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchEdittext.setText("1");
+            }
+        });
+
+        negativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchEdittext.setText("-1");
+            }
+        });
+
         diary_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String clicked_content = ((diary_listview) adapter.getItem(position)).getContent();
                 String clicked_score = ((diary_listview) adapter.getItem(position)).getAnalysis_score();
-                ;
                 String clicked_time = ((diary_listview) adapter.getItem(position)).getTime();
-                ;
 
                 Intent intent = new Intent(getApplicationContext(), DiaryshowActivity.class);
                 intent.putExtra("content", clicked_content);
@@ -219,7 +251,6 @@ public class DiaryActivity extends AppCompatActivity implements AdapterView.OnIt
                 startActivity(intent);
             }
         });
-
 
         Getdairylist getdairylist = new Getdairylist();
         getdairylist.execute("http://capstone02.cafe24.com/retrieve_diary.php", user_id);
