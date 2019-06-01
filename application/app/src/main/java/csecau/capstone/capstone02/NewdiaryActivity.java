@@ -45,7 +45,7 @@ public class NewdiaryActivity extends AppCompatActivity {
     private Button doneButton;
     private Button recognizeButton;
     private EditText contentEdittext;
-    private TextView resultText;
+//    private TextView resultText;
 
     private Intent i;
     private SpeechRecognizer mRecognizer;
@@ -126,7 +126,7 @@ public class NewdiaryActivity extends AppCompatActivity {
         doneButton = (Button) findViewById(R.id.DoneButton);
         recognizeButton = (Button) findViewById(R.id.RecognizeButton);
         contentEdittext = (EditText) findViewById(R.id.contentinput);
-        resultText = (TextView) findViewById(R.id.resulttext);
+//        resultText = (TextView) findViewById(R.id.resulttext);
 
         doneButton.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -308,7 +308,7 @@ public class NewdiaryActivity extends AppCompatActivity {
 
 //                    String test_string = contentEdittext.toString();
                     analysis_score = score;
-                    resultText.setText("Analysis Result : " + score);
+//                    resultText.setText("Analysis Result : " + score);
                 }
 
             } catch (FileNotFoundException e) {

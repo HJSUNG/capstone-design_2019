@@ -28,6 +28,7 @@
         <activity android:name=".NewMealActivity"></activity>
         <activity android:name=".ExerciseActivity"></activity>
         <activity android:name=".NewExerciseActivity"></activity>
+        <activity android:name=".DiaryshowActivity"></activity>
     </application>
 
 </manifest>
