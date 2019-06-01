@@ -12,40 +12,58 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/dairylayout_first"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:id="@+id/dairylayout_first">
+            android:gravity="right">
 
             <Spinner
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
                 android:id="@+id/spinner"
-                android:layout_weight="3"></Spinner>
-
-            <EditText
                 android:layout_width="0px"
                 android:layout_height="wrap_content"
-                android:id="@+id/search_edittext"
-                android:layout_weight="5"/>
+                android:layout_weight="3"
+                android:textAlignment="center"></Spinner>
+
+            <FrameLayout
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="5">
+
+                <EditText
+                    android:id="@+id/search_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:clickable="true"/>
+
+                <TextView
+                    android:id="@+id/search_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="날짜 선택"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:visibility="invisible"
+                    android:clickable="false"/>
+            </FrameLayout>
 
             <Button
+                android:id="@+id/newdiarybutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/newdiarybutton"
                 android:text="New" />
         </LinearLayout>
-        
+
         <LinearLayout
+            android:id="@+id/dairylayout_second"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/dairylayout_second">
+            android:layout_weight="1">
 
             <ListView
+                android:id="@+id/dairylistview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/dairylistview">
+                android:layout_height="match_parent">
 
             </ListView>
 

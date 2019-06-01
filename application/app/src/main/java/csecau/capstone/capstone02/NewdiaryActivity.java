@@ -83,15 +83,18 @@ public class NewdiaryActivity extends AppCompatActivity {
 
         @Override
         public void onResults(Bundle results) {
+            String existing_sentence = contentEdittext.getText().toString();
             String recognition_result = "";
             recognition_result = SpeechRecognizer.RESULTS_RECOGNITION;
             ArrayList<String> mResult = results.getStringArrayList(recognition_result);
             String[] result_string = new String[mResult.size()];
             mResult.toArray(result_string);
-            contentEdittext.setText("" + result_string[0]);
-//            for (int i = 0; i < mResult.size(); i++) {
-//                contentEdittext.append(" " + result_string[i]);
-//            }
+
+            if (existing_sentence.contentEquals("")) {
+                contentEdittext.setText(result_string[0]);
+            } else {
+                contentEdittext.setText(existing_sentence + " " + result_string[0]);
+            }
         }
 
         @Override
@@ -177,8 +180,8 @@ public class NewdiaryActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            if(DiaryActivity.activity != null) {
-                DiaryActivity activity = (DiaryActivity)DiaryActivity.activity;
+            if (DiaryActivity.activity != null) {
+                DiaryActivity activity = (DiaryActivity) DiaryActivity.activity;
                 activity.finish();
             }
 
@@ -196,9 +199,10 @@ public class NewdiaryActivity extends AppCompatActivity {
             String ID = (String) params[1];
             String Contents = (String) params[2];
             String analysis_score = (String) params[3];
+            String english_contents = (String) params[4];
 
             String serverURL = (String) params[0];
-            String postParameters = "ID=" + ID + "&Contents=" + Contents + "&Value=" + analysis_score;
+            String postParameters = "ID=" + ID + "&Contents=" + Contents + "&Value=" + analysis_score + "&english_contents=" + english_contents;
 
             try {
                 URL url = new URL(serverURL);
@@ -314,7 +318,7 @@ public class NewdiaryActivity extends AppCompatActivity {
             }
 
             InsertDiary insertdiary = new InsertDiary();
-            insertdiary.execute("http://capstone02.cafe24.com/insert_diary.php", user_id, Contents, Float.toString(analysis_score));
+            insertdiary.execute("http://capstone02.cafe24.com/insert_diary.php", user_id, Contents, Float.toString(analysis_score), result);
         }
 
         @Override
@@ -359,5 +363,4 @@ public class NewdiaryActivity extends AppCompatActivity {
             }
         }
     }
-
 }
