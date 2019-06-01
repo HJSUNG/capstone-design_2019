@@ -20,21 +20,21 @@
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Glucose" />
+                android:text="혈당" />
 
             <Button
                 android:id="@+id/MedicationButton"
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Medication" />
+                android:text="약" />
 
             <Button
                 android:id="@+id/ExerciseButton"
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Exercise" />
+                android:text="운동" />
         </LinearLayout>
 
         <LinearLayout
@@ -48,21 +48,21 @@
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Meal" />
+                android:text="식단" />
 
             <Button
                 android:id="@+id/DiaryButton"
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Diary" />
+                android:text="일기장" />
 
             <Button
                 android:id="@+id/logoutButton"
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Log out"/>
+                android:text="로그아웃"/>
         </LinearLayout>
 
         <LinearLayout

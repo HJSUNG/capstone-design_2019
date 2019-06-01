@@ -56,7 +56,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="10dp"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:lineSpacingExtra="10dp"/>
         </LinearLayout>
     </LinearLayout>
 
