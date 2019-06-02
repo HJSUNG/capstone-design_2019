@@ -107,16 +107,16 @@ public class MedicationActivity extends AppCompatActivity {
                                 }
                             } else {
                                 if (Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) == 12) {
-                                    result_time_result = delete_time.split(" ")[1].split(":")[0] + delete_time.split(" ")[1].split(":")[1] + ":00";
+                                    result_time_result = delete_time.split(" ")[1].split(":")[0]+":" + delete_time.split(" ")[1].split(":")[1] + ":00";
                                 } else {
-                                    result_time_result = Integer.toString(Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) + 12) + delete_time.split(" ")[1].split(":")[1] + "00";
+                                    result_time_result = Integer.toString(Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) + 12)+ ":" + delete_time.split(" ")[1].split(":")[1] + ":00";
                                 }
                             }
                             DeleteAlarm deleteAlarm = new DeleteAlarm();
                             deleteAlarm.execute("http://capstone02.cafe24.com/delete_alarm.php", user_id, result_time_result);
                             medication_adapter.removeItem(0);
                         } else {
-                            String delete_time = ((alarm_listview) medication_adapter.getItem(clicked_item)).getTime();
+                            String delete_time = ((alarm_listview) medication_adapter.getItem(clicked_item-1)).getTime();
                             String result_time_result = "";
                             if (delete_time.split(" ")[0].contentEquals("오전")) {
                                 if (0 < Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) && Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) < 10) {
@@ -128,14 +128,14 @@ public class MedicationActivity extends AppCompatActivity {
                                 }
                             } else {
                                 if (Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) == 12) {
-                                    result_time_result = delete_time.split(" ")[1].split(":")[0] + delete_time.split(" ")[1].split(":")[1] + ":00";
+                                    result_time_result = delete_time.split(" ")[1].split(":")[0]+ ":" + delete_time.split(" ")[1].split(":")[1] + ":00";
                                 } else {
-                                    result_time_result = Integer.toString(Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) + 12) + delete_time.split(" ")[1].split(":")[1] + "00";
+                                    result_time_result = Integer.toString(Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) + 12)+ ":" + delete_time.split(" ")[1].split(":")[1] + ":00";
                                 }
                             }
                             DeleteAlarm deleteAlarm = new DeleteAlarm();
                             deleteAlarm.execute("http://capstone02.cafe24.com/delete_alarm.php", user_id, result_time_result);
-                            medication_adapter.removeItem(clicked_item);
+                            medication_adapter.removeItem(clicked_item-1);
                         }
                         if (medication_adapter.getCount() == 0) {
                             medication_listview.setAdapter(temp_adapter);
@@ -155,8 +155,8 @@ public class MedicationActivity extends AppCompatActivity {
             }
         });
 
-        RetrieveDiary retrieveDiary = new RetrieveDiary();
-        retrieveDiary.execute("http://capstone02.cafe24.com/retrieve_alarm.php", user_id);
+        RetrieveAlarm retrieveAlarm = new RetrieveAlarm();
+        retrieveAlarm.execute("http://capstone02.cafe24.com/retrieve_alarm.php", user_id);
     }
 
     //insert_alarm
@@ -299,7 +299,7 @@ public class MedicationActivity extends AppCompatActivity {
         }
     }
 
-    class RetrieveDiary extends AsyncTask<String, Void, String> {
+    class RetrieveAlarm extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();

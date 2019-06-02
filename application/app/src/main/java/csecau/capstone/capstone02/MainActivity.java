@@ -45,13 +45,14 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
     private String[] glucose_list;
 
     private Button diaryButton, glucoseButton, medicationButton, logoutButton, exerciseButton, mealButton;
-    public static String user_id ="";
+    public static String user_id = "";
 
     private String[] main_list;
 
@@ -64,14 +65,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        glucoseButton = (Button)findViewById(R.id.GlucoseButton);
-        medicationButton = (Button)findViewById(R.id.MedicationButton);
-        exerciseButton = (Button)findViewById(R.id.ExerciseButton);
-        mealButton = (Button)findViewById(R.id.MealButton);
+        glucoseButton = (Button) findViewById(R.id.GlucoseButton);
+        medicationButton = (Button) findViewById(R.id.MedicationButton);
+        exerciseButton = (Button) findViewById(R.id.ExerciseButton);
+        mealButton = (Button) findViewById(R.id.MealButton);
         diaryButton = (Button) findViewById(R.id.DiaryButton);
         logoutButton = (Button) findViewById(R.id.logoutButton);
 
-        main_listview = (ListView)findViewById(R.id.main_medication_alarm);
+        main_listview = (ListView) findViewById(R.id.main_medication_alarm);
 
         glucoseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,8 +128,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        RetrieveDiary retrieveDiary = new RetrieveDiary();
-        retrieveDiary.execute("http://capstone02.cafe24.com/retrieve_alarm.php", user_id);
+        RetrieveClosetAlarm retrieveClosetAlarm = new RetrieveClosetAlarm();
+        retrieveClosetAlarm.execute("http://capstone02.cafe24.com/retrieve_alarm.php", user_id);
 
 
 //        alarm_listviewAdapter adapter;
@@ -137,10 +138,8 @@ public class MainActivity extends AppCompatActivity {
 //        main_alarm.setAdapter(adapter);
 
 
-
 //        LineChart lineChart = (LineChart) findViewById(R.id.chart);
 //        ArrayList<Entry> entries = new ArrayList<>();
-
 
 
 //        entries.add(new Entry(100, 2));
@@ -309,12 +308,12 @@ public class MainActivity extends AppCompatActivity {
 
             String test_sentence = glucose_list[0];
             boolean test_contains = result.contains("comma");
-            int i=0;
+            int i = 0;
             if (result.contains("<comma>")) {
                 for (String glucose : glucose_list) {
                     String glucose_split[] = glucose.split("<comma>");
 //                    adapter.addItem(glucose_split[1], glucose_split[2]);
-                    String date = glucose_split[1].substring(5,13);
+                    String date = glucose_split[1].substring(5, 13);
                     entries.add(new Entry(Integer.parseInt(glucose_split[2]), i));
                     labels.add(date);
 //                    date_hour.add(date);
@@ -397,7 +396,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    class RetrieveDiary extends AsyncTask<String, Void, String> {
+    class RetrieveClosetAlarm extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -409,6 +408,18 @@ public class MainActivity extends AppCompatActivity {
 
             String result_string = result;
 
+            long now = System.currentTimeMillis();
+            Date date = new Date(now);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String total_string = date.toString().split(" ")[3];
+
+            String getTime = sdf.format(date).split(" ")[1];
+
+            if(Integer.parseInt(total_string.split(":")[0])>12) {
+                getTime = Integer.toString(Integer.parseInt(getTime.split(":")[0])+12)+":"+getTime.split(":")[1]+":"+getTime.split(":")[2];
+            }
+            String showTime = "no";
+
             if (!result_string.contains("No Result")) {
                 main_list = result_string.split("<comma>");
 
@@ -417,6 +428,14 @@ public class MainActivity extends AppCompatActivity {
                     String minute_from_server = main_list[i].split(":")[1];
                     int hour_from_server_under12 = Integer.parseInt(hour_from_server);
                     String amVsPm_server = "";
+
+                    if (showTime.contentEquals("no")) {
+                        if (Integer.parseInt(hour_from_server) - Integer.parseInt(getTime.split(":")[0]) >= 0) {
+                            if (Integer.parseInt(minute_from_server) - Integer.parseInt(getTime.split(":")[1]) > 0) {
+                                showTime = amVsPm_server + " " + hour_from_server_under12 + ":" + minute_from_server;
+                            }
+                        }
+                    }
 
                     if (hour_from_server_under12 == 0) {
                         hour_from_server_under12 += 12;
@@ -429,11 +448,22 @@ public class MainActivity extends AppCompatActivity {
                         hour_from_server_under12 -= 12;
                         amVsPm_server = "오후";
                     }
-                    main_adapter.addItem(amVsPm_server + " " + hour_from_server_under12 + ":" + minute_from_server);
+                    if (showTime.contains("no")) {
+                        int test = Integer.parseInt(hour_from_server) - Integer.parseInt(getTime.split(":")[0]);
+                        if (Integer.parseInt(hour_from_server) - Integer.parseInt(getTime.split(":")[0]) == 0) {
+                            if (Integer.parseInt(minute_from_server) - Integer.parseInt(getTime.split(":")[1]) > 0) {
+                                main_adapter.addItem(amVsPm_server + " " + hour_from_server_under12 + ":" + minute_from_server);
+                                break;
+                            }
+                        } else if (Integer.parseInt(hour_from_server) - Integer.parseInt(getTime.split(":")[0]) > 0){
+                            main_adapter.addItem(amVsPm_server + " " + hour_from_server_under12 + ":" + minute_from_server);
+                            break;
+                        }
+                    }
                 }
-
                 main_listview.setAdapter(main_adapter);
             } else {
+                main_adapter.addItem("알람이 없습니다");
                 main_listview.setAdapter(main_adapter);
             }
         }

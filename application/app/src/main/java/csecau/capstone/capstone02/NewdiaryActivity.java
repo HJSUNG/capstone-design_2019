@@ -284,67 +284,21 @@ public class NewdiaryActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            Gson gson = new Gson();
-            JsonParser parser = new JsonParser();
-            JsonElement target = parser.parse(result.toString()).getAsJsonObject().get("message").getAsJsonObject().get("result").getAsJsonObject().get("translatedText");
+            if (!result.contains("errorMessage")) {
+                Gson gson = new Gson();
+                JsonParser parser = new JsonParser();
+                JsonElement target = parser.parse(result.toString()).getAsJsonObject().get("message").getAsJsonObject().get("result").getAsJsonObject().get("translatedText");
 
-            result = target.toString();
-            result = result.substring(1, result.length() - 1);
+                result = target.toString();
+                result = result.substring(1, result.length() - 1);
 
-            contentEdittext.setText(result);
+                contentEdittext.setText(result);
 
-            try {
-                int count = 0;
-
-                ArrayList<String> stopwords = new ArrayList<String>();
-                BufferedReader stop = new BufferedReader(new FileReader(getFilesDir() + "/stopwords.txt"));
-                String line = "";
-                while ((line = stop.readLine()) != null) {
-                    stopwords.add(line);
-                }
-
-                Map<String, String> map = new HashMap<String, String>();
-                BufferedReader in = new BufferedReader(new FileReader(getFilesDir() + "/afinn.txt"));
-
-                line = "";
-                while ((line = in.readLine()) != null) {
-                    String parts[] = line.split("\t");
-                    map.put(parts[0], parts[1]);
-                    count++;
-                }
-                in.close();
-
-                if ((result != null)) {
-                    float score = 0;
-                    String[] word = result.split(" ");
-
-                    for (int i = 0; i < word.length; i++) {
-                        if (stopwords.contains(word[i].toLowerCase())) {
-                            String wordscore = map.get(word[i].toLowerCase());
-                            if (wordscore != null) {
-                                score = (float) score + Integer.parseInt(wordscore);
-                            }
-                        } else {
-                            if (map.get(word[i]) != null) {
-                                String wordscore = map.get(word[i].toLowerCase());
-                                score = (float) score + Integer.parseInt(wordscore);
-                            }
-                        }
-                    }
-
-//                    String test_string = contentEdittext.toString();
-                    analysis_score = score;
-//                    resultText.setText("Analysis Result : " + score);
-                }
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                InsertDiary insertdiary = new InsertDiary();
+                insertdiary.execute("http://capstone02.cafe24.com/insert_diary.php", user_id, Contents, Float.toString(analysis_score), result);
+            } else {
+                Toast.makeText(NewdiaryActivity.this, "내용을 입력하세요 ", Toast.LENGTH_SHORT).show();
             }
-
-            InsertDiary insertdiary = new InsertDiary();
-            insertdiary.execute("http://capstone02.cafe24.com/insert_diary.php", user_id, Contents, Float.toString(analysis_score), result);
         }
 
         @Override
