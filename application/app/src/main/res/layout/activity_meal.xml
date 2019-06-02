@@ -33,11 +33,20 @@
                 android:visibility="invisible"/>
 
             <Button
+                android:id="@+id/newdiarybutton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/newmealbutton"
-                android:text="추가" />
+                android:background="#00ff0000"
+                android:drawableLeft="@drawable/add"
+                android:textSize="15sp"
+                android:text="새 식단" />
         </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10px"
+            android:background="#246391"
+            android:layout_marginLeft="25px"
+            android:layout_marginRight="25px"/>
 
         <LinearLayout
             android:layout_width="match_parent"
