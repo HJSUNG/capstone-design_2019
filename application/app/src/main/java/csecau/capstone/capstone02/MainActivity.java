@@ -1,11 +1,15 @@
 package csecau.capstone.capstone02;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,6 +43,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -47,7 +52,12 @@ public class MainActivity extends AppCompatActivity {
 
     private Button diaryButton, glucoseButton, medicationButton, logoutButton, exerciseButton, mealButton;
     public static String user_id ="";
-    private ListView main_alarm;
+
+    private String[] main_list;
+
+    private ListView main_listview;
+    private alarm_listviewAdapter main_adapter = new alarm_listviewAdapter();
+    private alarm_listviewAdapter temp_adapter = new alarm_listviewAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         diaryButton = (Button) findViewById(R.id.DiaryButton);
         logoutButton = (Button) findViewById(R.id.logoutButton);
 
-        main_alarm = (ListView)findViewById(R.id.main_medication_alarm);
+        main_listview = (ListView)findViewById(R.id.main_medication_alarm);
 
         glucoseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +126,9 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        RetrieveDiary retrieveDiary = new RetrieveDiary();
+        retrieveDiary.execute("http://capstone02.cafe24.com/retrieve_alarm.php", user_id);
 
 
 //        alarm_listviewAdapter adapter;
@@ -339,6 +352,99 @@ public class MainActivity extends AppCompatActivity {
 
             String serverURL = (String) params[0];
             String postParameters = "ID=" + user_id;
+
+            try {
+                URL url = new URL(serverURL);
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.connect();
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(postParameters.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+
+                int responseStatusCode = httpURLConnection.getResponseCode();
+                Log.d("@@@", "POST response code - " + responseStatusCode);
+
+                InputStream inputStream;
+                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
+                    inputStream = httpURLConnection.getInputStream();
+                } else {
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line = null;
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    sb.append(line);
+                }
+
+                bufferedReader.close();
+
+                return sb.toString();
+            } catch (Exception e) {
+                Log.e("@@@", "exception", e);
+                return new String("Same ID exists !");
+            }
+        }
+    }
+
+    class RetrieveDiary extends AsyncTask<String, Void, String> {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            String result_string = result;
+
+            if (!result_string.contains("No Result")) {
+                main_list = result_string.split("<comma>");
+
+                for (int i = 1; i < main_list.length; i++) {
+                    String hour_from_server = main_list[i].split(":")[0];
+                    String minute_from_server = main_list[i].split(":")[1];
+                    int hour_from_server_under12 = Integer.parseInt(hour_from_server);
+                    String amVsPm_server = "";
+
+                    if (hour_from_server_under12 == 0) {
+                        hour_from_server_under12 += 12;
+                        amVsPm_server = "오전";
+                    } else if (0 < hour_from_server_under12 && hour_from_server_under12 < 12) {
+                        amVsPm_server = "오전";
+                    } else if (hour_from_server_under12 == 12) {
+                        amVsPm_server = "오후";
+                    } else if (12 < hour_from_server_under12 && hour_from_server_under12 < 24) {
+                        hour_from_server_under12 -= 12;
+                        amVsPm_server = "오후";
+                    }
+                    main_adapter.addItem(amVsPm_server + " " + hour_from_server_under12 + ":" + minute_from_server);
+                }
+
+                main_listview.setAdapter(main_adapter);
+            } else {
+                main_listview.setAdapter(main_adapter);
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String ID = (String) params[1];
+
+            String serverURL = (String) params[0];
+            String postParameters = "ID=" + ID;
 
             try {
                 URL url = new URL(serverURL);
