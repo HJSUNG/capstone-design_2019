@@ -25,7 +25,7 @@ android:layout_height="70dp">
             android:id="@+id/vertical_line"
             android:background="#111111"
             android:layout_marginTop="15px"
-            android:layout_marginBottom="15px"></View>
+            android:layout_marginBottom="15px"/>
     </LinearLayout>
 
 

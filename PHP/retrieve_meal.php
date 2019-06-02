@@ -23,10 +23,7 @@ $android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
             }
 
             while( $row=$stmt->fetch() ) {
-                // UserID, DateRegistered, Contents,
-                // Value, positive, compound, neutral, negative, DiaryID
-                //echo($row['UserID']."<br>");
-                echo($row[1] . '<comma>' . $row[2] . '<comma>' . $row[3] . '<comma>' . $row[4] . '<comma>' . $row[5] . '<comma>' . $row[6] . '<comma>' . '<br>');
+                echo('<comma>' . $row[2] . '<comma>' . $row[3] . '<comma>' . $row[4] . '<comma>' . $row[5] . '<comma>' . $row[6] . '<comma>' . $row[1] . '<br>');
             }
         }
         catch(PDOException $e) {
