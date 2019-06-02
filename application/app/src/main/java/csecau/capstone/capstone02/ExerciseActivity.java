@@ -24,11 +24,15 @@ public class ExerciseActivity extends AppCompatActivity {
 
     private Button newExerciseButton;
 
+    public static ExerciseActivity activity = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise);
+
+        activity = this;
 
         newExerciseButton = (Button) findViewById(R.id.newexercisebutton);
 
