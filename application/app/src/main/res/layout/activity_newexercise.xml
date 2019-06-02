@@ -62,7 +62,7 @@
                 android:layout_width="100dp"
                 android:layout_height="60dp"
                 android:clickable="true"
-                android:backgroundTint="@android:color/holo_orange_light"
+                android:backgroundTint="@color/button_yellow"
                 android:textColor="@android:color/black"
                 android:textStyle="bold"
                 android:textSize="30dp"
