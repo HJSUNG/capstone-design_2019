@@ -81,11 +81,11 @@ public class MealActivity extends AppCompatActivity {
 
             if (result.contains("<comma>")) {
                 for (String meal : meal_list) {
-                    int count = meal.split("<comma>").length;
+                    int count = meal.split("<comma>").length-1;
 
+                    String[] meal_split = meal.split("<comma>");
+                    adapter.addItem(meal_split[1], meal_split[2], meal_split[3],meal_split[4],meal_split[5],meal_split[6]);
 
-                    String meal_split[] = meal.split("<comma>");
-                    adapter.addItem(meal_split[1], meal_split[2], meal_split[3],meal_split[4],meal_split[5],meal_split[0]);
                 }
             }
         }
