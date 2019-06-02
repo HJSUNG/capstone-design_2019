@@ -46,7 +46,6 @@ public class RegistrationActivity extends AppCompatActivity  {
 
     private TextView textResult;
 
-    private EditText mobileNum;
     private Spinner spinner_email;
 
     @SuppressLint("WrongViewCast")
@@ -62,11 +61,10 @@ public class RegistrationActivity extends AppCompatActivity  {
         Email_First_Edittext = (EditText)findViewById(R.id.Email_First_Register);
 //        Email_Second_Edittext = (EditText)findViewById(R.id.Email_Second_Register);
         mDate = (DatePicker)findViewById(R.id.datePicker);
-//        phoneEdittext_first = (EditText) findViewById(R.id.first_num);
-//        phoneEdittext_second = (EditText) findViewById(R.id.second_num);
-//        phoneEdittext_third = (EditText) findViewById(R.id.third_num);
+        phoneEdittext_first = (EditText) findViewById(R.id.first_num);
+        phoneEdittext_second = (EditText) findViewById(R.id.second_num);
+        phoneEdittext_third = (EditText) findViewById(R.id.third_num);
 
-        mobileNum = (EditText)findViewById(R.id.mobileNO);
         spinner_email = (Spinner)findViewById(R.id.Email_Second_Register);
 
         checkButton = (Button) findViewById(R.id.IDcheck);
@@ -114,8 +112,7 @@ public class RegistrationActivity extends AppCompatActivity  {
                 String Name = NameEdittext.getText().toString();
                 String Email = Email_First_Edittext.getText().toString() + spinner_email.getSelectedItem().toString();
                 String DOB = strDate;
-                String phone = mobileNum.getText().toString();
-//                String phone = phoneEdittext_first.getText().toString()+"-"+phoneEdittext_second.getText().toString()+"-"+phoneEdittext_third.getText().toString();
+                String phone = phoneEdittext_first.getText().toString()+"-"+phoneEdittext_second.getText().toString()+"-"+phoneEdittext_third.getText().toString();
 
                 boolean checkConfirmPW;
                 checkConfirmPW = PW.equals(confirmPW);
@@ -246,7 +243,7 @@ public class RegistrationActivity extends AppCompatActivity  {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Log.d("a",result);
+            Log.d("###",result);
 
             if(result.contains("successful")) {
                 Toast.makeText(RegistrationActivity.this, "회원가입이 완료되었습니다", Toast.LENGTH_SHORT).show();

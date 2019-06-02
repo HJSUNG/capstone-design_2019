@@ -121,21 +121,88 @@
                     android:id="@+id/Email_Second_Register"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="4"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
                     android:entries="@array/email"/>
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/mobileNO"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="@color/white"
-                android:hint="휴대폰번호를 입력하세요"
-                android:inputType="number"
-                android:padding="10dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/hint_color" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <EditText
+                    android:id="@+id/first_num"
+                    android:layout_width="80dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:hint="휴대폰"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_color"
+                    android:maxLength="3"/>
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/first_bar"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="20dp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:text="-" />
+
+                <EditText
+                    android:id="@+id/second_num"
+                    android:layout_width="110dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:hint="번호를"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_color"
+                    android:maxLength="4"/>
+
+                <TextView
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/second_bar"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="20dp"
+                    android:gravity="center"
+                    android:textStyle="bold"
+                    android:text="-" />
+
+                <EditText
+                    android:id="@+id/third_num"
+                    android:layout_width="110dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/white"
+                    android:gravity="center"
+                    android:hint="입력하세요"
+                    android:inputType="number"
+                    android:padding="10dp"
+                    android:textColor="@color/black"
+                    android:textColorHint="@color/hint_color"
+                    android:maxLength="4"/>
+            </LinearLayout>
+
+            <!--<EditText-->
+                <!--android:id="@+id/mobileNO"-->
+                <!--android:layout_width="fill_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--android:background="@color/white"-->
+                <!--android:hint="휴대폰번호를 입력하세요"-->
+                <!--android:inputType="number"-->
+                <!--android:padding="10dp"-->
+                <!--android:textColor="@color/black"-->
+                <!--android:textColorHint="@color/hint_color" />-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
