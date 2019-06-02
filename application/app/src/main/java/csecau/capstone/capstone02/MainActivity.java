@@ -384,19 +384,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    private void setChart(List<Record> records){
-//        LineChart lineChart = binding.lineChart;
-//        lineChart.invalidate();
-//        lineChart.clear();
-//
-//        ArrayList<Entry> values = new ArrayList<>();
-//
-//        for(Record record: records){
-//            long dateTime = record.getDateTime();
-//            float weight = (float) record.getValue();
-//            values.add(new Entry(dateTime,value));
-//        }
-//    }
-
-
 }
