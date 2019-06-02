@@ -12,7 +12,7 @@ $android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
         try {
             $ID = (int)$_POST['ID'];
             $stmt = $con->prepare('SELECT * FROM BloodGlucose 
-                WHERE (UserID = :ID AND DateRegistered >= ( CURDATE() - INTERVAL 3 DAY ) ) ORDER BY DateRegistered DESC');
+                WHERE (UserID = :ID AND DateRegistered >= ( CURDATE() - INTERVAL 3 DAY ) ) ORDER BY DateRegistered ASC');
             $stmt->bindParam(':ID', $ID);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_BOTH);
