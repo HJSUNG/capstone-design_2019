@@ -107,9 +107,9 @@ public class MedicationActivity extends AppCompatActivity {
                                 }
                             } else {
                                 if (Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) == 12) {
-                                    result_time_result = delete_time.split(" ")[1].split(":")[0] + delete_time.split(" ")[1].split(":")[1] + ":00";
+                                    result_time_result = delete_time.split(" ")[1].split(":")[0]+":" + delete_time.split(" ")[1].split(":")[1] + ":00";
                                 } else {
-                                    result_time_result = Integer.toString(Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) + 12) + delete_time.split(" ")[1].split(":")[1] + "00";
+                                    result_time_result = Integer.toString(Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) + 12)+ ":" + delete_time.split(" ")[1].split(":")[1] + ":00";
                                 }
                             }
                             DeleteAlarm deleteAlarm = new DeleteAlarm();
@@ -128,9 +128,9 @@ public class MedicationActivity extends AppCompatActivity {
                                 }
                             } else {
                                 if (Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) == 12) {
-                                    result_time_result = delete_time.split(" ")[1].split(":")[0] + delete_time.split(" ")[1].split(":")[1] + ":00";
+                                    result_time_result = delete_time.split(" ")[1].split(":")[0]+ ":" + delete_time.split(" ")[1].split(":")[1] + ":00";
                                 } else {
-                                    result_time_result = Integer.toString(Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) + 12) + delete_time.split(" ")[1].split(":")[1] + "00";
+                                    result_time_result = Integer.toString(Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) + 12)+ ":" + delete_time.split(" ")[1].split(":")[1] + ":00";
                                 }
                             }
                             DeleteAlarm deleteAlarm = new DeleteAlarm();
@@ -151,12 +151,12 @@ public class MedicationActivity extends AppCompatActivity {
         medication_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                clicked_item = medication_listview.getSelectedItemPosition() + 2;
+                clicked_item = position;
             }
         });
 
-        RetrieveDiary retrieveDiary = new RetrieveDiary();
-        retrieveDiary.execute("http://capstone02.cafe24.com/retrieve_alarm.php", user_id);
+        RetrieveAlarm retrieveAlarm = new RetrieveAlarm();
+        retrieveAlarm.execute("http://capstone02.cafe24.com/retrieve_alarm.php", user_id);
     }
 
     //insert_alarm
@@ -299,7 +299,7 @@ public class MedicationActivity extends AppCompatActivity {
         }
     }
 
-    class RetrieveDiary extends AsyncTask<String, Void, String> {
+    class RetrieveAlarm extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
