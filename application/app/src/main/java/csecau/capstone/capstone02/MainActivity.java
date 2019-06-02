@@ -451,7 +451,7 @@ public class MainActivity extends AppCompatActivity {
                     if (showTime.contains("no")) {
                         int test = Integer.parseInt(hour_from_server) - Integer.parseInt(getTime.split(":")[0]);
                         if (Integer.parseInt(hour_from_server) - Integer.parseInt(getTime.split(":")[0]) == 0) {
-                            if (Integer.parseInt(minute_from_server) - Integer.parseInt(getTime.split(":")[1]) > 0) {
+                            if (Integer.parseInt(minute_from_server) - Integer.parseInt(getTime.split(":")[1]) >= 0) {
                                 main_adapter.addItem(amVsPm_server + " " + hour_from_server_under12 + ":" + minute_from_server);
                                 showTime = "Yes";
                                 break;

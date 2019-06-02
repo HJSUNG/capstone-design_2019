@@ -75,10 +75,10 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="가장 가까운 약 알람"
+                android:text="가장 가까운 투약시간"
                 android:gravity="center_horizontal"
                 android:textSize="30sp"
-                android:textColor="@android:color/holo_blue_bright"/>
+                android:textColor="@color/textcolor"/>
             <ListView
                 android:id="@+id/main_medication_alarm"
                 android:layout_width="match_parent"
