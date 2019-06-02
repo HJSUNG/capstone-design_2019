@@ -42,8 +42,8 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
     private String[] glucose_list;
+
 
     private Button diaryButton, glucoseButton, medicationButton, logoutButton, exerciseButton, mealButton;
     public static String user_id ="";
@@ -129,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
 //        ArrayList<Entry> entries = new ArrayList<>();
 
 
-
 //        entries.add(new Entry(100, 2));
 
 //        LineDataSet dataset = new LineDataSet(entries, "Blood Glucose");
@@ -143,121 +142,6 @@ public class MainActivity extends AppCompatActivity {
 
 //        LineData data = new LineData(labels, dataset);
 //        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
-
-//        ArrayList<Entry> entries = new ArrayList<>();
-//        for(int i=0;i<glucose_list.length;i++){
-//
-//        }
-
-
-//        entries.add(new Entry(100, 2));
-//        entries.add(new Entry(123, 3));
-//        entries.add(new Entry(100, 25));
-//        entries.add(new Entry(200, 26));
-//        entries.add(new Entry(180, 29));
-//        entries.add(new Entry(123, 30));
-//        entries.add(new Entry(100, 32));
-//        entries.add(new Entry(120, 33));
-//        entries.add(new Entry(120, 34));
-//        entries.add(new Entry(90, 36));
-//        entries.add(new Entry(120, 81 ));
-
-//        LineDataSet dataset = new LineDataSet(entries, "Blood Glucose");
-//        dataset.setColor(Color.parseColor("#FF0000"));
-//        dataset.setCircleColor(R.color.black);
-//        dataset.setCircleColorHole(R.color.black);
-
-
-        ArrayList<String> labels = new ArrayList<String>();
-//        labels.add("04-07 6am");
-//        labels.add("04-07 12am");
-//        labels.add("04-07 6pm");
-//        labels.add("04-07 12pm");
-//        labels.add("04-08 6am");
-//        labels.add("04-08 12am");
-//        labels.add("04-08 6pm");
-//        labels.add("04-08 12pm");
-//        labels.add("04-09 6am");
-//        labels.add("04-09 12am");
-//        labels.add("04-09 6pm");
-//        labels.add("04-09 12pm");
-//        labels.add("04-10 6am");
-//        labels.add("04-10 12am");
-//        labels.add("04-10 6pm");
-//        labels.add("04-10 12pm");
-//        labels.add("04-11 6am");
-//        labels.add("04-11 12am");
-//        labels.add("04-11 6pm");
-//        labels.add("04-11 12pm");
-//        labels.add("04-12 6am");
-//        labels.add("04-12 12am");
-//        labels.add("04-12 6pm");
-//        labels.add("04-12 12pm");
-//        labels.add("04-13 6am");
-//        labels.add("04-13 12am");
-//        labels.add("04-13 6pm");
-//        labels.add("04-13 12pm");
-//        labels.add("04-14 6am");
-//        labels.add("04-14 12am");
-//        labels.add("04-14 6pm");
-//        labels.add("04-14 12pm");
-//        labels.add("04-15 6am");
-//        labels.add("04-15 12am");
-//        labels.add("04-15 6pm");
-//        labels.add("04-15 12pm");
-//        labels.add("04-16 6am");
-//        labels.add("04-16 12am");
-//        labels.add("04-16 6pm");
-//        labels.add("04-16 12pm");
-//        labels.add("04-17 6am");
-//        labels.add("04-17 12am");
-//        labels.add("04-17 6pm");
-//        labels.add("04-17 12pm");
-//        labels.add("04-18 6am");
-//        labels.add("04-18 12am");
-//        labels.add("04-18 6pm");
-//        labels.add("04-18 12pm");
-//        labels.add("04-19 6am");
-//        labels.add("04-19 12am");
-//        labels.add("04-19 6pm");
-//        labels.add("04-19 12pm");
-//        labels.add("04-20 6am");
-//        labels.add("04-20 12am");
-//        labels.add("04-20 6pm");
-//        labels.add("04-20 12pm");
-//        labels.add("04-21 6am");
-//        labels.add("04-21 12am");
-//        labels.add("04-21 6pm");
-//        labels.add("04-21 12pm");
-//        labels.add("04-22 6am");
-//        labels.add("04-22 12am");
-//        labels.add("04-22 6pm");
-//        labels.add("04-22 12pm");
-//        labels.add("04-23 6am");
-//        labels.add("04-23 12am");
-//        labels.add("04-23 6pm");
-//        labels.add("04-23 12pm");
-//        labels.add("04-24 6am");
-//        labels.add("04-24 12am");
-//        labels.add("04-24 6pm");
-//        labels.add("04-24 12pm");
-//        labels.add("04-25 6am");
-//        labels.add("04-25 12am");
-//        labels.add("04-25 6pm");
-//        labels.add("04-25 12pm");
-//        labels.add("04-26 6am");
-//        labels.add("04-26 12am");
-//        labels.add("04-26 6pm");
-//        labels.add("04-26 12pm");
-//        labels.add("04-27 6am");
-//        labels.add("04-27 12am");
-//        labels.add("04-27 6pm");
-//        labels.add("04-27 12pm");
-
-
-//        LineData data = new LineData(labels, dataset);
-//        dataset.setColors(ColorTemplate.COLORFUL_COLORS); //
-
         /*dataset.setDrawCubic(true); //선 둥글게 만들기
         dataset.setDrawFilled(true); //그래프 밑부분 색칠*/
 
@@ -279,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
             super.onPostExecute(result);
 
             String result_string = result;
-
             glucose_list = result_string.split("<br>");
 
             ListView listview;
@@ -317,19 +200,6 @@ public class MainActivity extends AppCompatActivity {
 
             lineChart.setData(data);
             lineChart.animateY(5000);
-
-//            glucose_list = result_string.split("<br>");
-//
-//            String test_sentence = glucose_list[0];
-//            boolean test_contains = result.contains("comma");
-//
-//            if (result.contains("<comma>")) {
-//                for (String glucose : glucose_list) {
-//                    String glucose_split[] = glucose.split("<comma>");
-////                    entries.add(glucose_split[1], glucose_split[0]);
-//                }
-//            }
-
         }
 
         @Override

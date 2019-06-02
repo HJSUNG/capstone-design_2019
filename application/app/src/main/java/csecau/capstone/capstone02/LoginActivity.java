@@ -139,9 +139,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
             if(SameLogin) {
-                Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Log-in failed", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(LoginActivity.this, "로그인 성공 ! ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Log-in Success", Toast.LENGTH_SHORT).show();
                 login_check = true;
 
                 if(login_check) {
