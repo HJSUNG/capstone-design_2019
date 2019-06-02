@@ -20,21 +20,24 @@
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="혈당 관리" />
+                android:text="혈당 관리"
+                android:textSize="20sp"/>
 
             <Button
                 android:id="@+id/MedicationButton"
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="투약시간 관리" />
+                android:text="투약시간 관리"
+                android:textSize="20sp"/>
 
             <Button
                 android:id="@+id/ExerciseButton"
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="운동 관리" />
+                android:text="운동 관리"
+                android:textSize="20sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -49,21 +52,24 @@
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="식단 관리" />
+                android:text="식단 관리"
+                android:textSize="20sp"/>
 
             <Button
                 android:id="@+id/DiaryButton"
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="일기장" />
+                android:text="일기장"
+                android:textSize="20sp"/>
 
             <Button
                 android:id="@+id/logoutButton"
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="로그아웃"/>
+                android:text="로그아웃"
+                android:textSize="20sp"/>
         </LinearLayout>
 
         <LinearLayout

@@ -241,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
                 labels.add(strDate0 + "점심");
                 labels.add(strDate0 + "저녁");
             }
-            LineDataSet dataset = new LineDataSet(entries, "Blood Glucose");
+            LineDataSet dataset = new LineDataSet(entries, "혈당");
             dataset.setColor(Color.parseColor("#FF0000"));
             dataset.setCircleColor(R.color.black);
             dataset.setCircleColorHole(R.color.black);

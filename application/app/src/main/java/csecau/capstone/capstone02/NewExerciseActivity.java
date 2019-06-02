@@ -1,6 +1,7 @@
 package csecau.capstone.capstone02;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -28,10 +29,14 @@ public class NewExerciseActivity extends AppCompatActivity {
     private EditText ExerciseEdittext;
     private EditText TimeEdittext;
 
+    public static NewExerciseActivity activity = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newexercise);
+
+        activity = this;
 
         ExerciseSaveBtn = (Button)findViewById(R.id.ExerciseSaveBtn);
 
@@ -76,8 +81,17 @@ public class NewExerciseActivity extends AppCompatActivity {
             if(Exercise) {
                 Toast.makeText(NewExerciseActivity.this, "다시 시도해주세요", Toast.LENGTH_SHORT).show();
             } else {
+                if (ExerciseActivity.activity != null) {
+                    ExerciseActivity activity = (ExerciseActivity) ExerciseActivity.activity;
+                    activity.finish();
+                }
+
+                NewExerciseActivity.activity.finish();
+
+                Intent intent = new Intent(getApplicationContext(), ExerciseActivity.class);
+                startActivity(intent);
+
                 Toast.makeText(NewExerciseActivity.this, "처리 완료", Toast.LENGTH_SHORT).show();
-                finish();
             }
         }
 

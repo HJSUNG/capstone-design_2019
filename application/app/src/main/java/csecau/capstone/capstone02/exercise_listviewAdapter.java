@@ -1,6 +1,7 @@
 package csecau.capstone.capstone02;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,8 @@ public class exercise_listviewAdapter extends BaseAdapter {
         }
 
         TextView activity_TextView = (TextView) convertView.findViewById(R.id.exercise_Activity);
+        activity_TextView.setMaxLines(1);
+        activity_TextView.setEllipsize(TextUtils.TruncateAt.END);
         TextView value_TextView = (TextView) convertView.findViewById(R.id.exercise_value);
         TextView time_TextView = (TextView) convertView.findViewById(R.id.exercise_time);
 
