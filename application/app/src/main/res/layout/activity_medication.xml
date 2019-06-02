@@ -48,14 +48,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:layout_weight="1"
-                android:text="추가" />
+                android:text="추가"
+                android:textSize="20sp"
+                android:background="@color/green_button_color"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"/>
 
             <Button
                 android:id="@+id/btn_delete"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:layout_weight="1"
-                android:text="제거" />
+                android:text="제거"
+                android:textSize="20sp"
+                android:background="@color/red_button_color"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="10dp"/>
         </LinearLayout>
 
         <View
