@@ -1,7 +1,9 @@
 package csecau.capstone.capstone02;
 
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +24,8 @@ import static csecau.capstone.capstone02.MainActivity.user_id;
 
 public class NewGlucoseActivity extends AppCompatActivity {
 
+    public static NewGlucoseActivity activity = null;
+
     private String TAG = "Glucosefunction";
 
     private Button GlucoseSaveBtn;
@@ -35,6 +39,8 @@ public class NewGlucoseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newglucose);
+
+        activity = this;
 
         GlucoseSaveBtn = (Button)findViewById(R.id.GlucoseSaveBtn);
 
@@ -80,8 +86,17 @@ public class NewGlucoseActivity extends AppCompatActivity {
             if(Glucose) {
                 Toast.makeText(NewGlucoseActivity.this, "다시 시도해 주세요", Toast.LENGTH_SHORT).show();
             } else {
+                if (GlucoseActivity.activity != null) {
+                    GlucoseActivity activity = (GlucoseActivity) GlucoseActivity.activity;
+                    activity.finish();
+                }
+
+                NewGlucoseActivity.activity.finish();
+
+                Intent intent = new Intent(getApplicationContext(), GlucoseActivity.class);
+                startActivity(intent);
+
                 Toast.makeText(NewGlucoseActivity.this, "처리 완료", Toast.LENGTH_SHORT).show();
-                finish();
             }
         }
 

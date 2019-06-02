@@ -23,11 +23,15 @@ public class MealActivity extends AppCompatActivity {
 
     private Button newmealButton;
 
+    public static MealActivity activity = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal);
+
+        activity = this;
 
         newmealButton = (Button) findViewById(R.id.newmealbutton);
 
