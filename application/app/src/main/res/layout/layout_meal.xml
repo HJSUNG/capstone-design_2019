@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="120dp">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -65,8 +64,16 @@
                 android:id="@+id/meal5"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
+                android:layout_weight="2"
                 android:gravity="center"
                 android:text="음식5"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_weight="2"
+                android:gravity="center"
                 android:textSize="20dp" />
 
         </LinearLayout>
@@ -80,6 +87,7 @@
                 android:id="@+id/meal_time"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
+                android:textColor="@color/button_yellow"
                 android:text="시간"
                 android:layout_weight="1"
                 android:textAlignment="textEnd"/>
