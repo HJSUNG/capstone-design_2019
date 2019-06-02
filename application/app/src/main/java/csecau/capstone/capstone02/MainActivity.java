@@ -415,8 +415,8 @@ public class MainActivity extends AppCompatActivity {
 
             String getTime = sdf.format(date).split(" ")[1];
 
-            if(Integer.parseInt(total_string.split(":")[0])>12) {
-                getTime = Integer.toString(Integer.parseInt(getTime.split(":")[0])+12)+":"+getTime.split(":")[1]+":"+getTime.split(":")[2];
+            if (Integer.parseInt(total_string.split(":")[0]) > 12) {
+                getTime = Integer.toString(Integer.parseInt(getTime.split(":")[0]) + 12) + ":" + getTime.split(":")[1] + ":" + getTime.split(":")[2];
             }
             String showTime = "no";
 
@@ -429,7 +429,7 @@ public class MainActivity extends AppCompatActivity {
                     int hour_from_server_under12 = Integer.parseInt(hour_from_server);
                     String amVsPm_server = "";
 
-                    if (showTime.contentEquals("no")) {
+                    if (showTime.contains("no")) {
                         if (Integer.parseInt(hour_from_server) - Integer.parseInt(getTime.split(":")[0]) >= 0) {
                             if (Integer.parseInt(minute_from_server) - Integer.parseInt(getTime.split(":")[1]) > 0) {
                                 showTime = amVsPm_server + " " + hour_from_server_under12 + ":" + minute_from_server;
@@ -453,14 +453,37 @@ public class MainActivity extends AppCompatActivity {
                         if (Integer.parseInt(hour_from_server) - Integer.parseInt(getTime.split(":")[0]) == 0) {
                             if (Integer.parseInt(minute_from_server) - Integer.parseInt(getTime.split(":")[1]) > 0) {
                                 main_adapter.addItem(amVsPm_server + " " + hour_from_server_under12 + ":" + minute_from_server);
+                                showTime = "Yes";
                                 break;
                             }
-                        } else if (Integer.parseInt(hour_from_server) - Integer.parseInt(getTime.split(":")[0]) > 0){
+                        } else if (Integer.parseInt(hour_from_server) - Integer.parseInt(getTime.split(":")[0]) > 0) {
                             main_adapter.addItem(amVsPm_server + " " + hour_from_server_under12 + ":" + minute_from_server);
+                            showTime = "Yes";
                             break;
                         }
                     }
                 }
+
+                if(showTime.contains("no")) {
+                    String hour_from_server = main_list[1].split(":")[0];
+                    String minute_from_server = main_list[1].split(":")[1];
+                    int hour_from_server_under12 = Integer.parseInt(hour_from_server);
+                    String amVsPm_server = "";
+
+                    if (hour_from_server_under12 == 0) {
+                        hour_from_server_under12 += 12;
+                        amVsPm_server = "오전";
+                    } else if (0 < hour_from_server_under12 && hour_from_server_under12 < 12) {
+                        amVsPm_server = "오전";
+                    } else if (hour_from_server_under12 == 12) {
+                        amVsPm_server = "오후";
+                    } else if (12 < hour_from_server_under12 && hour_from_server_under12 < 24) {
+                        hour_from_server_under12 -= 12;
+                        amVsPm_server = "오후";
+                    }
+                    main_adapter.addItem(amVsPm_server + " " + hour_from_server_under12 + ":" + minute_from_server);
+                }
+
                 main_listview.setAdapter(main_adapter);
             } else {
                 main_adapter.addItem("알람이 없습니다");
@@ -468,56 +491,56 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        @Override
-        protected String doInBackground(String... params) {
+    @Override
+    protected String doInBackground(String... params) {
 
-            String ID = (String) params[1];
+        String ID = (String) params[1];
 
-            String serverURL = (String) params[0];
-            String postParameters = "ID=" + ID;
+        String serverURL = (String) params[0];
+        String postParameters = "ID=" + ID;
 
-            try {
-                URL url = new URL(serverURL);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+        try {
+            URL url = new URL(serverURL);
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
-                httpURLConnection.setReadTimeout(5000);
-                httpURLConnection.setConnectTimeout(5000);
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.connect();
+            httpURLConnection.setReadTimeout(5000);
+            httpURLConnection.setConnectTimeout(5000);
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.connect();
 
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                outputStream.write(postParameters.getBytes("UTF-8"));
-                outputStream.flush();
-                outputStream.close();
+            OutputStream outputStream = httpURLConnection.getOutputStream();
+            outputStream.write(postParameters.getBytes("UTF-8"));
+            outputStream.flush();
+            outputStream.close();
 
-                int responseStatusCode = httpURLConnection.getResponseCode();
-                Log.d("@@@", "POST response code - " + responseStatusCode);
+            int responseStatusCode = httpURLConnection.getResponseCode();
+            Log.d("@@@", "POST response code - " + responseStatusCode);
 
-                InputStream inputStream;
-                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
-                    inputStream = httpURLConnection.getInputStream();
-                } else {
-                    inputStream = httpURLConnection.getErrorStream();
-                }
-
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-                StringBuilder sb = new StringBuilder();
-                String line = null;
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    sb.append(line);
-                }
-
-                bufferedReader.close();
-
-                return sb.toString();
-            } catch (Exception e) {
-                Log.e("@@@", "exception", e);
-                return new String("Same ID exists !");
+            InputStream inputStream;
+            if (responseStatusCode == HttpURLConnection.HTTP_OK) {
+                inputStream = httpURLConnection.getInputStream();
+            } else {
+                inputStream = httpURLConnection.getErrorStream();
             }
+
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line);
+            }
+
+            bufferedReader.close();
+
+            return sb.toString();
+        } catch (Exception e) {
+            Log.e("@@@", "exception", e);
+            return new String("Same ID exists !");
         }
     }
+}
 
 }

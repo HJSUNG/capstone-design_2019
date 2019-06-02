@@ -116,7 +116,7 @@ public class MedicationActivity extends AppCompatActivity {
                             deleteAlarm.execute("http://capstone02.cafe24.com/delete_alarm.php", user_id, result_time_result);
                             medication_adapter.removeItem(0);
                         } else {
-                            String delete_time = ((alarm_listview) medication_adapter.getItem(clicked_item-1)).getTime();
+                            String delete_time = ((alarm_listview) medication_adapter.getItem(clicked_item)).getTime();
                             String result_time_result = "";
                             if (delete_time.split(" ")[0].contentEquals("오전")) {
                                 if (0 < Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) && Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) < 10) {
@@ -135,7 +135,7 @@ public class MedicationActivity extends AppCompatActivity {
                             }
                             DeleteAlarm deleteAlarm = new DeleteAlarm();
                             deleteAlarm.execute("http://capstone02.cafe24.com/delete_alarm.php", user_id, result_time_result);
-                            medication_adapter.removeItem(clicked_item-1);
+                            medication_adapter.removeItem(clicked_item);
                         }
                         if (medication_adapter.getCount() == 0) {
                             medication_listview.setAdapter(temp_adapter);
@@ -151,7 +151,7 @@ public class MedicationActivity extends AppCompatActivity {
         medication_listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                clicked_item = medication_listview.getSelectedItemPosition() + 2;
+                clicked_item = position;
             }
         });
 
