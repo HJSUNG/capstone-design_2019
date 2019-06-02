@@ -45,8 +45,12 @@ public class NewExerciseActivity extends AppCompatActivity {
                 String exe_time = TimeEdittext.getText().toString();
                 String UserID = user_id;
 
-                Exercsie task = new Exercsie();
-                task.execute("http://capstone02.cafe24.com/insert_exercise.php", UserID, exercise, exe_time);
+                if(exercise.equals("") || exe_time.equals("")){
+                    Toast.makeText(NewExerciseActivity.this,"모든 값을 넣어주세요", Toast.LENGTH_SHORT).show();
+                } else {
+                    Exercsie task = new Exercsie();
+                    task.execute("http://capstone02.cafe24.com/insert_exercise.php", UserID, exercise, exe_time);
+                }
             }
         });
     }

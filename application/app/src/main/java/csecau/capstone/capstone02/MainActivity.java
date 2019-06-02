@@ -68,10 +68,8 @@ public class MainActivity extends AppCompatActivity {
     private alarm_listviewAdapter main_adapter = new alarm_listviewAdapter();
     private alarm_listviewAdapter temp_adapter = new alarm_listviewAdapter();
 
-    int nYear, nMonth, nDay;
     int n[] = new int[9];
     int sum[] = new int[9];
-    float average1 = 0f, average2 = 0f, average3 = 0f, average4 = 0f, average5 = 0f, average6 = 0f, average7 = 0f, average8 = 0f, average9 = 0f;
     int[] average = new int[9];
 
     String strDate0, strDate1, strDate2;

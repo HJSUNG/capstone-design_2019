@@ -51,8 +51,12 @@ public class NewMealActivity extends AppCompatActivity {
                 String Meal5 = meal5.getText().toString();
                 String UserID = user_id;
 
-                Meal task = new Meal();
-                task.execute("http://capstone02.cafe24.com/insert_meal.php", UserID, Meal1, Meal2, Meal3, Meal4, Meal5);
+                if(Meal1.contentEquals("")){
+                    Toast.makeText(NewMealActivity.this,"첫번째음식을 채워주세요",Toast.LENGTH_SHORT).show();
+                }else {
+                    Meal task = new Meal();
+                    task.execute("http://capstone02.cafe24.com/insert_meal.php", UserID, Meal1, Meal2, Meal3, Meal4, Meal5);
+                }
             }
         });
 

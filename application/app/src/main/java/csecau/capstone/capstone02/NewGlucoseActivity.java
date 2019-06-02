@@ -47,10 +47,13 @@ public class NewGlucoseActivity extends AppCompatActivity {
                 String glucose = GlucoseEdittext.getText().toString();
                 String comment = ComentEdittext.getText().toString();
                 String UserID =  user_id;
-                //6말고 UserID값이 자동으로 들어와야된다.
 
-                Glucose task = new Glucose();
-                task.execute("http://capstone02.cafe24.com/insert_glucose.php", UserID, glucose, comment);
+                if(glucose.equals("") || comment.equals("")){
+                    Toast.makeText(NewGlucoseActivity.this,"모든 값을 넣어주세요", Toast.LENGTH_SHORT).show();
+                } else {
+                    Glucose task = new Glucose();
+                    task.execute("http://capstone02.cafe24.com/insert_glucose.php", UserID, glucose, comment);
+                }
             }
         });
 
