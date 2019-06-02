@@ -197,9 +197,10 @@ public class MedicationActivity extends AppCompatActivity {
                 medication_listview.setAdapter(medication_adapter);
                 Addbtn.setClickable(true);
             } else {
-                Toast.makeText(MedicationActivity.this, result, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MedicationActivity.this, "중복값이 있습니다", Toast.LENGTH_SHORT).show();
                 Addbtn.setClickable(true);
             }
+//            Toast.makeText(MedicationActivity.this, result, Toast.LENGTH_SHORT).show();
         }
 
         @Override
