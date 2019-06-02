@@ -53,7 +53,7 @@ public class NewdiaryActivity extends AppCompatActivity {
     private RecognitionListener listener = new RecognitionListener() {
         @Override
         public void onReadyForSpeech(Bundle params) {
-            Toast.makeText(getApplicationContext(), "음성인식 시작", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Start", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -216,7 +216,7 @@ public class NewdiaryActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), DiaryActivity.class);
             startActivity(intent);
 
-            Toast.makeText(NewdiaryActivity.this, "처리 완료", Toast.LENGTH_SHORT).show();
+            Toast.makeText(NewdiaryActivity.this, result, Toast.LENGTH_SHORT).show();
         }
 
         @Override
