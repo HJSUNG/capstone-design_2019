@@ -112,9 +112,9 @@ public class MedicationActivity extends AppCompatActivity {
                                 }
                             } else {
                                 if (Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) == 12) {
-                                    result_time_result = delete_time.split(" ")[1].split(":")[0]+":" + delete_time.split(" ")[1].split(":")[1] + ":00";
+                                    result_time_result = delete_time.split(" ")[1].split(":")[0] + ":" + delete_time.split(" ")[1].split(":")[1] + ":00";
                                 } else {
-                                    result_time_result = Integer.toString(Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) + 12)+ ":" + delete_time.split(" ")[1].split(":")[1] + ":00";
+                                    result_time_result = Integer.toString(Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) + 12) + ":" + delete_time.split(" ")[1].split(":")[1] + ":00";
                                 }
                             }
                             DeleteAlarm deleteAlarm = new DeleteAlarm();
@@ -133,9 +133,9 @@ public class MedicationActivity extends AppCompatActivity {
                                 }
                             } else {
                                 if (Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) == 12) {
-                                    result_time_result = delete_time.split(" ")[1].split(":")[0]+ ":" + delete_time.split(" ")[1].split(":")[1] + ":00";
+                                    result_time_result = delete_time.split(" ")[1].split(":")[0] + ":" + delete_time.split(" ")[1].split(":")[1] + ":00";
                                 } else {
-                                    result_time_result = Integer.toString(Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) + 12)+ ":" + delete_time.split(" ")[1].split(":")[1] + ":00";
+                                    result_time_result = Integer.toString(Integer.parseInt(delete_time.split(" ")[1].split(":")[0]) + 12) + ":" + delete_time.split(" ")[1].split(":")[1] + ":00";
                                 }
                             }
                             DeleteAlarm deleteAlarm = new DeleteAlarm();
@@ -189,13 +189,17 @@ public class MedicationActivity extends AppCompatActivity {
             super.onPostExecute(result);
 
             if (result.contains("success")) {
-                medication_adapter.addItem(amVsPm + " " + selected_hour + ":" + selected_minute);
+                if (0 <= selected_minute && selected_minute < 10) {
+                    medication_adapter.addItem(amVsPm + " " + selected_hour + ":" + "0" + selected_minute);
+                } else {
+                    medication_adapter.addItem(amVsPm + " " + selected_hour + ":" + selected_minute);
+                }
                 medication_listview.setAdapter(medication_adapter);
                 Addbtn.setClickable(true);
             } else {
+                Toast.makeText(MedicationActivity.this, result, Toast.LENGTH_SHORT).show();
                 Addbtn.setClickable(true);
             }
-//            Toast.makeText(MedicationActivity.this, result, Toast.LENGTH_SHORT).show();
         }
 
         @Override
