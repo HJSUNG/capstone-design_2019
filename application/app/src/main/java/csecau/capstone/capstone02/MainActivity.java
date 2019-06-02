@@ -39,7 +39,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,6 +54,14 @@ public class MainActivity extends AppCompatActivity {
     private Button diaryButton, glucoseButton, medicationButton, logoutButton, exerciseButton, mealButton;
     public static String user_id ="";
     private ListView main_alarm;
+
+    int nYear, nMonth, nDay;
+    int n[] = new int[9];
+    int sum[] = new int[9];
+    float average1 =0f,average2 =0f,average3 =0f,average4 =0f,average5 =0f,average6 =0f,average7 =0f,average8 =0f,average9 =0f;
+    int[] average =new int[9];
+
+    String strDate0, strDate1, strDate2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,152 +131,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        // 현재 날짜 구하기
+        Calendar cal = new GregorianCalendar(Locale.KOREA);
+        cal.setTime(new Date());
 
-//        alarm_listviewAdapter adapter;
-//
-//        adapter = new alarm_listviewAdapter();
-//        main_alarm.setAdapter(adapter);
+        SimpleDateFormat fm1 = new SimpleDateFormat("MM-dd");
+        String date = fm1.format(new Date());
+        System.out.println("현재시간 월일 = " + date);
 
-
-
-//        LineChart lineChart = (LineChart) findViewById(R.id.chart);
-//        ArrayList<Entry> entries = new ArrayList<>();
-
-
-
-//        entries.add(new Entry(100, 2));
-
-//        LineDataSet dataset = new LineDataSet(entries, "Blood Glucose");
-//        dataset.setColor(Color.parseColor("#FF0000"));
-//        dataset.setCircleColor(R.color.black);
-//        dataset.setCircleColorHole(R.color.black);
-
-
-//        ArrayList<String> labels = new ArrayList<String>();
-//        labels.add("04-07 6am");
-
-//        LineData data = new LineData(labels, dataset);
-//        dataset.setColors(ColorTemplate.COLORFUL_COLORS);
-
-//        ArrayList<Entry> entries = new ArrayList<>();
-//        for(int i=0;i<glucose_list.length;i++){
-//
-//        }
-
-
-//        entries.add(new Entry(100, 2));
-//        entries.add(new Entry(123, 3));
-//        entries.add(new Entry(100, 25));
-//        entries.add(new Entry(200, 26));
-//        entries.add(new Entry(180, 29));
-//        entries.add(new Entry(123, 30));
-//        entries.add(new Entry(100, 32));
-//        entries.add(new Entry(120, 33));
-//        entries.add(new Entry(120, 34));
-//        entries.add(new Entry(90, 36));
-//        entries.add(new Entry(120, 81 ));
-
-//        LineDataSet dataset = new LineDataSet(entries, "Blood Glucose");
-//        dataset.setColor(Color.parseColor("#FF0000"));
-//        dataset.setCircleColor(R.color.black);
-//        dataset.setCircleColorHole(R.color.black);
-
-
-        ArrayList<String> labels = new ArrayList<String>();
-//        labels.add("04-07 6am");
-//        labels.add("04-07 12am");
-//        labels.add("04-07 6pm");
-//        labels.add("04-07 12pm");
-//        labels.add("04-08 6am");
-//        labels.add("04-08 12am");
-//        labels.add("04-08 6pm");
-//        labels.add("04-08 12pm");
-//        labels.add("04-09 6am");
-//        labels.add("04-09 12am");
-//        labels.add("04-09 6pm");
-//        labels.add("04-09 12pm");
-//        labels.add("04-10 6am");
-//        labels.add("04-10 12am");
-//        labels.add("04-10 6pm");
-//        labels.add("04-10 12pm");
-//        labels.add("04-11 6am");
-//        labels.add("04-11 12am");
-//        labels.add("04-11 6pm");
-//        labels.add("04-11 12pm");
-//        labels.add("04-12 6am");
-//        labels.add("04-12 12am");
-//        labels.add("04-12 6pm");
-//        labels.add("04-12 12pm");
-//        labels.add("04-13 6am");
-//        labels.add("04-13 12am");
-//        labels.add("04-13 6pm");
-//        labels.add("04-13 12pm");
-//        labels.add("04-14 6am");
-//        labels.add("04-14 12am");
-//        labels.add("04-14 6pm");
-//        labels.add("04-14 12pm");
-//        labels.add("04-15 6am");
-//        labels.add("04-15 12am");
-//        labels.add("04-15 6pm");
-//        labels.add("04-15 12pm");
-//        labels.add("04-16 6am");
-//        labels.add("04-16 12am");
-//        labels.add("04-16 6pm");
-//        labels.add("04-16 12pm");
-//        labels.add("04-17 6am");
-//        labels.add("04-17 12am");
-//        labels.add("04-17 6pm");
-//        labels.add("04-17 12pm");
-//        labels.add("04-18 6am");
-//        labels.add("04-18 12am");
-//        labels.add("04-18 6pm");
-//        labels.add("04-18 12pm");
-//        labels.add("04-19 6am");
-//        labels.add("04-19 12am");
-//        labels.add("04-19 6pm");
-//        labels.add("04-19 12pm");
-//        labels.add("04-20 6am");
-//        labels.add("04-20 12am");
-//        labels.add("04-20 6pm");
-//        labels.add("04-20 12pm");
-//        labels.add("04-21 6am");
-//        labels.add("04-21 12am");
-//        labels.add("04-21 6pm");
-//        labels.add("04-21 12pm");
-//        labels.add("04-22 6am");
-//        labels.add("04-22 12am");
-//        labels.add("04-22 6pm");
-//        labels.add("04-22 12pm");
-//        labels.add("04-23 6am");
-//        labels.add("04-23 12am");
-//        labels.add("04-23 6pm");
-//        labels.add("04-23 12pm");
-//        labels.add("04-24 6am");
-//        labels.add("04-24 12am");
-//        labels.add("04-24 6pm");
-//        labels.add("04-24 12pm");
-//        labels.add("04-25 6am");
-//        labels.add("04-25 12am");
-//        labels.add("04-25 6pm");
-//        labels.add("04-25 12pm");
-//        labels.add("04-26 6am");
-//        labels.add("04-26 12am");
-//        labels.add("04-26 6pm");
-//        labels.add("04-26 12pm");
-//        labels.add("04-27 6am");
-//        labels.add("04-27 12am");
-//        labels.add("04-27 6pm");
-//        labels.add("04-27 12pm");
-
-
-//        LineData data = new LineData(labels, dataset);
-//        dataset.setColors(ColorTemplate.COLORFUL_COLORS); //
-
-        /*dataset.setDrawCubic(true); //선 둥글게 만들기
-        dataset.setDrawFilled(true); //그래프 밑부분 색칠*/
-
-//        lineChart.setData(data);
-//        lineChart.animateY(5000);
+        strDate0 = fm1.format(cal.getTime());//현재날짜
+        cal.add(Calendar.DAY_OF_YEAR,-1);
+        strDate1 = fm1.format(cal.getTime());//하루전 날짜
+        cal.add(Calendar.DAY_OF_YEAR,-1);
+        strDate2 = fm1.format(cal.getTime());//이틀전 날짜
 
         Getglucoselist getglucoselist = new Getglucoselist();
         getglucoselist.execute("http://capstone02.cafe24.com/retrieve_glucose_graph.php", user_id);
@@ -282,13 +163,6 @@ public class MainActivity extends AppCompatActivity {
 
             glucose_list = result_string.split("<br>");
 
-            ListView listview;
-            glucose_listviewAdapter adapter;
-
-            adapter = new glucose_listviewAdapter();
-
-//            listview = (ListView) findViewById(R.id.glucoselistview);
-//            listview.setAdapter(adapter);
             LineChart lineChart = (LineChart) findViewById(R.id.chart);
             ArrayList<Entry> entries = new ArrayList<>();
             ArrayList<String> labels = new ArrayList<String>();
@@ -297,16 +171,83 @@ public class MainActivity extends AppCompatActivity {
             String test_sentence = glucose_list[0];
             boolean test_contains = result.contains("comma");
             int i=0;
+            String date_hour[][] = new String[30][2];
+            int glucose_value[] =new int[30];
+
             if (result.contains("<comma>")) {
                 for (String glucose : glucose_list) {
                     String glucose_split[] = glucose.split("<comma>");
-//                    adapter.addItem(glucose_split[1], glucose_split[2]);
-                    String date = glucose_split[1].substring(5,13);
-                    entries.add(new Entry(Integer.parseInt(glucose_split[2]), i));
-                    labels.add(date);
+                    String date = glucose_split[1].substring(5,13);//'MM-dd hh'
+                    date_hour[i] = date.split(" ");
+                    glucose_value[i] = Integer.parseInt(glucose_split[2]);
+//                    entries.add(new Entry(Integer.parseInt(glucose_split[2]), i));
+//                    labels.add(date);
+                    Log.d("날짜", date_hour[i][0]);
+                    Log.d("시간", date_hour[i][1]);
 //                    date_hour.add(date);
                     i++;
                 }
+                for(int j=0;j<i;j++){
+                    if(date_hour[j][0].equals(strDate2)){
+                        if(Integer.parseInt(date_hour[j][1])<=8){
+                            //이틀전 아침
+                            sum[0]+=glucose_value[j];
+                            n[0]++;
+                        } else if(Integer.parseInt(date_hour[j][1])<=16){
+                            //이틀전 점심
+                            sum[1]+=glucose_value[j];
+                            n[1]++;
+                        } else{
+                            //이틀전 저녁
+                            sum[2]+=glucose_value[j];
+                            n[2]++;
+                        }
+                    } else if(date_hour[j][0].equals(strDate1)){
+                        if(Integer.parseInt(date_hour[j][1])<=8){
+                            //하루전 아침
+                            sum[3]+=glucose_value[j];
+                            n[3]++;
+                        } else if(Integer.parseInt(date_hour[j][1])<=16){
+                            //하루전 점심
+                            sum[4]+=glucose_value[j];
+                            n[4]++;
+                        } else{
+                            //하루전 저녁
+                            sum[5]+=glucose_value[j];
+                            n[5]++;
+                        }
+                    } else if(date_hour[j][0].equals(strDate0)){
+                        if(Integer.parseInt(date_hour[j][1])<=8){
+                            //오늘 아침
+                            sum[6]+=glucose_value[j];
+                            n[6]++;
+                        } else if(Integer.parseInt(date_hour[j][1])<=16){
+                            //오늘 점심
+                            sum[7]+=glucose_value[j];
+                            n[7]++;
+                        } else{
+                            //오늘 저녁
+                            sum[8]+=glucose_value[j];
+                            n[8]++;
+                        }
+                    }
+                }
+
+                for(int k=0;k<9;k++){
+                    if(n[k]!=0) {
+                        average[k]=sum[k]/n[k];
+                    }else average[k]=0;
+                    entries.add(new Entry(average[k], k));
+                }
+                labels.add(strDate2+"아침");
+                labels.add(strDate2+"점심");
+                labels.add(strDate2+"저녁");
+                labels.add(strDate1+"아침");
+                labels.add(strDate1+"점심");
+                labels.add(strDate1+"저녁");
+                labels.add(strDate0+"아침");
+                labels.add(strDate0+"점심");
+                labels.add(strDate0+"저녁");
             }
             LineDataSet dataset = new LineDataSet(entries, "Blood Glucose");
             dataset.setColor(Color.parseColor("#FF0000"));
@@ -326,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
 //            if (result.contains("<comma>")) {
 //                for (String glucose : glucose_list) {
 //                    String glucose_split[] = glucose.split("<comma>");
-////                    entries.add(glucose_split[1], glucose_split[0]);
+//                    entries.add(glucose_split[1], glucose_split[0]);
 //                }
 //            }
 
