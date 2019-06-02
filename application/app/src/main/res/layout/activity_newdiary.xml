@@ -60,7 +60,7 @@
                 android:textSize="20sp"
                 android:layout_marginLeft="50px"
                 android:layout_marginRight="50px"
-                android:background="@color/button_yellow"
+                android:background="#d6d6d6"
                 android:layout_marginTop="25px"
                 android:layout_marginBottom="12px"/>
 

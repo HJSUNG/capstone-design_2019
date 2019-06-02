@@ -10,7 +10,6 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#96EC8E"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="10dp">
@@ -53,7 +52,7 @@
                 android:layout_height="fill_parent"
                 android:layout_marginBottom="10dp"
                 android:layout_toRightOf="@+id/IDregister"
-                android:text="Check"
+                android:text="중복확인"
                 android:textAllCaps="false" />
         </LinearLayout>
 
@@ -249,11 +248,12 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dip"
-                android:background="#ea4c88"
-                android:text="확인"
+                android:background="@color/green_button_color"
+                android:text="완료"
                 android:textStyle="bold"
                 android:textColor="@color/black"
-                android:textSize="30sp" />
+                android:textSize="30sp"
+                android:layout_marginBottom="20dp"/>
 
             <!-- Link to Login Screen -->
 
