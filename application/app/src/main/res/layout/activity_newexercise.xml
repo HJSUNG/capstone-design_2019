@@ -47,6 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/exe_time"
+                android:maxLength="40"
                 android:layout_marginBottom="30dp"/>
         </LinearLayout>
 

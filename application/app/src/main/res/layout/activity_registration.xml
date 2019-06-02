@@ -130,7 +130,8 @@
                 android:layout_height="match_parent">
                 <EditText
                     android:id="@+id/first_num"
-                    android:layout_width="80dp"
+                    android:layout_weight="4"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="10dp"
                     android:background="@color/white"
@@ -143,7 +144,8 @@
                     android:maxLength="3"/>
 
                 <TextView
-                    android:layout_width="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:id="@+id/first_bar"
                     android:layout_marginBottom="10dp"
@@ -154,7 +156,8 @@
 
                 <EditText
                     android:id="@+id/second_num"
-                    android:layout_width="110dp"
+                    android:layout_weight="8"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="10dp"
                     android:background="@color/white"
@@ -167,7 +170,8 @@
                     android:maxLength="4"/>
 
                 <TextView
-                    android:layout_width="30dp"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:id="@+id/second_bar"
                     android:layout_marginBottom="10dp"
@@ -178,7 +182,8 @@
 
                 <EditText
                     android:id="@+id/third_num"
-                    android:layout_width="110dp"
+                    android:layout_weight="8"
+                    android:layout_width="100dp"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="10dp"
                     android:background="@color/white"
