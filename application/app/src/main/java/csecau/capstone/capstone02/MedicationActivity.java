@@ -1,5 +1,6 @@
 package csecau.capstone.capstone02;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -29,6 +30,8 @@ import static csecau.capstone.capstone02.MainActivity.user_id;
 
 public class MedicationActivity extends AppCompatActivity {
 
+    public static MedicationActivity activity = null;
+
     AlarmManager alarm_manager;
     TimePicker alarm_timepicker;
     private int selected_hour, selected_minute;
@@ -50,6 +53,8 @@ public class MedicationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_medication);
+
+        activity = this;
 
         Addbtn = (Button) findViewById(R.id.btn_add);
         Deletebtn = (Button) findViewById(R.id.btn_delete);
@@ -157,6 +162,19 @@ public class MedicationActivity extends AppCompatActivity {
 
         RetrieveAlarm retrieveAlarm = new RetrieveAlarm();
         retrieveAlarm.execute("http://capstone02.cafe24.com/retrieve_alarm.php", user_id);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (MainActivity.activity != null) {
+            MainActivity activity = (MainActivity) MainActivity.activity;
+            activity.finish();
+        }
+
+        MedicationActivity.activity.finish();
+
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 
     //insert_alarm

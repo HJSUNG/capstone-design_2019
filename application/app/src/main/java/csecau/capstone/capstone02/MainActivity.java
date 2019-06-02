@@ -33,6 +33,8 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static MainActivity activity = null;
+
     private String[] glucose_list;
 
     private Button diaryButton, glucoseButton, medicationButton, logoutButton, exerciseButton, mealButton;
@@ -54,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        activity = this;
 
         glucoseButton = (Button) findViewById(R.id.GlucoseButton);
         medicationButton = (Button) findViewById(R.id.MedicationButton);
@@ -327,6 +331,7 @@ public class MainActivity extends AppCompatActivity {
             if (Integer.parseInt(total_string.split(":")[0]) > 12) {
                 getTime = Integer.toString(Integer.parseInt(getTime.split(":")[0]) + 12) + ":" + getTime.split(":")[1] + ":" + getTime.split(":")[2];
             }
+
             String showTime = "no";
 
             if (!result_string.contains("No Result")) {
@@ -338,13 +343,15 @@ public class MainActivity extends AppCompatActivity {
                     int hour_from_server_under12 = Integer.parseInt(hour_from_server);
                     String amVsPm_server = "";
 
-                    if (showTime.contains("no")) {
-                        if (Integer.parseInt(hour_from_server) - Integer.parseInt(getTime.split(":")[0]) >= 0) {
-                            if (Integer.parseInt(minute_from_server) - Integer.parseInt(getTime.split(":")[1]) > 0) {
-                                showTime = amVsPm_server + " " + hour_from_server_under12 + ":" + minute_from_server;
-                            }
-                        }
-                    }
+//                    if (showTime.contains("no")) {
+//                        if (Integer.parseInt(hour_from_server) - Integer.parseInt(getTime.split(":")[0]) == 0) {
+//                            if (Integer.parseInt(minute_from_server) - Integer.parseInt(getTime.split(":")[1]) >= 0) {
+//                                showTime = amVsPm_server + " " + hour_from_server_under12 + ":" + minute_from_server;
+//                            }
+//                        } else if (Integer.parseInt(hour_from_server) - Integer.parseInt(getTime.split(":")[0]) > 0) {
+//                            showTime = amVsPm_server + " " + hour_from_server_under12 + ":" + minute_from_server;
+//                        }
+//                    }
 
                     if (hour_from_server_under12 == 0) {
                         hour_from_server_under12 += 12;
@@ -357,8 +364,8 @@ public class MainActivity extends AppCompatActivity {
                         hour_from_server_under12 -= 12;
                         amVsPm_server = "오후";
                     }
+
                     if (showTime.contains("no")) {
-                        int test = Integer.parseInt(hour_from_server) - Integer.parseInt(getTime.split(":")[0]);
                         if (Integer.parseInt(hour_from_server) - Integer.parseInt(getTime.split(":")[0]) == 0) {
                             if (Integer.parseInt(minute_from_server) - Integer.parseInt(getTime.split(":")[1]) >= 0) {
                                 main_adapter.addItem(amVsPm_server + " " + hour_from_server_under12 + ":" + minute_from_server);
