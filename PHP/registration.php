@@ -26,7 +26,7 @@ include('dbcon.php');
 
       try {
         // Check for duplicate ID
-        $stmt = $con->prepare("SELECT * FROM UserLogin WHERE UserName = :UserName");
+        $stmt = $con->prepare("SELECT * FROM User WHERE UserName = :UserName");
         $stmt->bindParam(':UserName', $UserName);
         $stmt->execute();
         if($stmt->fetch(PDO::FETCH_ASSOC)){
