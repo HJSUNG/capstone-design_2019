@@ -77,9 +77,9 @@ public class NewMealActivity extends AppCompatActivity {
             Log.d(TAG, input_string);
 
             if(Meal) {
-                Toast.makeText(NewMealActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewMealActivity.this, "다시 시도해 주세요", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(NewMealActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewMealActivity.this, "처리 완료", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }

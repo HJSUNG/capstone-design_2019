@@ -75,9 +75,9 @@ public class NewGlucoseActivity extends AppCompatActivity {
             Log.d(TAG, input_string);
 
             if(Glucose) {
-                Toast.makeText(NewGlucoseActivity.this, "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewGlucoseActivity.this, "다시 시도해 주세요", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(NewGlucoseActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(NewGlucoseActivity.this, "처리 완료", Toast.LENGTH_SHORT).show();
                 finish();
             }
         }
