@@ -1,41 +1,22 @@
 package csecau.capstone.capstone02;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.support.v4.app.NotificationCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.utils.ColorTemplate;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -45,15 +26,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
-
-import java.util.Date;
-
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,15 +40,15 @@ public class MainActivity extends AppCompatActivity {
 
     private String[] main_list;
 
-    private ListView main_listview;
-    private alarm_listviewAdapter main_adapter = new alarm_listviewAdapter();
-    private alarm_listviewAdapter temp_adapter = new alarm_listviewAdapter();
-
     int n[] = new int[9];
     int sum[] = new int[9];
     int[] average = new int[9];
 
     String strDate0, strDate1, strDate2;
+
+    private ListView main_listview;
+    private alarm_listviewAdapter main_adapter = new alarm_listviewAdapter();
+    private alarm_listviewAdapter temp_adapter = new alarm_listviewAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,8 +118,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        RetrieveClosetAlarm retrieveClosetAlarm = new RetrieveClosetAlarm();
+        retrieveClosetAlarm.execute("http://capstone02.cafe24.com/retrieve_alarm.php", user_id);
 
-        // 현재 날짜 구하기
+
         Calendar cal = new GregorianCalendar(Locale.KOREA);
         cal.setTime(new Date());
 
@@ -151,15 +129,13 @@ public class MainActivity extends AppCompatActivity {
         String date = fm1.format(new Date());
         System.out.println("현재시간 월일 = " + date);
 
-        RetrieveClosetAlarm retrieveClosetAlarm = new RetrieveClosetAlarm();
-        retrieveClosetAlarm.execute("http://capstone02.cafe24.com/retrieve_alarm.php", user_id);
-
-
         strDate0 = fm1.format(cal.getTime());//현재날짜
         cal.add(Calendar.DAY_OF_YEAR, -1);
         strDate1 = fm1.format(cal.getTime());//하루전 날짜
         cal.add(Calendar.DAY_OF_YEAR, -1);
         strDate2 = fm1.format(cal.getTime());//이틀전 날짜
+
+
 
         Getglucoselist getglucoselist = new Getglucoselist();
         getglucoselist.execute("http://capstone02.cafe24.com/retrieve_glucose_graph.php", user_id);
@@ -398,7 +374,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                if (showTime.contains("no")) {
+                if(showTime.contains("no")) {
                     String hour_from_server = main_list[1].split(":")[0];
                     String minute_from_server = main_list[1].split(":")[1];
                     int hour_from_server_under12 = Integer.parseInt(hour_from_server);
@@ -425,60 +401,54 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        @Override
-        protected String doInBackground(String... params) {
+    @Override
+    protected String doInBackground(String... params) {
 
-            String ID = (String) params[1];
+        String ID = (String) params[1];
 
-            String serverURL = (String) params[0];
-            String postParameters = "ID=" + ID;
+        String serverURL = (String) params[0];
+        String postParameters = "ID=" + ID;
 
-            try {
-                URL url = new URL(serverURL);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+        try {
+            URL url = new URL(serverURL);
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
-                httpURLConnection.setReadTimeout(5000);
-                httpURLConnection.setConnectTimeout(5000);
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.connect();
+            httpURLConnection.setReadTimeout(5000);
+            httpURLConnection.setConnectTimeout(5000);
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.connect();
 
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                outputStream.write(postParameters.getBytes("UTF-8"));
-                outputStream.flush();
-                outputStream.close();
+            OutputStream outputStream = httpURLConnection.getOutputStream();
+            outputStream.write(postParameters.getBytes("UTF-8"));
+            outputStream.flush();
+            outputStream.close();
 
-                int responseStatusCode = httpURLConnection.getResponseCode();
-                Log.d("@@@", "POST response code - " + responseStatusCode);
+            int responseStatusCode = httpURLConnection.getResponseCode();
+            Log.d("@@@", "POST response code - " + responseStatusCode);
 
-                InputStream inputStream;
-                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
-                    inputStream = httpURLConnection.getInputStream();
-                } else {
-                    inputStream = httpURLConnection.getErrorStream();
-                }
-
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-                StringBuilder sb = new StringBuilder();
-                String line = null;
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    sb.append(line);
-                }
-
-                bufferedReader.close();
-
-                return sb.toString();
-            } catch (Exception e) {
-                Log.e("@@@", "exception", e);
-                return new String("Same ID exists !");
+            InputStream inputStream;
+            if (responseStatusCode == HttpURLConnection.HTTP_OK) {
+                inputStream = httpURLConnection.getInputStream();
+            } else {
+                inputStream = httpURLConnection.getErrorStream();
             }
+
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line);
+            }
+
+            bufferedReader.close();
+
+            return sb.toString();
+        } catch (Exception e) {
+            Log.e("@@@", "exception", e);
+            return new String("Same ID exists !");
         }
     }
 }
-
-
-
-
-
