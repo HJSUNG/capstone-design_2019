@@ -1,6 +1,8 @@
 package csecau.capstone.capstone02;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +23,8 @@ import static csecau.capstone.capstone02.MainActivity.user_id;
 
 public class NewMealActivity extends AppCompatActivity {
 
+    public static NewMealActivity activity = null;
+
     private String TAG = "Mealfunction";
 
     private Button MealSaveBtn;
@@ -32,6 +36,8 @@ public class NewMealActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newmeal);
+
+        activity = this;
 
         MealSaveBtn = (Button)findViewById(R.id.MealSaveBtn);
 
@@ -83,8 +89,17 @@ public class NewMealActivity extends AppCompatActivity {
             if(Meal) {
                 Toast.makeText(NewMealActivity.this, "다시 시도해 주세요", Toast.LENGTH_SHORT).show();
             } else {
+                if (MealActivity.activity != null) {
+                    MealActivity activity = (MealActivity) MealActivity.activity;
+                    activity.finish();
+                }
+
+                NewMealActivity.activity.finish();
+
+                Intent intent = new Intent(getApplicationContext(), MealActivity.class);
+                startActivity(intent);
+
                 Toast.makeText(NewMealActivity.this, "처리 완료", Toast.LENGTH_SHORT).show();
-                finish();
             }
         }
 

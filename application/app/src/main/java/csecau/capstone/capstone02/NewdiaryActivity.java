@@ -206,17 +206,22 @@ public class NewdiaryActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            if (DiaryActivity.activity != null) {
-                DiaryActivity activity = (DiaryActivity) DiaryActivity.activity;
-                activity.finish();
+            boolean diary_error = result.contains("Error");
+            if (diary_error) {
+                Toast.makeText(NewdiaryActivity.this, result, Toast.LENGTH_SHORT).show();
+            } else {
+                if (DiaryActivity.activity != null) {
+                    DiaryActivity activity = (DiaryActivity) DiaryActivity.activity;
+                    activity.finish();
+                }
+
+                NewdiaryActivity.activity.finish();
+
+                Intent intent = new Intent(getApplicationContext(), DiaryActivity.class);
+                startActivity(intent);
+
+                Toast.makeText(NewdiaryActivity.this, "처리 완료", Toast.LENGTH_SHORT).show();
             }
-
-            NewdiaryActivity.activity.finish();
-
-            Intent intent = new Intent(getApplicationContext(), DiaryActivity.class);
-            startActivity(intent);
-
-            Toast.makeText(NewdiaryActivity.this, "처리 완료", Toast.LENGTH_SHORT).show();
         }
 
         @Override

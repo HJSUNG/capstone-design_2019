@@ -22,6 +22,8 @@ import static csecau.capstone.capstone02.MainActivity.user_id;
 
 public class GlucoseActivity extends AppCompatActivity{
 
+    public static GlucoseActivity activity = null;
+
     private String[] glucose_list;
 
     private Button newglucoseButton;
@@ -31,6 +33,8 @@ public class GlucoseActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_glucose);
+
+        activity = this;
 
         newglucoseButton = (Button) findViewById(R.id.newglucosebutton);
 
@@ -44,10 +48,19 @@ public class GlucoseActivity extends AppCompatActivity{
 
         Getglucoselist getglucoselist = new Getglucoselist();
         getglucoselist.execute("http://capstone02.cafe24.com/retrieve_glucose.php", user_id);
+    }
 
+    @Override
+    public void onBackPressed() {
+        if (MainActivity.activity != null) {
+            MainActivity activity = (MainActivity) MainActivity.activity;
+            activity.finish();
+        }
 
-//        glucose_listviewAdapter adapter = new glucose_listviewAdapter();
-//        adapter.addItem("100","activity_registration", "2019.5.26");
+        GlucoseActivity.activity.finish();
+
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 
 
