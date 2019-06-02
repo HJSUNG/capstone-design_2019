@@ -20,35 +20,36 @@
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="혈당" />
+                android:text="혈당 관리" />
 
             <Button
                 android:id="@+id/MedicationButton"
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="약" />
+                android:text="투약시간 관리" />
 
             <Button
                 android:id="@+id/ExerciseButton"
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="운동" />
+                android:text="운동 관리" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/button_second"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/button_first">
+            android:layout_below="@+id/button_first"
+            android:layout_marginBottom="5dp">
 
             <Button
                 android:id="@+id/MealButton"
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="식단" />
+                android:text="식단 관리" />
 
             <Button
                 android:id="@+id/DiaryButton"
@@ -71,6 +72,12 @@
             android:id="@+id/medicationtext"
             android:orientation="vertical"
             android:layout_below="@+id/button_second">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10px"
+                android:background="#246391"
+                android:layout_marginLeft="25px"
+                android:layout_marginRight="25px"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -82,7 +89,14 @@
             <ListView
                 android:id="@+id/main_medication_alarm"
                 android:layout_width="match_parent"
-                android:layout_height="70dp"/>
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10px"
+                android:background="#246391"
+                android:layout_marginLeft="25px"
+                android:layout_marginRight="25px"/>
 
         </LinearLayout>
 
@@ -90,7 +104,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/chart"
-            android:layout_below="@id/medicationtext"/>
+            android:layout_below="@id/medicationtext"
+            android:layout_marginTop="10dp"/>
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

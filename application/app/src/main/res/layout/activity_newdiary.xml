@@ -22,7 +22,8 @@
                 android:text="새로운 일기를 작성하세요 ! "
                 android:textAlignment="center"
                 android:gravity="center"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textColor="@color/textcolor"/>
 
 
         </LinearLayout>
@@ -41,18 +42,6 @@
                 android:background="@drawable/edittext_edge"
                 android:gravity="top"
                 android:padding="5dp" />
-
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="0dp"-->
-            <!--android:layout_weight="1">-->
-
-            <!--<TextView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:id="@+id/resulttext"-->
-            <!--android:text="Analysis Result : "-->
-            <!--android:textSize="20sp"/>-->
 
         </LinearLayout>
 
@@ -85,7 +74,7 @@
                 android:textSize="20sp"
                 android:layout_marginLeft="50px"
                 android:layout_marginRight="50px"
-                android:background="#6be7af"
+                android:background="@color/green_button_color"
                 android:layout_marginTop="12px"/>
 
         </RelativeLayout>
