@@ -308,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                if (showTime.contains("no")) {
+                if(showTime.contains("no")) {
                     String hour_from_server = main_list[1].split(":")[0];
                     String minute_from_server = main_list[1].split(":")[1];
                     int hour_from_server_under12 = Integer.parseInt(hour_from_server);
@@ -335,55 +335,56 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        @Override
-        protected String doInBackground(String... params) {
+    @Override
+    protected String doInBackground(String... params) {
 
-            String ID = (String) params[1];
+        String ID = (String) params[1];
 
-            String serverURL = (String) params[0];
-            String postParameters = "ID=" + ID;
+        String serverURL = (String) params[0];
+        String postParameters = "ID=" + ID;
 
-            try {
-                URL url = new URL(serverURL);
-                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+        try {
+            URL url = new URL(serverURL);
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
 
-                httpURLConnection.setReadTimeout(5000);
-                httpURLConnection.setConnectTimeout(5000);
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.connect();
+            httpURLConnection.setReadTimeout(5000);
+            httpURLConnection.setConnectTimeout(5000);
+            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection.connect();
 
-                OutputStream outputStream = httpURLConnection.getOutputStream();
-                outputStream.write(postParameters.getBytes("UTF-8"));
-                outputStream.flush();
-                outputStream.close();
+            OutputStream outputStream = httpURLConnection.getOutputStream();
+            outputStream.write(postParameters.getBytes("UTF-8"));
+            outputStream.flush();
+            outputStream.close();
 
-                int responseStatusCode = httpURLConnection.getResponseCode();
-                Log.d("@@@", "POST response code - " + responseStatusCode);
+            int responseStatusCode = httpURLConnection.getResponseCode();
+            Log.d("@@@", "POST response code - " + responseStatusCode);
 
-                InputStream inputStream;
-                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
-                    inputStream = httpURLConnection.getInputStream();
-                } else {
-                    inputStream = httpURLConnection.getErrorStream();
-                }
-
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
-                StringBuilder sb = new StringBuilder();
-                String line = null;
-
-                while ((line = bufferedReader.readLine()) != null) {
-                    sb.append(line);
-                }
-
-                bufferedReader.close();
-
-                return sb.toString();
-            } catch (Exception e) {
-                Log.e("@@@", "exception", e);
-                return new String("Same ID exists !");
+            InputStream inputStream;
+            if (responseStatusCode == HttpURLConnection.HTTP_OK) {
+                inputStream = httpURLConnection.getInputStream();
+            } else {
+                inputStream = httpURLConnection.getErrorStream();
             }
+
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+
+            while ((line = bufferedReader.readLine()) != null) {
+                sb.append(line);
+            }
+
+            bufferedReader.close();
+
+            return sb.toString();
+        } catch (Exception e) {
+            Log.e("@@@", "exception", e);
+            return new String("Same ID exists !");
         }
     }
+}
+
 }
