@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewGlucoseActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center|top">
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal">
+            <TextView
+                android:textColor="@android:color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:text="혈당"/>
+
+            <EditText
+                android:id="@+id/GlucoseValue"
+                android:gravity="center"
+                android:textSize="25dp"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:inputType="number"
+                android:maxLength="3"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:textSize="30dp"
+                android:text="mg/dL"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/coment"
+                android:text="메모"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:textSize="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/coment_explain"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:inputType="textMultiLine|textNoSuggestions"
+                android:background="@drawable/corner"
+                android:gravity="top"
+                android:maxLength="500"
+                android:padding="10dp"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:scrollbars="vertical"/>
+
+            <Button
+                android:id="@+id/GlucoseSaveBtn"
+                android:layout_gravity="center"
+                android:layout_width="100dp"
+                android:layout_height="60dp"
+                android:clickable="true"
+                android:backgroundTint="@color/button_yellow"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"
+                android:textSize="30dp"
+                android:text="저장"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

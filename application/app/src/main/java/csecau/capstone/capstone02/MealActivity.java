@@ -1,15 +1,13 @@
 package csecau.capstone.capstone02;
 
-import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ListView;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -21,12 +19,11 @@ import java.net.URL;
 import static csecau.capstone.capstone02.MainActivity.user_id;
 
 public class MealActivity extends AppCompatActivity {
+    private String[] meal_list;
 
-    private String TAG = "Mealfunction";
+    private Button newmealButton;
 
-    private Button MealSaveBtn;
-
-    private EditText meal1, meal2, meal3, meal4, meal5;
+    public static MealActivity activity = null;
 
 
     @Override
@@ -34,71 +31,76 @@ public class MealActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meal);
 
-        MealSaveBtn = (Button)findViewById(R.id.MealSaveBtn);
+        activity = this;
 
-        meal1 = (EditText)findViewById(R.id.mealtext1);
-        meal2 = (EditText)findViewById(R.id.mealtext2);
-        meal3 = (EditText)findViewById(R.id.mealtext3);
-        meal4 = (EditText)findViewById(R.id.mealtext4);
-        meal5 = (EditText)findViewById(R.id.mealtext5);
+        newmealButton = (Button) findViewById(R.id.newmealbutton);
 
-        MealSaveBtn.setOnClickListener(new View.OnClickListener() {
+        newmealButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                String Meal1 = meal1.getText().toString();
-                String Meal2 = meal2.getText().toString();
-                String Meal3 = meal3.getText().toString();
-                String Meal4 = meal4.getText().toString();
-                String Meal5 = meal5.getText().toString();
-                String UserID = user_id;
-
-                Meal task = new Meal();
-                task.execute("http://capstone02.cafe24.com/insert_meal.php", UserID, Meal1, Meal2, Meal3, Meal4, Meal5);
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), NewMealActivity.class);
+                startActivity(intent);
             }
         });
 
+        Getmeallist getmeallist = new Getmeallist();
+        getmeallist.execute("http://capstone02.cafe24.com/retrieve_meal.php", user_id);
+
+//        ListView listView;
+//        meal_listviewAdapter adapter;
+//
+//        adapter = new meal_listviewAdapter();
+//
+//        listView = (ListView) findViewById(R.id.meallistview);
+//        listView.setAdapter(adapter);
+//
+//        adapter.addItem("1","2","3","4","5","시간");
+
     }
 
-    class Meal extends AsyncTask<String, Void, String>{
-        ProgressDialog progressDialog;
 
+    class Getmeallist extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = ProgressDialog.show(MealActivity.this,"Please Wait", null, true, true);
         }
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            progressDialog.dismiss();
 
-            String input_string = result;
-            boolean Meal = input_string.contains("Error");
-            Log.d(TAG, input_string);
+            String result_string = result;
+            meal_list = result_string.split("<br>");
 
-            if(Meal) {
-                Toast.makeText(MealActivity.this, "Error", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(MealActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                finish();
+            ListView listview;
+            meal_listviewAdapter adapter;
+
+            adapter = new meal_listviewAdapter();
+
+            listview = (ListView) findViewById(R.id.meallistview);
+            listview.setAdapter(adapter);
+
+            String test_sentence = meal_list[0];
+            boolean test_contains = result.contains("comma");
+
+            if (result.contains("<comma>")) {
+                for (String meal : meal_list) {
+                    int count = meal.split("<comma>").length-1;
+
+                    String[] meal_split = meal.split("<comma>");
+                    adapter.addItem(meal_split[1], meal_split[2], meal_split[3],meal_split[4],meal_split[5],meal_split[6]);
+
+                }
             }
         }
 
         @Override
         protected String doInBackground(String... params) {
 
-            String serverURL = (String)params[0];
+            String user_id = (String) params[1];
 
-            String userID = (String)params[1];
-            String meal1 = (String)params[2];
-            String meal2 = (String)params[3];
-            String meal3 = (String)params[4];
-            String meal4 = (String)params[5];
-            String meal5 = (String)params[6];
-
-            String postParameters = "ID=" + userID + "&Contents1=" +meal1 + "&Contents2=" +meal2 + "&Contents3=" +meal3 +
-                    "&Contents4=" +meal4 + "&Contents5=" +meal5;
+            String serverURL = (String) params[0];
+            String postParameters = "ID=" + user_id;
 
             try {
                 URL url = new URL(serverURL);
@@ -118,10 +120,9 @@ public class MealActivity extends AppCompatActivity {
                 Log.d("@@@", "POST response code - " + responseStatusCode);
 
                 InputStream inputStream;
-                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
                     inputStream = httpURLConnection.getInputStream();
-                }
-                else{
+                } else {
                     inputStream = httpURLConnection.getErrorStream();
                 }
 
@@ -131,15 +132,16 @@ public class MealActivity extends AppCompatActivity {
                 StringBuilder sb = new StringBuilder();
                 String line = null;
 
-                while((line = bufferedReader.readLine()) != null){
+                while ((line = bufferedReader.readLine()) != null) {
                     sb.append(line);
                 }
 
                 bufferedReader.close();
 
-                return sb.toString().trim();
-            }catch (Exception e) {
-                return new String("Error: " + e.getMessage());
+                return sb.toString();
+            } catch (Exception e) {
+                Log.e("@@@", "exception", e);
+                return new String("Same ID exists !");
             }
         }
     }

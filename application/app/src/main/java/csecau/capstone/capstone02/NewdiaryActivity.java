@@ -37,13 +37,15 @@ import static csecau.capstone.capstone02.MainActivity.user_id;
 
 public class NewdiaryActivity extends AppCompatActivity {
 
+    public static NewdiaryActivity activity = null;
+
     private float analysis_score = 0;
     private static String Contents = "";
 
     private Button doneButton;
     private Button recognizeButton;
     private EditText contentEdittext;
-    private TextView resultText;
+//    private TextView resultText;
 
     private Intent i;
     private SpeechRecognizer mRecognizer;
@@ -51,7 +53,7 @@ public class NewdiaryActivity extends AppCompatActivity {
     private RecognitionListener listener = new RecognitionListener() {
         @Override
         public void onReadyForSpeech(Bundle params) {
-            Toast.makeText(getApplicationContext(), "Start", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "음성인식 시작", Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -76,20 +78,67 @@ public class NewdiaryActivity extends AppCompatActivity {
 
         @Override
         public void onError(int error) {
-            Toast.makeText(getApplicationContext(), String.valueOf(error), Toast.LENGTH_SHORT).show();
+
+            String error_string = "";
+
+            switch (error) {
+                case 1:
+                case 2:
+                    error_string = "연결상태를 확인하세요";
+                    break;
+
+                case 3:
+                case 4:
+                case 5:
+                case 7:
+                case 8:
+                    error_string = "다시 한번 말씀해 주세요";
+                    break;
+
+                case 6:
+                    error_string = "조금 더 크게 말씀해 주세요";
+                    break;
+
+                case 9:
+                    error_string = "마이크 사용권한을 설정하세요";
+                    break;
+            }
+
+            Toast.makeText(getApplicationContext(), error_string, Toast.LENGTH_SHORT).show();
+
+//                1 ERROR_NETWORK_TIMEOUT : 네트워크 타임아웃
+//
+//                2 ERROR_NETWORK :  그 외 네트워크 에러
+//
+//                3 ERROR_AUDIO :  녹음 에러
+//
+//                4 ERROR_SERVER :  서버에서 에러를 보냄
+//
+//                5 ERROR_CLIENT :  클라이언트 에러
+//
+//                6 ERROR_SPEECH_TIMEOUT :  아무 음성도 듣지 못했을 때
+//
+//                7 ERROR_NO_MATCH :  적당한 결과를 찾지 못했을 때
+//
+//                8 ERROR_RECOGNIZER_BUSY :  RecognitionService가 바쁠 때
+//
+//                9 ERROR_INSUFFICIENT_PERMISSIONS: uses-permission(즉 RECORD_AUDIO) 이 없을 때
         }
 
         @Override
         public void onResults(Bundle results) {
+            String existing_sentence = contentEdittext.getText().toString();
             String recognition_result = "";
             recognition_result = SpeechRecognizer.RESULTS_RECOGNITION;
             ArrayList<String> mResult = results.getStringArrayList(recognition_result);
             String[] result_string = new String[mResult.size()];
             mResult.toArray(result_string);
-            contentEdittext.setText("" + result_string[0]);
-//            for (int i = 0; i < mResult.size(); i++) {
-//                contentEdittext.append(" " + result_string[i]);
-//            }
+
+            if (existing_sentence.contentEquals("")) {
+                contentEdittext.setText(result_string[0]);
+            } else {
+                contentEdittext.setText(existing_sentence + " " + result_string[0]);
+            }
         }
 
         @Override
@@ -105,6 +154,9 @@ public class NewdiaryActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        activity = this;
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newdiary);
 
@@ -118,7 +170,7 @@ public class NewdiaryActivity extends AppCompatActivity {
         doneButton = (Button) findViewById(R.id.DoneButton);
         recognizeButton = (Button) findViewById(R.id.RecognizeButton);
         contentEdittext = (EditText) findViewById(R.id.contentinput);
-        resultText = (TextView) findViewById(R.id.resulttext);
+//        resultText = (TextView) findViewById(R.id.resulttext);
 
         doneButton.setOnClickListener(new Button.OnClickListener() {
             @Override
@@ -139,24 +191,6 @@ public class NewdiaryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mRecognizer.startListening(i);
-//                1 ERROR_NETWORK_TIMEOUT : 네트워크 타임아웃
-//
-//                2 ERROR_NETWORK :  그 외 네트워크 에러
-//
-//                3 ERROR_AUDIO :  녹음 에러
-//
-//                4 ERROR_SERVER :  서버에서 에러를 보냄
-//
-//                5 ERROR_CLIENT :  클라이언트 에러
-//
-//                6 ERROR_SPEECH_TIMEOUT :  아무 음성도 듣지 못했을 때
-//
-//                7 ERROR_NO_MATCH :  적당한 결과를 찾지 못했을 때
-//
-//                8 ERROR_RECOGNIZER_BUSY :  RecognitionService가 바쁠 때
-//
-//                9 ERROR_INSUFFICIENT_PERMISSIONS: uses-permission(즉 RECORD_AUDIO) 이 없을 때
-
             }
         });
 
@@ -172,7 +206,22 @@ public class NewdiaryActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            Toast.makeText(NewdiaryActivity.this, result, Toast.LENGTH_SHORT).show();
+            boolean diary_error = result.contains("Error");
+            if (diary_error) {
+                Toast.makeText(NewdiaryActivity.this, result, Toast.LENGTH_SHORT).show();
+            } else {
+                if (DiaryActivity.activity != null) {
+                    DiaryActivity activity = (DiaryActivity) DiaryActivity.activity;
+                    activity.finish();
+                }
+
+                NewdiaryActivity.activity.finish();
+
+                Intent intent = new Intent(getApplicationContext(), DiaryActivity.class);
+                startActivity(intent);
+
+                Toast.makeText(NewdiaryActivity.this, "처리 완료", Toast.LENGTH_SHORT).show();
+            }
         }
 
         @Override
@@ -181,9 +230,10 @@ public class NewdiaryActivity extends AppCompatActivity {
             String ID = (String) params[1];
             String Contents = (String) params[2];
             String analysis_score = (String) params[3];
+            String english_contents = (String) params[4];
 
             String serverURL = (String) params[0];
-            String postParameters = "ID=" + ID + "&Contents=" + Contents + "&Value=" + analysis_score;
+            String postParameters = "ID=" + ID + "&Contents=" + Contents + "&Value=" + analysis_score + "&english_contents=" + english_contents;
 
             try {
                 URL url = new URL(serverURL);
@@ -239,67 +289,21 @@ public class NewdiaryActivity extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            Gson gson = new Gson();
-            JsonParser parser = new JsonParser();
-            JsonElement target = parser.parse(result.toString()).getAsJsonObject().get("message").getAsJsonObject().get("result").getAsJsonObject().get("translatedText");
+            if (!result.contains("errorMessage")) {
+                Gson gson = new Gson();
+                JsonParser parser = new JsonParser();
+                JsonElement target = parser.parse(result.toString()).getAsJsonObject().get("message").getAsJsonObject().get("result").getAsJsonObject().get("translatedText");
 
-            result = target.toString();
-            result = result.substring(1, result.length() - 1);
+                result = target.toString();
+                result = result.substring(1, result.length() - 1);
 
-            contentEdittext.setText(result);
+                contentEdittext.setText(result);
 
-            try {
-                int count = 0;
-
-                ArrayList<String> stopwords = new ArrayList<String>();
-                BufferedReader stop = new BufferedReader(new FileReader(getFilesDir() + "/stopwords.txt"));
-                String line = "";
-                while ((line = stop.readLine()) != null) {
-                    stopwords.add(line);
-                }
-
-                Map<String, String> map = new HashMap<String, String>();
-                BufferedReader in = new BufferedReader(new FileReader(getFilesDir() + "/afinn.txt"));
-
-                line = "";
-                while ((line = in.readLine()) != null) {
-                    String parts[] = line.split("\t");
-                    map.put(parts[0], parts[1]);
-                    count++;
-                }
-                in.close();
-
-                if ((result != null)) {
-                    float score = 0;
-                    String[] word = result.split(" ");
-
-                    for (int i = 0; i < word.length; i++) {
-                        if (stopwords.contains(word[i].toLowerCase())) {
-                            String wordscore = map.get(word[i].toLowerCase());
-                            if (wordscore != null) {
-                                score = (float) score + Integer.parseInt(wordscore);
-                            }
-                        } else {
-                            if (map.get(word[i]) != null) {
-                                String wordscore = map.get(word[i].toLowerCase());
-                                score = (float) score + Integer.parseInt(wordscore);
-                            }
-                        }
-                    }
-
-//                    String test_string = contentEdittext.toString();
-                    analysis_score = score;
-                    resultText.setText("Analysis Result : " + score);
-                }
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                InsertDiary insertdiary = new InsertDiary();
+                insertdiary.execute("http://capstone02.cafe24.com/insert_diary.php", user_id, Contents, Float.toString(analysis_score), result);
+            } else {
+                Toast.makeText(NewdiaryActivity.this, "내용을 입력하세요 ", Toast.LENGTH_SHORT).show();
             }
-
-            InsertDiary insertdiary = new InsertDiary();
-            insertdiary.execute("http://capstone02.cafe24.com/insert_diary.php", user_id, Contents, Float.toString(analysis_score));
         }
 
         @Override
@@ -344,5 +348,4 @@ public class NewdiaryActivity extends AppCompatActivity {
             }
         }
     }
-
 }

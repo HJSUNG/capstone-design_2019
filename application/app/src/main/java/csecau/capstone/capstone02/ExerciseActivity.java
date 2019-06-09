@@ -1,15 +1,13 @@
 package csecau.capstone.capstone02;
 
-import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ListView;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -22,71 +20,75 @@ import static csecau.capstone.capstone02.MainActivity.user_id;
 
 public class ExerciseActivity extends AppCompatActivity {
 
-    private String TAG = "Exercisefunction";
+    private String[] exercise_list;
 
-    private Button ExerciseSaveBtn;
+    private Button newExerciseButton;
 
-    private EditText ExerciseEdittext;
-    private EditText TimeEdittext;
+    public static ExerciseActivity activity = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_exercise);
 
-        ExerciseSaveBtn = (Button)findViewById(R.id.ExerciseSaveBtn);
+        activity = this;
 
-        ExerciseEdittext = (EditText)findViewById(R.id.exercise);
-        TimeEdittext = (EditText)findViewById(R.id.exe_time);
+        newExerciseButton = (Button) findViewById(R.id.newexercisebutton);
 
-        ExerciseSaveBtn.setOnClickListener(new View.OnClickListener() {
+        newExerciseButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                String exercise = ExerciseEdittext.getText().toString();
-                String exe_time = TimeEdittext.getText().toString();
-                String UserID = user_id;
-
-                Exercsie task = new Exercsie();
-                task.execute("http://capstone02.cafe24.com/insert_exercise.php", UserID, exercise, exe_time);
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), NewExerciseActivity.class);
+                startActivity(intent);
             }
         });
+
+        Getexerciselist getexerciselist = new Getexerciselist();
+        getexerciselist.execute("http://capstone02.cafe24.com/retrieve_exercise.php", user_id);
+
     }
 
-    class Exercsie extends AsyncTask<String, Void, String>{
-        ProgressDialog progressDialog;
 
+    class Getexerciselist extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = ProgressDialog.show(ExerciseActivity.this,"Please Wait", null, true, true);
         }
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            progressDialog.dismiss();
 
-            String input_string = result;
-            boolean Exercise = input_string.contains("Error");
-            Log.d(TAG, input_string);
+            String result_string = result;
+            exercise_list = result_string.split("<br>");
 
-            if(Exercise) {
-                Toast.makeText(ExerciseActivity.this, "Error", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(ExerciseActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                finish();
+            ListView listview;
+            exercise_listviewAdapter adapter;
+
+            adapter = new exercise_listviewAdapter();
+
+            listview = (ListView) findViewById(R.id.exerciselistview);
+            listview.setAdapter(adapter);
+
+            String test_sentence = exercise_list[0];
+            boolean test_contains = result.contains("comma");
+
+            if (result.contains("<comma>")) {
+                for (String exercise : exercise_list) {
+                    String exercise_split[] = exercise.split("<comma>");
+                    adapter.addItem(exercise_split[1], exercise_split[2], exercise_split[3]);
+                }
             }
         }
 
         @Override
         protected String doInBackground(String... params) {
 
-            String serverURL = (String)params[0];
-            String userID = (String)params[1];
-            String exercise = (String)params[2];
-            String exe_time = (String)params[3];
-            
-            String postParameters = "ID=" + userID + "&ActivityName=" + exercise + "&Value=" + exe_time;
+            String user_id = (String) params[1];
+
+            String serverURL = (String) params[0];
+            String postParameters = "ID=" + user_id;
 
             try {
                 URL url = new URL(serverURL);
@@ -106,10 +108,9 @@ public class ExerciseActivity extends AppCompatActivity {
                 Log.d("@@@", "POST response code - " + responseStatusCode);
 
                 InputStream inputStream;
-                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
                     inputStream = httpURLConnection.getInputStream();
-                }
-                else{
+                } else {
                     inputStream = httpURLConnection.getErrorStream();
                 }
 
@@ -119,15 +120,16 @@ public class ExerciseActivity extends AppCompatActivity {
                 StringBuilder sb = new StringBuilder();
                 String line = null;
 
-                while((line = bufferedReader.readLine()) != null){
+                while ((line = bufferedReader.readLine()) != null) {
                     sb.append(line);
                 }
 
                 bufferedReader.close();
 
-                return sb.toString().trim();
+                return sb.toString();
             } catch (Exception e) {
-                return new String("Error: " + e.getMessage());
+                Log.e("@@@", "exception", e);
+                return new String("Same ID exists !");
             }
         }
     }

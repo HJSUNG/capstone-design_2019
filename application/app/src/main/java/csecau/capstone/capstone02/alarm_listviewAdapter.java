@@ -53,4 +53,8 @@ public class alarm_listviewAdapter extends BaseAdapter {
 
         listviewalarmList.add(item);
     }
+
+    public void removeItem(int itemnum) {
+        listviewalarmList.remove(itemnum);
+    }
 }

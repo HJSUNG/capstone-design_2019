@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ExerciseActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,63 +14,91 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:gravity="right"
+            android:id="@+id/exerciselayout_first">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/textcolor"
-                android:text="운동 종류와 횟수를 적어주세요"
-                android:textSize="30sp"
+                android:text="운동 내역"
                 android:textStyle="bold"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="50dp"/>
+                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:layout_marginLeft="20dp"/>
 
-            <TextView
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:textSize="20dp"
-                android:text="운동 종류"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/exercise"
-                android:layout_marginBottom="20dp"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:textSize="20dp"
-                android:text="횟수 또는 시간"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/exe_time"
-                android:layout_marginBottom="30dp"/>
+                android:id="@+id/newexercisebutton"
+                android:text="추가"
+                android:background="#00ff0000"
+                android:drawableLeft="@drawable/add"
+                android:textSize="20sp"/>
         </LinearLayout>
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10px"
+            android:background="#246391"
+            android:layout_marginLeft="25px"
+            android:layout_marginRight="25px"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:gravity="center">
+            android:layout_height="wrap_content">
 
-            <Button
-                android:id="@+id/ExerciseSaveBtn"
+            <TextView
+                android:layout_width="97dp"
+                android:layout_height="wrap_content"
+                android:text="운동종류"
+                android:textAlignment="center"
                 android:layout_gravity="center"
-                android:layout_width="100dp"
-                android:layout_height="60dp"
-                android:clickable="true"
-                android:backgroundTint="@android:color/holo_orange_light"
-                android:textColor="@android:color/black"
-                android:textStyle="bold"
-                android:textSize="30dp"
-                android:text="저장"/>
+                android:textSize="15sp"
+                android:paddingLeft="5dp"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="#246391"
+                android:layout_marginLeft="10px"
+                android:layout_marginRight="10px"/>
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:text="내용 / 작성일시"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:paddingRight="85dp"
+                android:textSize="15sp"/>
 
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10px"
+            android:background="#246391"
+            android:layout_marginLeft="25px"
+            android:layout_marginRight="25px"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:id="@+id/exerciselayout_second">
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/exerciselistview">
+
+            </ListView>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

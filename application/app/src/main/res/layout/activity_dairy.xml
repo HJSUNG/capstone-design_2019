@@ -12,42 +12,127 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/dairylayout_first"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
-            android:id="@+id/dairylayout_first">
+            android:gravity="right">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="0px"
                 android:layout_height="wrap_content"
-                android:text="Diary Activity"
-                android:layout_weight="1"
-                android:textSize="20sp"/>
+                android:layout_weight="3"
+                android:textAlignment="center"></Spinner>
+
+            <FrameLayout
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="5">
+
+                <EditText
+                    android:id="@+id/search_edittext"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:clickable="true"/>
+
+                <TextView
+                    android:id="@+id/search_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="날짜 선택"
+                    android:textAlignment="center"
+                    android:gravity="center"
+                    android:visibility="invisible"
+                    android:clickable="false"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="1">
+
+                    <Button
+                        android:id="@+id/positiveButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="긍정적"/>
+
+                    <Button
+                        android:id="@+id/negativeButton"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:text="부정적"/>
+
+                </LinearLayout>
+            </FrameLayout>
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/searchbutton"
-                android:text="search"
-                android:visibility="invisible"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/newdiarybutton"
-                android:text="New" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00ff0000"
+                android:drawableLeft="@drawable/add"
+                android:textSize="15sp"
+                android:text="새 일기" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10px"
+            android:background="#246391"
+            android:layout_marginLeft="25px"
+            android:layout_marginRight="25px"/>
         
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:id="@+id/dairylayout_second">
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="57dp"
+                android:layout_height="wrap_content"
+                android:text="점수"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:textSize="15sp"
+                android:paddingLeft="5dp"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:background="#246391"
+                android:layout_marginLeft="10px"
+                android:layout_marginRight="10px"/>
+
+            <TextView
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:text="내용 / 작성일시"
+                android:textAlignment="center"
+                android:layout_gravity="center"
+                android:paddingRight="50dp"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+        
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10px"
+            android:background="#246391"
+            android:layout_marginLeft="25px"
+            android:layout_marginRight="25px"/>
+
+        <LinearLayout
+            android:id="@+id/dairylayout_second"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <ListView
+                android:id="@+id/dairylistview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/dairylistview">
+                android:layout_marginTop="10px">
 
             </ListView>
 

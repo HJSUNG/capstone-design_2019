@@ -1,14 +1,14 @@
 package csecau.capstone.capstone02;
 
-
-import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
-import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -20,77 +20,89 @@ import java.net.URL;
 
 import static csecau.capstone.capstone02.MainActivity.user_id;
 
-public class GlucoseActivity extends AppCompatActivity {
+public class GlucoseActivity extends AppCompatActivity{
 
-    private String TAG = "Glucosefunction";
+    public static GlucoseActivity activity = null;
 
-    private Button GlucoseSaveBtn;
+    private String[] glucose_list;
 
-    private EditText GlucoseEdittext;
-    private EditText ComentEdittext;
+    private Button newglucoseButton;
 
-    /////////////////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_glucose);
 
-        GlucoseSaveBtn = (Button)findViewById(R.id.GlucoseSaveBtn);
+        activity = this;
 
-        GlucoseEdittext = (EditText)findViewById(R.id.GlucoseValue);
-        ComentEdittext = (EditText)findViewById(R.id.coment_explain);
+        newglucoseButton = (Button) findViewById(R.id.newglucosebutton);
 
-        GlucoseSaveBtn.setOnClickListener(new View.OnClickListener() {
+        newglucoseButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                String glucose = GlucoseEdittext.getText().toString();
-                String comment = ComentEdittext.getText().toString();
-                String UserID =  user_id;
-                //6말고 UserID값이 자동으로 들어와야된다.
-
-                Glucose task = new Glucose();
-                task.execute("http://capstone02.cafe24.com/insert_glucose.php", UserID, glucose, comment);
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), NewGlucoseActivity.class);
+                startActivity(intent);
             }
         });
 
+        Getglucoselist getglucoselist = new Getglucoselist();
+        getglucoselist.execute("http://capstone02.cafe24.com/retrieve_glucose.php", user_id);
     }
 
-    class Glucose extends AsyncTask<String, Void, String>{
-        ProgressDialog progressDialog;
+    @Override
+    public void onBackPressed() {
+        if (MainActivity.activity != null) {
+            MainActivity activity = (MainActivity) MainActivity.activity;
+            activity.finish();
+        }
 
+        GlucoseActivity.activity.finish();
+
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+    }
+
+
+    class Getglucoselist extends AsyncTask<String, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = ProgressDialog.show(GlucoseActivity.this,"Please Wait", null, true, true);
         }
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            progressDialog.dismiss();
 
-            String input_string = result;
-            boolean Glucose = input_string.contains("Error");
-            Log.d(TAG, input_string);
+            String result_string = result;
+            glucose_list = result_string.split("<br>");
 
-            if(Glucose) {
-                Toast.makeText(GlucoseActivity.this, "Error", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(GlucoseActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                finish();
+            ListView listview;
+            glucose_listviewAdapter adapter;
+
+            adapter = new glucose_listviewAdapter();
+
+            listview = (ListView) findViewById(R.id.glucoselistview);
+            listview.setAdapter(adapter);
+
+            String test_sentence = glucose_list[0];
+            boolean test_contains = result.contains("comma");
+
+            if (result.contains("<comma>")) {
+                for (String glucose : glucose_list) {
+                    String glucose_split[] = glucose.split("<comma>");
+                    adapter.addItem(glucose_split[1], glucose_split[2], glucose_split[0]);
+                }
             }
         }
 
         @Override
         protected String doInBackground(String... params) {
 
-            String userID = (String)params[1];
-            String glucose = (String)params[2];
-            String comment = (String)params[3];
+            String user_id = (String) params[1];
 
-            String serverURL = (String)params[0];
-            String postParameters = "ID=" + userID + "&Value=" + glucose + "&Comment=" + comment;
+            String serverURL = (String) params[0];
+            String postParameters = "ID=" + user_id;
 
             try {
                 URL url = new URL(serverURL);
@@ -110,10 +122,9 @@ public class GlucoseActivity extends AppCompatActivity {
                 Log.d("@@@", "POST response code - " + responseStatusCode);
 
                 InputStream inputStream;
-                if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+                if (responseStatusCode == HttpURLConnection.HTTP_OK) {
                     inputStream = httpURLConnection.getInputStream();
-                }
-                else{
+                } else {
                     inputStream = httpURLConnection.getErrorStream();
                 }
 
@@ -123,18 +134,17 @@ public class GlucoseActivity extends AppCompatActivity {
                 StringBuilder sb = new StringBuilder();
                 String line = null;
 
-                while((line = bufferedReader.readLine()) != null){
+                while ((line = bufferedReader.readLine()) != null) {
                     sb.append(line);
                 }
 
                 bufferedReader.close();
 
-                return sb.toString().trim();
+                return sb.toString();
             } catch (Exception e) {
-                return new String("Error: " + e.getMessage());
+                Log.e("@@@", "exception", e);
+                return new String("Same ID exists !");
             }
         }
     }
-
-
 }

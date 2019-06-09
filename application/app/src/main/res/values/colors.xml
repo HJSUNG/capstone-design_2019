@@ -6,9 +6,15 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="white_greyish">#EEEEEE</color>
+    <color name="button_yellow">@android:color/holo_orange_light</color>
 
+    <color name="hint_color">#9E9E9E</color>
     <color name="button_selectorcolor">#9E9E9E</color>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="diarylist_datepickerdialog_background">#331c9a5d</color>
+    <color name="green_button_color">#6acf84</color>
+    <color name="app_blue">#3075b6</color>
+    <color name="red_button_color">#f29595</color>
 </resources>

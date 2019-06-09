@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_alignParentLeft="true">
+
+        <TextView
+            android:id="@+id/glucose_value"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:text="0"
+            android:textSize="30sp"
+            android:textAlignment="center"
+            android:gravity="center_vertical"/>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:id="@+id/vertical_line"
+            android:background="#111111"
+            android:layout_marginTop="15px"
+            android:layout_marginBottom="15px"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="70dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/glucose_memo_content"
+            android:layout_width="280dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="Memo of glucose"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/glucose_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/button_yellow"
+            android:text="Time of glucose"
+            android:textAlignment="textEnd"/>
+    </LinearLayout>
+
+</RelativeLayout>

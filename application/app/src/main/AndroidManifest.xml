@@ -3,6 +3,8 @@
     package="csecau.capstone.capstone02">
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-permission android:name="android.permission.RECORD_AUDIO"></uses-permission>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <application
         android:allowBackup="true"
         android:icon="@drawable/diary_icon"
@@ -20,11 +22,15 @@
         <activity android:name=".MainActivity"></activity>
         <activity android:name=".RegistrationActivity"></activity>
         <activity android:name=".GlucoseActivity"></activity>
+        <activity android:name=".NewGlucoseActivity"></activity>
         <activity android:name=".DiaryActivity"></activity>
         <activity android:name=".NewdiaryActivity"></activity>
         <activity android:name=".MedicationActivity"></activity>
         <activity android:name=".MealActivity"></activity>
+        <activity android:name=".NewMealActivity"></activity>
         <activity android:name=".ExerciseActivity"></activity>
+        <activity android:name=".NewExerciseActivity"></activity>
+        <activity android:name=".DiaryshowActivity"></activity>
     </application>
 
 </manifest>

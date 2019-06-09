@@ -11,7 +11,7 @@ $android = strpos($_SERVER['HTTP_USER_AGENT'], "Android");
     if( (($_SERVER['REQUEST_METHOD'] == 'POST') && isset($_POST['submit'])) || $android ) {
         try {
             $ID = (int)$_POST['ID'];
-            $stmt = $con->prepare('SELECT * FROM Diary WHERE UserID = :ID');
+            $stmt = $con->prepare('SELECT * FROM Diary WHERE UserID = :ID ORDER BY DateRegistered DESC');
             $stmt->bindParam(':ID', $ID);
             $stmt->execute();
             $stmt->setFetchMode(PDO::FETCH_BOTH);

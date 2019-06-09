@@ -20,72 +20,98 @@
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Glucose" />
+                android:text="혈당 관리"
+                android:textSize="20sp"/>
 
             <Button
                 android:id="@+id/MedicationButton"
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Medication" />
+                android:text="투약시간 관리"
+                android:textSize="20sp"/>
 
             <Button
                 android:id="@+id/ExerciseButton"
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Exercise" />
+                android:text="운동 관리"
+                android:textSize="20sp"/>
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/button_second"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/button_first">
+            android:layout_below="@+id/button_first"
+            android:layout_marginBottom="5dp">
 
             <Button
                 android:id="@+id/MealButton"
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Meal" />
+                android:text="식단 관리"
+                android:textSize="20sp"/>
 
             <Button
                 android:id="@+id/DiaryButton"
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Diary" />
+                android:text="일기장"
+                android:textSize="20sp"/>
 
             <Button
                 android:id="@+id/logoutButton"
                 android:layout_width="100px"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Log out"/>
+                android:text="로그아웃"
+                android:textSize="20sp"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/medicationtext"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_below="@+id/button_second">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10px"
+                android:background="#246391"
+                android:layout_marginLeft="25px"
+                android:layout_marginRight="25px"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Medication information here"
+                android:text="다음 투약시간"
                 android:gravity="center_horizontal"
-                android:textSize="40sp"
-                android:textColor="@android:color/holo_blue_bright"/>
+                android:textSize="30sp"
+                android:textColor="@color/textcolor"/>
+            <ListView
+                android:id="@+id/main_medication_alarm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10px"
+                android:background="#246391"
+                android:layout_marginLeft="25px"
+                android:layout_marginRight="25px"/>
+
         </LinearLayout>
 
         <com.github.mikephil.charting.charts.LineChart
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/chart"
-            android:layout_below="@id/medicationtext"/>
+            android:layout_below="@id/medicationtext"
+            android:layout_marginTop="10dp"/>
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>

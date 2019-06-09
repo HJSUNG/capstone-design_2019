@@ -1,7 +1,5 @@
 package csecau.capstone.capstone02;
 
-import android.graphics.drawable.Drawable;
-
 public class diary_listview {
     private String analysis_score;
     private String content;
