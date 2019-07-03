@@ -55,7 +55,6 @@ android:layout_height="70dp">
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Time of dairy"
-            android:textColor="@color/button_yellow"
             android:textAlignment="textEnd"
             android:layout_marginRight="20px"/>
     </LinearLayout>

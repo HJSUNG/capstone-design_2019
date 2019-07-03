@@ -87,10 +87,10 @@
                 android:id="@+id/meal_time"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:textColor="@color/button_yellow"
                 android:text="시간"
                 android:layout_weight="1"
-                android:textAlignment="textEnd"/>
+                android:textAlignment="textEnd"
+                android:layout_marginRight="15dp"/>
 
         </LinearLayout>
     </LinearLayout>
